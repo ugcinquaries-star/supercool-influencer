@@ -1,0 +1,66 @@
+'use client';
+
+export default function PricingPage() {
+  const handleCheckout = async (plan: string) => {
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan }),
+    });
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+    else alert(data.error || 'Something went wrong');
+  };
+
+  const plans = [
+    { id: 'starter', name: 'Starter', price: '$9', period: 'one-time', credits: '5 briefs', desc: 'Try it out. No commitment.', color: '#6ee7b7', features: ['5 production briefs', 'All 8 output tabs', 'Seedance + Kling + Runway', 'Brand Bot + Calendar', 'Nano Banana prompts'], popular: false },
+    { id: 'creator', name: 'Creator', price: '$29', period: '/month', credits: '30 briefs/mo', desc: 'For serious content creators.', color: '#a78bfa', features: ['30 production briefs/month', 'All 8 output tabs', 'Priority generation', 'Brand Bot + Calendar', 'Cancel anytime'], popular: true },
+    { id: 'agency', name: 'Agency', price: '$79', period: '/month', credits: 'Unlimited', desc: 'For agencies and power users.', color: '#f9a8d4', features: ['Unlimited briefs', 'All 8 output tabs', 'Priority generation', 'Client-ready exports', 'Cancel anytime'], popular: false },
+  ];
+
+  return (
+    <div style={{ background: '#06060b', minHeight: '100vh', color: 'white', fontFamily: 'sans-serif' }}>
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 48px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <a href="/dashboard" style={{ fontWeight: 800, fontSize: '18px', textDecoration: 'none', color: 'white' }}>super<span style={{ color: '#a78bfa' }}>cool</span> influencer</a>
+      </nav>
+
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '80px 24px', textAlign: 'center' as const }}>
+        <div style={{ fontSize: '12px', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: '#a78bfa', fontWeight: 600, marginBottom: '16px' }}>Pricing</div>
+        <h1 style={{ fontSize: '48px', fontWeight: 800, letterSpacing: '-2px', marginBottom: '16px' }}>Simple, honest pricing.</h1>
+        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '18px', marginBottom: '64px' }}>No fluff. Pay for what you use.</p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+          {plans.map(plan => (
+            <div key={plan.id} style={{ background: plan.popular ? 'rgba(124,58,237,0.1)' : '#0d0d14', border: `1px solid ${plan.popular ? 'rgba(124,58,237,0.5)' : 'rgba(255,255,255,0.07)'}`, borderRadius: '20px', padding: '32px', position: 'relative' as const, textAlign: 'left' as const }}>
+              {plan.popular && (
+                <div style={{ position: 'absolute' as const, top: '-12px', left: '50%', transform: 'translateX(-50%)', background: 'linear-gradient(135deg, #7c3aed, #ec4899)', color: 'white', fontSize: '11px', fontWeight: 700, padding: '4px 16px', borderRadius: '100px', whiteSpace: 'nowrap' as const }}>MOST POPULAR</div>
+              )}
+              <div style={{ fontSize: '14px', fontWeight: 700, color: plan.color, marginBottom: '8px' }}>{plan.name}</div>
+              <div style={{ fontSize: '42px', fontWeight: 800, letterSpacing: '-2px', marginBottom: '4px' }}>
+                {plan.price}<span style={{ fontSize: '16px', fontWeight: 400, color: 'rgba(255,255,255,0.4)' }}>{plan.period}</span>
+              </div>
+              <div style={{ fontSize: '13px', color: plan.color, marginBottom: '8px', fontWeight: 600 }}>{plan.credits}</div>
+              <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '24px' }}>{plan.desc}</div>
+              <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '8px', marginBottom: '28px' }}>
+                {plan.features.map(f => (
+                  <div key={f} style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <span style={{ color: plan.color }}>✓</span> {f}
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={() => handleCheckout(plan.id)}
+                style={{ width: '100%', padding: '14px', borderRadius: '10px', border: 'none', background: plan.popular ? 'linear-gradient(135deg, #7c3aed, #ec4899)' : 'rgba(255,255,255,0.08)', color: 'white', fontSize: '14px', fontWeight: 700, cursor: 'pointer' }}>
+                Get {plan.name} →
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ marginTop: '48px', color: 'rgba(255,255,255,0.3)', fontSize: '13px' }}>
+          Payments powered by Stripe. Cancel anytime. No hidden fees.
+        </div>
+      </div>
+    </div>
+  );
+}
