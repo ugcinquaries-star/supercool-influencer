@@ -1,818 +1,651 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-// ── Constants ──────────────────────────────────────────────
-const AD_ANGLES = ['Before vs After','GRWM','Unboxing','Testimonial','Problem Solution','POV Storytime','Transformation','Myth Busting','TikTok Made Me Buy It','Honest Review','Day in the Life','Tutorial / How To'];
-const NICHES = ['Beauty & Skincare','Fitness & Health','Finance & Crypto','Fashion & Style','Food & Cooking','Tech & AI','Travel','Mindset & Self-Help','Business','Home & Living','Pet Care','Baby & Parenting'];
-const PLATFORMS = [{id:'tiktok',label:'TikTok'},{id:'instagram',label:'Instagram Reels'},{id:'youtube_shorts',label:'YT Shorts'},{id:'meta_ads',label:'Meta Ads'},{id:'tiktok_ads',label:'TikTok Ads'}];
-const VIBES = ['Luxury & Aspirational','Raw & Authentic','Bold & Controversial','Educational','Funny & Relatable','Dark & Mysterious','Motivational','Soft & Feminine','Clean & Minimal'];
-const AESTHETICS = ['Clean White Studio','Dark Moody Cinematic','Pastel Dreamy','Golden Hour Warm','Neon Futuristic','Cozy Home','Luxury Marble','Outdoor Natural'];
-const CHARACTERS = ['The Busy Founder','The Everyday Creator','The Wellness Seeker','The Social Connector','The Travel Explorer','The Professional','The Parent / Caregiver','The Creative Artist','The Bold Expressor'];
-const ETHNICITIES = ['African American','Mixed Race','Caucasian','Asian','Latina','Middle Eastern','South Asian','East African','Caribbean'];
-const AGE_RANGES = ['18-22','22-28','28-35','35-45','45-55','55+'];
-const FEMALE_BODY_TYPES = ['Slim','Tall','Average','Toned','Curvy','Plus-Size','Hourglass','Petite Curvy','Athletic Build','Soft Average','Strong & Curvy'];
-const MALE_BODY_TYPES = ['Slim','Tall','Average','Toned','Muscular','Athletic Build','Dad Bod','Plus-Size','Lean Muscle','Stocky'];
-const FEMALE_HAIRSTYLES = ['Messy Bun','Low Sleek Bun','Beach Waves','Defined Curly','Coily / Afro','Bone Straight Silk Press','Bouncy Blowout','Blunt Bob','Knotless Braids','Boho Braids','Butterfly Locs','Box Braids','High Ponytail','Half-Up Half-Down','Pixie Cut','Curtain Bangs','Space Buns'];
-const MALE_HAIRSTYLES_BLACK = ['Textured crop + low taper fade','360 waves + drop fade','Taper Afro','High top fade','Buzz cut + beard combo','Coily low taper','Twist out + mid fade','Flat top','Sponge curls + taper','Burst fade','Shape-up / edge-up only','Afro fade','Short dreadlocks','Long dreadlocks','Cornrows straight back','High skin fade + shape-up'];
-const MALE_HAIRSTYLES_GENERAL = ['Textured crop + mid fade','French crop + skin fade','Crew cut','Soft mullet + taper','Curtains / center part','Buzz cut','Pompadour','Caesar cut','Bro flow / flow cut','Skin fade + slick back','Low fade + side part','Shaved head','Short wavy + taper'];
-const BEARD_OPTIONS = ['No beard / clean shaven','Light stubble','Short neat beard','Full beard','Long full beard','Goatee','Fade beard','Beard + line-up'];
-const TATTOO_OPTIONS = ['No tattoos','Sleeve tattoo (one arm)','Sleeve tattoo (both arms)','Neck tattoo','Hand tattoos','Chest tattoo','Minimal tattoos','Mixed tattoos'];
-const HAIR_COLORS = ['Natural Black','Dark Brown','Medium Brown','Golden Brown / Honey','Copper / Auburn','Caramel Balayage','Platinum Blonde','Rose Gold','Silver / Cool Grey','Bleached Blonde','Natural Grey'];
-const FEMALE_OUTFIT_CATS: Record<string,string[]> = {
-  'AI UGC / Creator':['Beauty creator outfit','GRWM outfit','Luxury skincare creator fit','Hyperreal influencer look'],
-  'Luxury / High Fashion':['Quiet luxury outfit','Old money outfit','Parisian chic','Editorial fashion look'],
-  'Baddie / Trendy':['Clean girl outfit','It girl outfit','Hot girl summer outfit','Viral TikTok fit'],
-  'Soft Girl / Feminine':['Soft girl outfit','Coquette outfit','Balletcore look','Romantic girl outfit'],
-  'Fitness / Sporty':['Pilates princess outfit','Gym baddie fit','Athleisure look','Luxury activewear'],
+const T = {
+  bg: '#0D0A0E',
+  bg2: '#131013',
+  bg3: '#1A1418',
+  bg4: '#201C20',
+  border: 'rgba(255,255,255,0.08)',
+  borderGold: 'rgba(212,175,135,0.25)',
+  gold: '#D4AF87',
+  goldDim: 'rgba(212,175,135,0.55)',
+  goldFaint: 'rgba(212,175,135,0.1)',
+  ivory: '#F5F0E8',
+  ivoryDim: 'rgba(245,240,232,0.6)',
+  ivoryFaint: 'rgba(245,240,232,0.06)',
+  textMid: 'rgba(255,255,255,0.45)',
+  textLow: 'rgba(255,255,255,0.22)',
+  green: '#4ADE80',
+  greenFaint: 'rgba(74,222,128,0.08)',
+  greenBorder: 'rgba(74,222,128,0.2)',
 };
-const MALE_OUTFIT_CATS: Record<string,string[]> = {
-  'Streetwear / Hype':['Oversized hoodie + cargo pants','Hype fit','Graphic tee + baggy jeans','Vintage streetwear'],
-  'Clean / Minimal':['White tee + slim jeans + white sneakers','Minimalist neutral tones','Smart casual','Quiet luxury menswear'],
-  'Luxury / Designer':['Designer fit','Luxury casual premium basics','Editorial menswear'],
-  'Fitness / Active':['Gym fit compression + shorts','Athleisure joggers + hoodie','Luxury activewear'],
-};
-const FEMALE_ACCESSORIES = ['No accessories','Gold necklace (delicate)','Gold necklace (statement)','Pearl necklace','Hoop earrings (small)','Hoop earrings (large)','Luxury handbag','Watch (luxury)','Bracelet stack','Rings (multiple)','Sunglasses'];
-const MALE_ACCESSORIES = ['No accessories','Gold chain (thin)','Gold chain (thick / Cuban link)','Silver chain','Diamond stud earrings','Watch (luxury)','Rings (multiple)','Sunglasses','Cap (fitted)'];
-const SCENE_LOCATIONS = [
-  {id:'bathroom',label:'Bathroom',desc:'Skincare, mirror moments'},
-  {id:'bedroom',label:'Bedroom',desc:'Morning / night routine'},
-  {id:'kitchen',label:'Kitchen',desc:'Coffee ritual, supplements'},
-  {id:'living_room',label:'Living Room',desc:'Relaxed, cozy'},
-  {id:'car',label:'Car',desc:'Parking lot, drive reveal'},
-  {id:'hotel',label:'Hotel / Airbnb',desc:'Luxury bathroom, travel'},
-  {id:'spa',label:'Spa / Salon',desc:'Post-treatment, self-care'},
-  {id:'fitness',label:'Gym / Fitness',desc:'Post-workout, active'},
-  {id:'coffee_shop',label:'Coffee Shop',desc:'Café table, between meetings'},
-  {id:'outdoor_street',label:'Street / Outdoor',desc:'Golden hour, city walk'},
-];
-const CAMERA_ANGLES = ['Selfie angle','Eye-level angle','Mirror angle','Over-the-shoulder','POV angle','Low angle','Overhead angle','Three-quarter angle','Intimate close angle'];
-const LIGHTING_TYPES = ['Golden hour light','Window light','Ring light','Soft diffused light','Low-key moody light','Beauty lighting','Natural room lighting','Backlit window','Warm ambient lighting'];
-const REALISM_MODES = [
-  {id:'alive',label:'Alive Realism™',desc:'Motion truth + biological realism'},
-  {id:'ultra',label:'Ultra Realism',desc:'Maximum raw authenticity, unfiltered'},
-  {id:'everyday',label:'Everyday Realism',desc:'Relatable, natural, unposed'},
-  {id:'brand_clean',label:'Brand Clean',desc:'Polished but human — luxury/corporate'},
-];
-const UGC_STYLES = ['Raw authentic UGC','Aesthetic UGC','Documentary-style','POV UGC','Talking-head','Voiceover','ASMR','Faceless','Hands-only','Testimonial','Vlog-style'];
 
-const LOADING_STEPS = [
-  'Analyzing creator identity...',
-  'Building campaign brief...',
-  'Engineering human realism...',
-  'Generating cinematic direction...',
-  'Calibrating motion psychology...',
-  'Optimizing retention architecture...',
-  'Finalizing your campaign...',
+// Curated cinematic mood scenes — no fake generation
+const MOODS = [
+  {
+    label: 'Morning Skincare Ritual',
+    sub: 'Natural light • Soft shadows • Calm energy',
+    bg: 'linear-gradient(180deg, #1C1209 0%, #3D2410 35%, #6B4020 65%, #8B5E35 100%)',
+    imgs: [
+      'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=400&q=80',
+      'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400&q=80',
+      'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80',
+      'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=400&q=80',
+    ],
+  },
+  {
+    label: 'Golden Hour Editorial',
+    sub: 'Warm tones • Cinematic depth • High contrast',
+    bg: 'linear-gradient(180deg, #0D0A05 0%, #2E1A08 35%, #5C3810 65%, #8B6020 100%)',
+    imgs: [
+      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80',
+      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80',
+      'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&q=80',
+      'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=400&q=80',
+    ],
+  },
+  {
+    label: 'Luxury Interior Moment',
+    sub: 'Soft ambient • Intimate framing • Premium feel',
+    bg: 'linear-gradient(180deg, #080608 0%, #1A1020 35%, #2E1835 65%, #3D2445 100%)',
+    imgs: [
+      'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80',
+      'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80',
+      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80',
+      'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&q=80',
+    ],
+  },
+  {
+    label: 'Cinematic Night Edit',
+    sub: 'Low-key moody • Deep shadows • High emotion',
+    bg: 'linear-gradient(180deg, #050305 0%, #120810 35%, #1E0E1A 65%, #2A1425 100%)',
+    imgs: [
+      'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=400&q=80',
+      'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=400&q=80',
+      'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80',
+      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80',
+    ],
+  },
 ];
 
-const PREVIEW_SCENES = [
-  { bg: 'linear-gradient(135deg, #2C1810 0%, #5C3317 30%, #8B5E3C 60%, #C4956A 100%)', label: 'Golden Hour · Bathroom' },
-  { bg: 'linear-gradient(135deg, #0D0D0D 0%, #1A1A2E 40%, #16213E 80%, #0F3460 100%)', label: 'Night Ritual · Bedroom' },
-  { bg: 'linear-gradient(135deg, #F5F0E8 0%, #E8DDD0 40%, #D4C5B0 80%, #C4B49A 100%)', label: 'Soft Morning · Studio' },
-  { bg: 'linear-gradient(135deg, #1A0A0A 0%, #3D1515 40%, #6B2525 80%, #9E3535 100%)', label: 'Moody Edit · Interior' },
-  { bg: 'linear-gradient(135deg, #0A1628 0%, #1E3A5F 40%, #2E5F8A 80%, #4A90C4 100%)', label: 'Cool Cinematic · Outdoor' },
+const TABS = [
+  { id: 'content', label: 'Content' },
+  { id: 'creator', label: 'Creator' },
+  { id: 'character', label: 'Character' },
+  { id: 'environment', label: 'Environment' },
+  { id: 'motion', label: 'Motion' },
+  { id: 'realism', label: 'Realism' },
 ];
 
-export default function GeneratePage() {
+export default function OutputPage() {
   const router = useRouter();
-  const [step, setStep] = useState(1);
-  const [mode, setMode] = useState<'content'|'ugc_ads'>('content');
-  const [loading, setLoading] = useState(false);
-  const [loadStep, setLoadStep] = useState(0);
-  const [previewIdx, setPreviewIdx] = useState(0);
-  const [outfitCat, setOutfitCat] = useState('AI UGC / Creator');
-  const [hairstyleType, setHairstyleType] = useState('general');
-  const [form, setForm] = useState({
-    mode:'content', niche:'', platform:'tiktok', adAngle:'',
-    targetAudience:'', influencerVibe:'', aesthetic:'',
-    avatarAction:'', customBrief:'',
-    gender:'female', characterArchetype:'', ethnicity:'',
-    ageRange:'', bodyType:'', hairstyle:'', hairColor:'',
-    beardOption:'', tattooOption:'', accessories:'', outfit:'',
-    sceneLocation:'bathroom', cameraAngle:'', lightingType:'',
-    realismMode:'alive', ugcStyle:'', productDescription:'',
-  });
-
-  const set = (f: string, v: string) => setForm(p => ({...p, [f]: v}));
+  const [data, setData] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState('content');
+  const [copied, setCopied] = useState('');
+  const [moodIdx, setMoodIdx] = useState(0);
+  const [imgIdx, setImgIdx] = useState(0);
+  const [showMoodPicker, setShowMoodPicker] = useState(false);
 
   useEffect(() => {
-    if (!loading) return;
-    let i = 0;
-    const iv = setInterval(() => {
-      i++;
-      if (i < LOADING_STEPS.length) setLoadStep(i);
-      else clearInterval(iv);
-    }, 3500);
-    return () => clearInterval(iv);
-  }, [loading]);
+    const stored = sessionStorage.getItem('brief');
+    if (!stored) { router.push('/generate'); return; }
+    setData(JSON.parse(stored));
+  }, [router]);
 
-  useEffect(() => {
-    const iv = setInterval(() => setPreviewIdx(p => (p + 1) % PREVIEW_SCENES.length), 4000);
-    return () => clearInterval(iv);
-  }, []);
-
-  const handleGenerate = async () => {
-    setLoading(true);
-    setLoadStep(0);
-    try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({...form, mode}),
-      });
-      const data = await res.json();
-      if (data.success) {
-        sessionStorage.setItem('brief', JSON.stringify(data.data));
-        router.push('/output');
-      } else {
-        alert('Failed: ' + data.error);
-        setLoading(false);
-      }
-    } catch {
-      alert('Something went wrong. Try again.');
-      setLoading(false);
-    }
+  const copy = (text: string, id: string) => {
+    navigator.clipboard?.writeText(text).catch(() => {
+      const el = document.createElement('textarea');
+      el.value = text; document.body.appendChild(el); el.select();
+      document.execCommand('copy'); document.body.removeChild(el);
+    });
+    setCopied(id);
+    setTimeout(() => setCopied(''), 2500);
   };
 
-  const Chip = ({label, field, val}: any) => {
-    const active = form[field as keyof typeof form] === val;
-    return (
-      <button onClick={() => set(field, val)} style={{
-        padding:'8px 14px', borderRadius:'6px', fontSize:'12px', fontWeight:500,
-        cursor:'pointer', border:'1px solid '+(active ? 'rgba(212,175,135,0.6)' : 'rgba(255,255,255,0.1)'),
-        background:active ? 'rgba(212,175,135,0.15)' : 'rgba(255,255,255,0.03)',
-        color:active ? '#D4AF87' : 'rgba(255,255,255,0.5)',
-        transition:'all 0.2s', letterSpacing:'0.02em',
-      }}>{label}</button>
-    );
-  };
+  const mood = MOODS[moodIdx];
 
-  const ChipGroup = ({label, field, options}: any) => (
-    <div style={{marginBottom:'20px'}}>
-      <div style={lbl}>{label}</div>
-      <div style={{display:'flex', flexWrap:'wrap' as const, gap:'6px'}}>
-        {options.map((o: string) => <Chip key={o} label={o} field={field} val={o} />)}
-      </div>
-    </div>
-  );
-
-  const Drop = ({label, field, options, placeholder}: any) => (
-    <div style={{marginBottom:'14px'}}>
-      <div style={lbl}>{label}</div>
-      <select value={form[field as keyof typeof form]} onChange={e => set(field, e.target.value)} style={dropStyle}>
-        <option value="" style={{background:'#1A1015'}}>{placeholder || 'Select...'}</option>
-        {options.map((o: string) => <option key={o} value={o} style={{background:'#1A1015'}}>{o}</option>)}
-      </select>
-    </div>
+  const CopyBtn = ({ text, id, label }: { text: string; id: string; label?: string }) => (
+    <button onClick={() => copy(text, id)} style={{
+      background: copied === id ? T.greenFaint : 'transparent',
+      border: `1px solid ${copied === id ? T.greenBorder : T.border}`,
+      color: copied === id ? T.green : T.textMid,
+      padding: '4px 10px', borderRadius: '3px', cursor: 'pointer',
+      fontSize: '10px', fontWeight: 500, whiteSpace: 'nowrap' as const,
+      letterSpacing: '0.08em', transition: 'all 0.2s', flexShrink: 0,
+      fontFamily: "'Inter', sans-serif", display: 'flex', alignItems: 'center', gap: 4,
+    }}>
+      {copied === id ? '✓' : '⎘'} {label || (copied === id ? 'Copied' : 'Copy')}
+    </button>
   );
 
   const lbl: any = {
-    fontSize:'10px', fontWeight:600, letterSpacing:'0.16em',
-    textTransform:'uppercase', color:'rgba(212,175,135,0.6)',
-    marginBottom:'8px', display:'block',
+    fontSize: '9px', fontWeight: 600, letterSpacing: '0.18em',
+    textTransform: 'uppercase', color: T.goldDim,
+    marginBottom: '6px', display: 'block', fontFamily: "'Inter', sans-serif",
   };
 
-  const dropStyle: any = {
-    width:'100%', background:'rgba(255,255,255,0.04)',
-    border:'1px solid rgba(255,255,255,0.08)',
-    borderRadius:'6px', padding:'10px 12px',
-    color:'rgba(255,255,255,0.8)', fontSize:'13px',
-    outline:'none', cursor:'pointer', appearance:'none',
-  };
-
-  const ta: any = {
-    width:'100%', background:'rgba(255,255,255,0.04)',
-    border:'1px solid rgba(255,255,255,0.08)',
-    borderRadius:'6px', padding:'12px',
-    color:'rgba(255,255,255,0.8)', fontSize:'13px',
-    resize:'none', outline:'none', boxSizing:'border-box',
-    lineHeight:'1.6',
-  };
-
-  const STEPS = ['Content','Creative','Character','Scene','Realism'];
-  const progress = ((step - 1) / 4) * 100;
-  const scene = PREVIEW_SCENES[previewIdx];
-
-  // ── LOADING SCREEN ──
-  if (loading) return (
+  const OutputCard = ({ icon, title, id, children, copyText }: any) => (
     <div style={{
-      background:'#0D0A0E', minHeight:'100vh', color:'white',
-      display:'flex', flexDirection:'column' as const,
-      alignItems:'center', justifyContent:'center',
-      fontFamily:"'Inter', sans-serif",
-      position:'relative', overflow:'hidden',
+      background: T.bg2, border: `1px solid ${T.border}`,
+      borderRadius: '6px', padding: '18px 20px', marginBottom: 10,
     }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
-        @keyframes pulse { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
-        @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes spin { to{transform:rotate(360deg)} }
-        @keyframes glow { 0%,100%{box-shadow:0 0 20px rgba(212,175,135,0.2)} 50%{box-shadow:0 0 60px rgba(212,175,135,0.5)} }
-      `}</style>
-
-      {/* ambient bg */}
-      <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(158,90,43,0.12) 0%, transparent 65%)',pointerEvents:'none'}} />
-
-      <div style={{position:'relative',textAlign:'center',maxWidth:'480px',padding:'0 32px'}}>
-        <div style={{
-          width:72,height:72,borderRadius:'50%',
-          border:'1px solid rgba(212,175,135,0.3)',
-          display:'flex',alignItems:'center',justifyContent:'center',
-          margin:'0 auto 32px',
-          animation:'glow 2s ease-in-out infinite',
-          background:'rgba(212,175,135,0.06)',
-        }}>
-          <div style={{fontSize:28,animation:'pulse 2s ease-in-out infinite'}}>⚡</div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 14, opacity: 0.7 }}>{icon}</span>
+          <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase' as const, color: T.ivory, fontFamily: "'Inter', sans-serif" }}>{title}</span>
         </div>
-
-        <div style={{
-          fontFamily:"'Cormorant Garamond', serif", fontWeight:300,
-          fontSize:36, lineHeight:1.1, color:'#F5F0E8',
-          letterSpacing:'-0.5px', marginBottom:16,
-        }}>
-          Building your<br /><em style={{color:'#D4AF87'}}>campaign</em>
-        </div>
-
-        <div key={loadStep} style={{
-          fontSize:13, color:'rgba(212,175,135,0.7)', marginBottom:48,
-          letterSpacing:'0.06em', animation:'fadeUp 0.5s ease',
-          fontFamily:"'Inter', sans-serif", fontWeight:300,
-        }}>
-          {LOADING_STEPS[loadStep]}
-        </div>
-
-        {/* progress */}
-        <div style={{
-          width:'100%', height:1,
-          background:'rgba(255,255,255,0.08)', borderRadius:1,
-          marginBottom:16, overflow:'hidden', position:'relative',
-        }}>
-          <div style={{
-            height:'100%',
-            width:`${((loadStep + 1) / LOADING_STEPS.length) * 100}%`,
-            background:'linear-gradient(90deg, rgba(212,175,135,0.4), #D4AF87)',
-            transition:'width 3.5s linear',
-            position:'relative',
-          }}>
-            <div style={{
-              position:'absolute',inset:0,
-              background:'linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)',
-              animation:'shimmer 1.5s infinite',
-            }} />
-          </div>
-        </div>
-
-        <div style={{
-          display:'flex', justifyContent:'space-between',
-          fontFamily:"'Inter', sans-serif", fontSize:10,
-          color:'rgba(255,255,255,0.2)', letterSpacing:'0.1em',
-          textTransform:'uppercase',
-        }}>
-          <span>Human Realism Engine™</span>
-          <span>{Math.round(((loadStep + 1) / LOADING_STEPS.length) * 100)}%</span>
-        </div>
-
-        <div style={{marginTop:48, display:'flex', gap:8, justifyContent:'center', flexWrap:'wrap' as const}}>
-          {['Analyzing','Briefing','Realism','Motion','Retention','Finalizing'].map((s,i) => (
-            <div key={s} style={{
-              padding:'6px 12px', borderRadius:4,
-              background: i <= loadStep ? 'rgba(212,175,135,0.12)' : 'rgba(255,255,255,0.03)',
-              border:'1px solid '+(i <= loadStep ? 'rgba(212,175,135,0.3)' : 'rgba(255,255,255,0.06)'),
-              fontSize:10, fontFamily:"'Inter',sans-serif", letterSpacing:'0.1em',
-              color: i <= loadStep ? '#D4AF87' : 'rgba(255,255,255,0.2)',
-              transition:'all 0.5s',
-            }}>{s}</div>
-          ))}
-        </div>
+        {copyText && <CopyBtn text={copyText} id={id} />}
       </div>
+      {children}
     </div>
   );
 
-  // ── MAIN GENERATE UI ──
+  const bodyText: any = { fontSize: 13, color: T.ivoryDim, lineHeight: 1.75, fontWeight: 300, fontFamily: "'Inter', sans-serif" };
+  const boldKey: any = { fontWeight: 600, color: T.ivory };
+
+  if (!data) return (
+    <div style={{ background: T.bg, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.gold, fontFamily: "'Inter', sans-serif", fontSize: 12, letterSpacing: '0.1em' }}>
+      Loading campaign...
+    </div>
+  );
+
+  // Build copyable text blocks from data
+  const briefText = data.brief_summary ? `${data.brief_summary.concept}\n\nGoal: ${data.brief_summary.emotional_arc}\n\nHook: ${data.brief_summary.hook}` : '';
+  const imagePromptText = data.midjourney_master || data.flux_master || '';
+  const reelText = data.seedance_master?.substring(0, 600) || '';
+  const hookCaption = data.brand_identity?.tiktok ? `Hook: ${data.brand_identity.tiktok.hooks?.[0] || ''}\n\nCaption: ${data.brand_identity.tiktok.caption || ''}` : '';
+  const hashtagsText = data.brand_identity?.tiktok?.hashtags?.join(' ') || '';
+  const motionText = data.kling_master?.substring(0, 500) || '';
+
   return (
-    <div style={{
-      background:'#0D0A0E', minHeight:'100vh', color:'white',
-      fontFamily:"'Inter', sans-serif", display:'flex', flexDirection:'column' as const,
-    }}>
+    <div style={{ background: T.bg, height: '100vh', color: T.ivory, fontFamily: "'Inter', sans-serif", display: 'flex', flexDirection: 'column' as const, overflow: 'hidden' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
         * { box-sizing: border-box; }
-        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(212,175,135,0.2); border-radius: 2px; }
-        select option { background: #1A1015 !important; color: white; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes sceneIn { from{opacity:0} to{opacity:1} }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-        .step-btn:hover { background: rgba(212,175,135,0.08) !important; border-color: rgba(212,175,135,0.3) !important; }
-        .platform-btn:hover { border-color: rgba(212,175,135,0.4) !important; color: #D4AF87 !important; }
-        textarea::placeholder { color: rgba(255,255,255,0.2); }
-        textarea:focus { border-color: rgba(212,175,135,0.3) !important; outline: none; }
-        select:focus { border-color: rgba(212,175,135,0.3) !important; outline: none; }
+        ::-webkit-scrollbar { width: 3px; height: 3px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(212,175,135,0.15); border-radius: 2px; }
+        .tab-btn:hover { color: rgba(245,240,232,0.6) !important; }
+        .mood-thumb:hover { border-color: rgba(212,175,135,0.6) !important; opacity: 1 !important; }
+        .tool-btn:hover { background: rgba(212,175,135,0.12) !important; border-color: rgba(212,175,135,0.4) !important; color: #D4AF87 !important; }
+        .output-card-hover:hover { border-color: rgba(212,175,135,0.2) !important; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes imgFade { from{opacity:0} to{opacity:1} }
       `}</style>
 
-      {/* ── TOP NAV ── */}
+      {/* ── NAV ── */}
       <nav style={{
-        display:'flex', alignItems:'center', justifyContent:'space-between',
-        padding:'0 24px', height:52, flexShrink:0,
-        borderBottom:'1px solid rgba(255,255,255,0.06)',
-        background:'rgba(13,10,14,0.98)', backdropFilter:'blur(12px)',
-        position:'sticky', top:0, zIndex:100,
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '0 28px', height: 48, flexShrink: 0,
+        borderBottom: `1px solid ${T.border}`,
+        background: 'rgba(13,10,14,0.98)',
       }}>
-        <div style={{display:'flex',alignItems:'center',gap:32}}>
-          <a href="/" style={{textDecoration:'none'}}>
-            <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:600,fontSize:14,color:'#F5F0E8',letterSpacing:'0.12em',textTransform:'uppercase' as const,lineHeight:1}}>
-              Super<em style={{color:'#D4AF87',fontStyle:'italic',fontWeight:300}}>cool</em>
-            </div>
-            <div style={{fontSize:8,color:'rgba(255,255,255,0.2)',letterSpacing:'0.2em',textTransform:'uppercase' as const}}>Influencer</div>
-          </a>
-          <div style={{display:'flex',gap:4}}>
-            {['Generate','History','Templates','Brand Kit'].map((item,i) => (
-              <button key={item} style={{
-                padding:'6px 14px', borderRadius:4, fontSize:12, fontWeight:i===0?500:400,
-                border:'none', cursor:'pointer',
-                background:i===0 ? 'rgba(212,175,135,0.12)' : 'transparent',
-                color:i===0 ? '#D4AF87' : 'rgba(255,255,255,0.35)',
-                display:'flex',alignItems:'center',gap:6,
-              }}>
-                {i===0 && <span style={{fontSize:10}}>⚡</span>}
-                {item}
-              </button>
-            ))}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{
+            width: 28, height: 28, borderRadius: '4px',
+            background: T.gold, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 14, color: T.bg,
+          }}>S</div>
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 600, color: T.ivory, letterSpacing: '0.1em', textTransform: 'uppercase' as const, fontFamily: "'Inter', sans-serif" }}>SUPERCOOL INFLUENCER</div>
           </div>
         </div>
-        <div style={{display:'flex',alignItems:'center',gap:16}}>
-          <div style={{
-            display:'flex',alignItems:'center',gap:8,padding:'6px 14px',
-            border:'1px solid rgba(212,175,135,0.2)',borderRadius:4,
-            background:'rgba(212,175,135,0.06)',
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <button onClick={() => copy(JSON.stringify(data, null, 2), 'full')} style={{
+            background: 'transparent', border: `1px solid ${T.border}`,
+            color: copied === 'full' ? T.green : T.textMid,
+            padding: '7px 18px', borderRadius: '4px', fontSize: '11px',
+            fontWeight: 500, cursor: 'pointer', letterSpacing: '0.08em',
+            fontFamily: "'Inter', sans-serif",
           }}>
-            <span style={{fontSize:12}}>⚡</span>
-            <div>
-              <div style={{fontSize:9,color:'rgba(255,255,255,0.3)',letterSpacing:'0.1em',textTransform:'uppercase' as const}}>Credits</div>
-              <div style={{fontSize:13,fontWeight:600,color:'#D4AF87'}}>1,250</div>
-            </div>
-          </div>
-          <div style={{
-            width:32,height:32,borderRadius:'50%',
-            background:'linear-gradient(135deg,#8B5E3C,#D4AF87)',
-            display:'flex',alignItems:'center',justifyContent:'center',
-            fontSize:13,fontWeight:600,color:'white',cursor:'pointer',
-          }}>K</div>
+            {copied === 'full' ? '✓ Exported' : 'Export Campaign'}
+          </button>
+          <button style={{
+            background: 'transparent', border: `1px solid ${T.border}`,
+            color: T.textMid, padding: '7px 10px', borderRadius: '4px',
+            cursor: 'pointer', fontSize: 16, lineHeight: 1,
+          }}>≡</button>
         </div>
       </nav>
 
       {/* ── MAIN SPLIT ── */}
-      <div style={{display:'flex',flex:1,overflow:'hidden',minHeight:0}}>
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
 
-        {/* ── LEFT: VISUAL PREVIEW ── */}
+        {/* ── LEFT: CINEMATIC VISUAL ── */}
         <div style={{
-          width:'47%', flexShrink:0, position:'relative',
-          background:'#0A0709', overflow:'hidden',
-          display:'flex', flexDirection:'column' as const,
+          width: '46%', flexShrink: 0, position: 'relative',
+          overflow: 'hidden', display: 'flex', flexDirection: 'column' as const,
         }}>
-          {/* Scene preview */}
-          <div key={previewIdx} style={{
-            flex:1, background:scene.bg,
-            position:'relative', animation:'sceneIn 1.2s ease',
-            display:'flex', flexDirection:'column' as const,
-            justifyContent:'space-between', padding:20,
-          }}>
-            {/* Overlay */}
-            <div style={{position:'absolute',inset:0,background:'linear-gradient(to bottom,rgba(0,0,0,0.15) 0%,transparent 40%,rgba(0,0,0,0.6) 100%)',pointerEvents:'none'}} />
+          {/* Main image */}
+          <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+            <img
+              key={`${moodIdx}-${imgIdx}`}
+              src={mood.imgs[imgIdx]}
+              alt={mood.label}
+              style={{
+                width: '100%', height: '100%', objectFit: 'cover' as const,
+                animation: 'imgFade 0.8s ease',
+              }}
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+                (e.target as HTMLImageElement).nextElementSibling?.removeAttribute('style');
+              }}
+            />
+            {/* Fallback gradient */}
+            <div style={{ position: 'absolute', inset: 0, background: mood.bg, zIndex: -1 }} />
 
             {/* Top badge */}
-            <div style={{position:'relative',zIndex:2,display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
+            <div style={{
+              position: 'absolute', top: 16, left: 16, right: 16,
+              display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
+              zIndex: 10,
+            }}>
               <div style={{
-                display:'flex',alignItems:'center',gap:6,
-                background:'rgba(0,0,0,0.4)',backdropFilter:'blur(8px)',
-                border:'1px solid rgba(255,255,255,0.15)',
-                borderRadius:4,padding:'5px 10px',
+                background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)',
+                border: `1px solid rgba(255,255,255,0.12)`,
+                borderRadius: '4px', padding: '6px 10px',
+                display: 'flex', alignItems: 'center', gap: 6,
               }}>
-                <div style={{width:6,height:6,borderRadius:'50%',background:'#4ADE80',animation:'pulse 1.5s infinite'}} />
-                <span style={{fontSize:10,fontWeight:600,letterSpacing:'0.1em',color:'white'}}>VISUAL PREVIEW</span>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#F87171' }} />
+                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.14em', color: T.ivory }}>IMMERSIVE CINEMATIC PREVIEW</span>
               </div>
-              <div style={{
-                background:'rgba(0,0,0,0.5)',backdropFilter:'blur(8px)',
-                border:'1px solid rgba(255,255,255,0.15)',
-                borderRadius:4,padding:'5px 10px',fontSize:11,fontWeight:600,color:'white',
-              }}>9:16</div>
             </div>
 
-            {/* Bottom info */}
-            <div style={{position:'relative',zIndex:2}}>
-              {/* Shot insight card */}
-              <div style={{
-                background:'rgba(0,0,0,0.55)',backdropFilter:'blur(12px)',
-                border:'1px solid rgba(255,255,255,0.1)',
-                borderRadius:8,padding:'12px 14px',marginBottom:12,
-              }}>
-                <div style={{fontSize:9,fontWeight:600,letterSpacing:'0.14em',color:'rgba(212,175,135,0.7)',textTransform:'uppercase' as const,marginBottom:6}}>Shot Insight</div>
-                <div style={{fontSize:12,color:'rgba(255,255,255,0.75)',lineHeight:1.5,fontWeight:300}}>
-                  {scene.label} creates cinematic depth and emotional warmth — ideal for retention.
-                </div>
-              </div>
+            {/* Bottom overlay */}
+            <div style={{
+              position: 'absolute', bottom: 0, left: 0, right: 0,
+              background: 'linear-gradient(to top, rgba(13,10,14,0.95) 0%, rgba(13,10,14,0.6) 50%, transparent 100%)',
+              padding: '60px 20px 16px', zIndex: 10,
+            }}>
+              <div style={{ fontSize: 9, color: T.goldDim, letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 6, fontWeight: 500 }}>Scene Mood</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 22, color: T.ivory, marginBottom: 4, lineHeight: 1 }}>{mood.label}</div>
+              <div style={{ fontSize: 11, color: T.textMid, marginBottom: 14, fontWeight: 300 }}>{mood.sub}</div>
 
-              {/* Thumbnail strip */}
-              <div style={{display:'flex',gap:6}}>
-                {PREVIEW_SCENES.map((sc,i) => (
+              {/* Thumbnails */}
+              <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+                {mood.imgs.map((img, i) => (
                   <div
                     key={i}
-                    onClick={() => setPreviewIdx(i)}
+                    className="mood-thumb"
+                    onClick={() => setImgIdx(i)}
                     style={{
-                      flex:1,height:48,borderRadius:4,cursor:'pointer',
-                      background:sc.bg,
-                      border:'1px solid '+(i===previewIdx ? 'rgba(212,175,135,0.8)' : 'rgba(255,255,255,0.15)'),
-                      transition:'border-color 0.3s',overflow:'hidden',
+                      width: 64, height: 48, borderRadius: '3px', overflow: 'hidden',
+                      cursor: 'pointer', flexShrink: 0,
+                      border: `1px solid ${i === imgIdx ? T.gold : 'rgba(255,255,255,0.15)'}`,
+                      opacity: i === imgIdx ? 1 : 0.6,
+                      transition: 'all 0.2s',
                     }}
-                  />
+                  >
+                    <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' as const }} />
+                  </div>
                 ))}
               </div>
 
-              {/* Playbar */}
-              <div style={{marginTop:12,display:'flex',alignItems:'center',gap:10}}>
-                <div style={{width:24,height:24,borderRadius:'50%',background:'rgba(255,255,255,0.15)',display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',fontSize:10}}>▶</div>
-                <div style={{flex:1,height:2,background:'rgba(255,255,255,0.15)',borderRadius:1,position:'relative'}}>
-                  <div style={{width:'30%',height:'100%',background:'rgba(212,175,135,0.8)',borderRadius:1}} />
-                  <div style={{position:'absolute',top:'50%',left:'30%',transform:'translate(-50%,-50%)',width:8,height:8,borderRadius:'50%',background:'#D4AF87'}} />
-                </div>
-                <span style={{fontSize:10,color:'rgba(255,255,255,0.4)',fontFamily:'monospace'}}>00:12</span>
-              </div>
+              {/* Change mood btn */}
+              <button
+                onClick={() => setShowMoodPicker(!showMoodPicker)}
+                style={{
+                  background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)',
+                  border: `1px solid rgba(255,255,255,0.15)`,
+                  color: T.ivory, padding: '7px 16px', borderRadius: '3px',
+                  fontSize: '11px', fontWeight: 500, cursor: 'pointer',
+                  letterSpacing: '0.06em', fontFamily: "'Inter', sans-serif",
+                }}
+              >
+                Change Mood
+              </button>
             </div>
-          </div>
 
-          {/* Realism Engine Status */}
-          <div style={{
-            background:'#0F0B10',
-            borderTop:'1px solid rgba(255,255,255,0.06)',
-            padding:'14px 20px',
-          }}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}}>
-              <span style={{fontSize:10,fontWeight:600,letterSpacing:'0.14em',color:'rgba(255,255,255,0.5)',textTransform:'uppercase' as const}}>Human Realism Engine</span>
-              <span style={{fontSize:10,fontWeight:700,color:'#4ADE80',letterSpacing:'0.08em'}}>ACTIVE</span>
-            </div>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'6px 16px'}}>
-              {['Skin Texture Simulation','Natural Lighting','Behavioral Delay','Fabric & Hair Physics','Micro Expressions','Eye Movement Tracking'].map(f => (
-                <div key={f} style={{display:'flex',alignItems:'center',gap:6,fontSize:11,color:'rgba(255,255,255,0.45)'}}>
-                  <span style={{color:'#4ADE80',fontSize:9}}>✓</span> {f}
+            {/* Mood picker overlay */}
+            {showMoodPicker && (
+              <div style={{
+                position: 'absolute', inset: 0, background: 'rgba(13,10,14,0.92)',
+                backdropFilter: 'blur(12px)', zIndex: 20, padding: 24,
+                display: 'flex', flexDirection: 'column' as const, gap: 12,
+                animation: 'fadeIn 0.2s ease',
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: T.goldDim }}>Select Scene Mood</span>
+                  <button onClick={() => setShowMoodPicker(false)} style={{ background: 'none', border: 'none', color: T.textMid, cursor: 'pointer', fontSize: 18, lineHeight: 1 }}>×</button>
                 </div>
-              ))}
-            </div>
+                {MOODS.map((m, i) => (
+                  <button key={i} onClick={() => { setMoodIdx(i); setImgIdx(0); setShowMoodPicker(false); }} style={{
+                    background: i === moodIdx ? T.goldFaint : T.bg2,
+                    border: `1px solid ${i === moodIdx ? T.borderGold : T.border}`,
+                    borderRadius: '4px', padding: '12px 16px', cursor: 'pointer',
+                    textAlign: 'left' as const, transition: 'all 0.2s',
+                    display: 'flex', gap: 12, alignItems: 'center',
+                  }}>
+                    <div style={{ width: 40, height: 30, borderRadius: '2px', background: m.bg, flexShrink: 0 }} />
+                    <div>
+                      <div style={{ fontSize: 12, fontWeight: 500, color: T.ivory, marginBottom: 2 }}>{m.label}</div>
+                      <div style={{ fontSize: 10, color: T.textMid, fontWeight: 300 }}>{m.sub}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* ── RIGHT: FORM ── */}
-        <div style={{flex:1,display:'flex',flexDirection:'column' as const,overflow:'hidden',borderLeft:'1px solid rgba(255,255,255,0.06)'}}>
+        {/* ── RIGHT: OUTPUT PANEL ── */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' as const, overflow: 'hidden', borderLeft: `1px solid ${T.border}` }}>
 
-          {/* Step nav */}
+          {/* Tab nav */}
           <div style={{
-            padding:'0 24px',height:44,display:'flex',alignItems:'center',
-            justifyContent:'space-between',
-            borderBottom:'1px solid rgba(255,255,255,0.06)',
-            background:'rgba(255,255,255,0.02)',flexShrink:0,
+            display: 'flex', gap: 0, padding: '0 20px',
+            borderBottom: `1px solid ${T.border}`,
+            background: T.bg2, flexShrink: 0, overflowX: 'auto' as const,
           }}>
-            <div style={{display:'flex',gap:4}}>
-              {STEPS.map((s,i) => (
-                <button
-                  key={s}
-                  onClick={() => i < step && setStep(i+1)}
-                  className="step-btn"
-                  style={{
-                    padding:'4px 12px',borderRadius:4,fontSize:11,fontWeight:500,
-                    cursor:i < step ? 'pointer' : 'default',
-                    border:'1px solid '+(i+1===step ? 'rgba(212,175,135,0.4)' : 'transparent'),
-                    background:i+1===step ? 'rgba(212,175,135,0.1)' : 'transparent',
-                    color:i+1===step ? '#D4AF87' : i+1<step ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.2)',
-                    letterSpacing:'0.04em',
-                  }}
-                >
-                  {i+1 < step && <span style={{marginRight:4,color:'rgba(212,175,135,0.5)'}}>✓</span>}
-                  {s}
-                </button>
-              ))}
-            </div>
-            <div style={{
-              width:120,height:2,background:'rgba(255,255,255,0.08)',
-              borderRadius:1,overflow:'hidden',
-            }}>
-              <div style={{
-                height:'100%',width:`${progress}%`,
-                background:'linear-gradient(90deg,rgba(212,175,135,0.5),#D4AF87)',
-                transition:'width 0.4s ease',borderRadius:1,
-              }} />
-            </div>
+            {TABS.map(tab => (
+              <button key={tab.id} onClick={() => setActiveTab(tab.id)} className="tab-btn" style={{
+                padding: '12px 14px', background: 'none', border: 'none',
+                borderBottom: `2px solid ${activeTab === tab.id ? T.gold : 'transparent'}`,
+                color: activeTab === tab.id ? T.ivory : T.textLow,
+                cursor: 'pointer', fontSize: '11px', fontWeight: activeTab === tab.id ? 500 : 400,
+                whiteSpace: 'nowrap' as const, letterSpacing: '0.06em',
+                transition: 'all 0.2s', fontFamily: "'Inter', sans-serif",
+              }}>{tab.label}</button>
+            ))}
           </div>
 
-          {/* Form content */}
-          <div style={{flex:1,overflowY:'auto' as const,padding:'24px'}}>
+          {/* Scrollable output */}
+          <div style={{ flex: 1, overflowY: 'auto' as const, padding: '16px 20px 100px' }}>
 
-            {/* ── STEP 1: CONTENT ── */}
-            {step===1 && (
-              <div style={{animation:'fadeIn 0.3s ease'}}>
-                <div style={{marginBottom:24}}>
-                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>What are you creating?</div>
-                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>Define your content mode and niche.</div>
-                </div>
+            {/* ── CONTENT TAB ── */}
+            {activeTab === 'content' && (
+              <div style={{ animation: 'fadeIn 0.3s ease' }}>
 
-                <div style={{marginBottom:20}}>
-                  <div style={lbl}>Mode</div>
-                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
-                    {[{id:'content',icon:'🎬',title:'Content Creator',desc:'Organic TikTok, Reels, Shorts'},{id:'ugc_ads',icon:'📢',title:'UGC Ads Mode',desc:'Meta Ads, TikTok Ads Manager'}].map(m => (
-                      <button key={m.id} onClick={() => {setMode(m.id as any); set('mode',m.id);}} style={{
-                        padding:'14px',borderRadius:6,textAlign:'left' as const,cursor:'pointer',
-                        border:'1px solid '+(mode===m.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.07)'),
-                        background:mode===m.id ? 'rgba(212,175,135,0.08)' : 'rgba(255,255,255,0.03)',
-                        transition:'all 0.2s',
-                      }}>
-                        <div style={{fontSize:18,marginBottom:6}}>{m.icon}</div>
-                        <div style={{fontSize:13,fontWeight:600,color:mode===m.id ? '#D4AF87' : 'rgba(255,255,255,0.8)',marginBottom:3}}>{m.title}</div>
-                        <div style={{fontSize:11,color:'rgba(255,255,255,0.3)',fontWeight:300}}>{m.desc}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {mode==='ugc_ads' && (
-                  <div style={{marginBottom:20}}>
-                    <ChipGroup label="Ad Angle" field="adAngle" options={AD_ANGLES} />
-                    <div>
-                      <div style={lbl}>Product Description</div>
-                      <textarea
-                        placeholder="e.g. Dina Bright Radiant Glow Knuckle Serum — brightening serum for dark knuckles..."
-                        value={form.productDescription}
-                        onChange={e => set('productDescription',e.target.value)}
-                        rows={3} style={ta}
-                      />
+                <OutputCard icon="📋" title="Campaign Brief" id="brief" copyText={briefText}>
+                  {data.brief_summary && (
+                    <div style={bodyText}>
+                      <div style={{ marginBottom: 6 }}><span style={boldKey}>Concept:</span> {data.brief_summary.concept}</div>
+                      <div style={{ marginBottom: 6 }}><span style={boldKey}>Goal:</span> {data.brief_summary.emotional_arc}</div>
+                      {data.brief_summary.hook && <div style={{ marginBottom: 6 }}><span style={boldKey}>Tone:</span> Cinematic, intimate, elevated</div>}
+                      <div><span style={boldKey}>Platform:</span> {data.brief_summary.mode === 'ugc_ads' ? 'Meta Ads · TikTok Ads' : 'Instagram Reels · TikTok'}</div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </OutputCard>
 
-                <ChipGroup label="Niche" field="niche" options={NICHES} />
-
-                <div style={{marginBottom:20}}>
-                  <div style={lbl}>Platform</div>
-                  <div style={{display:'flex',gap:6,flexWrap:'wrap' as const}}>
-                    {PLATFORMS.map(p => (
-                      <button key={p.id} onClick={() => set('platform',p.id)} className="platform-btn" style={{
-                        padding:'8px 14px',borderRadius:5,fontSize:12,fontWeight:500,cursor:'pointer',
-                        border:'1px solid '+(form.platform===p.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.08)'),
-                        background:form.platform===p.id ? 'rgba(212,175,135,0.1)' : 'rgba(255,255,255,0.03)',
-                        color:form.platform===p.id ? '#D4AF87' : 'rgba(255,255,255,0.4)',
-                        transition:'all 0.2s',
-                      }}>{p.label}</button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ── STEP 2: CREATIVE ── */}
-            {step===2 && (
-              <div style={{animation:'fadeIn 0.3s ease'}}>
-                <div style={{marginBottom:24}}>
-                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>Define the creative.</div>
-                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>Who speaks, who watches, what happens.</div>
-                </div>
-
-                <div style={{marginBottom:16}}>
-                  <div style={lbl}>Target Audience</div>
-                  <textarea placeholder="e.g. Women 25-35 who want glowy skin but are overwhelmed by routines..." value={form.targetAudience} onChange={e => set('targetAudience',e.target.value)} rows={2} style={ta} />
-                </div>
-                <div style={{marginBottom:16}}>
-                  <div style={lbl}>Avatar Action — What Happens in the Video</div>
-                  <textarea placeholder="e.g. She applies serum to her knuckles mid-FaceTime call, shows before/after..." value={form.avatarAction} onChange={e => set('avatarAction',e.target.value)} rows={2} style={ta} />
-                </div>
-                <div style={{marginBottom:20}}>
-                  <div style={lbl}>Your Brief — Extra Direction</div>
-                  <textarea placeholder="e.g. Tone should feel like a real girl sharing a secret with her friend, not a polished ad..." value={form.customBrief} onChange={e => set('customBrief',e.target.value)} rows={3} style={ta} />
-                </div>
-                <ChipGroup label="Content Vibe" field="influencerVibe" options={VIBES} />
-                <ChipGroup label="Visual Aesthetic" field="aesthetic" options={AESTHETICS} />
-                {mode==='ugc_ads' && <ChipGroup label="UGC Style" field="ugcStyle" options={UGC_STYLES} />}
-              </div>
-            )}
-
-            {/* ── STEP 3: CHARACTER ── */}
-            {step===3 && (
-              <div style={{animation:'fadeIn 0.3s ease'}}>
-                <div style={{marginBottom:24}}>
-                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>Build your character.</div>
-                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>Who is the AI human in your video?</div>
-                </div>
-
-                <div style={{marginBottom:14}}>
-                  <div style={lbl}>Gender</div>
-                  <div style={{display:'flex',gap:8}}>
-                    {['female','male'].map(g => (
-                      <button key={g} onClick={() => { set('gender',g); set('hairstyle',''); set('outfit',''); setOutfitCat(g==='female' ? 'AI UGC / Creator' : 'Streetwear / Hype'); setHairstyleType('general'); }} style={{
-                        flex:1,padding:'10px',borderRadius:6,cursor:'pointer',
-                        border:'1px solid '+(form.gender===g ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.08)'),
-                        background:form.gender===g ? 'rgba(212,175,135,0.1)' : 'rgba(255,255,255,0.03)',
-                        color:form.gender===g ? '#D4AF87' : 'rgba(255,255,255,0.4)',
-                        fontSize:13,fontWeight:500,textTransform:'capitalize' as const,
-                      }}>{g}</button>
-                    ))}
-                  </div>
-                </div>
-
-                <Drop label="Character Archetype" field="characterArchetype" options={CHARACTERS} />
-                <Drop label="Ethnicity" field="ethnicity" options={ETHNICITIES} />
-                <Drop label="Age Range" field="ageRange" options={AGE_RANGES} />
-                <Drop label="Body Type" field="bodyType" options={form.gender==='female' ? FEMALE_BODY_TYPES : MALE_BODY_TYPES} />
-
-                {form.gender==='male' && (
-                  <div style={{marginBottom:14}}>
-                    <div style={lbl}>Hairstyle Type</div>
-                    <div style={{display:'flex',gap:6,marginBottom:10}}>
-                      {[{id:'general',label:'General'},{id:'black',label:'Black / Dark Skin'}].map(t => (
-                        <button key={t.id} onClick={() => { setHairstyleType(t.id); set('hairstyle',''); }} style={{flex:1,padding:'8px',borderRadius:5,border:'1px solid '+(hairstyleType===t.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.08)'),background:hairstyleType===t.id ? 'rgba(212,175,135,0.1)' : 'rgba(255,255,255,0.03)',color:hairstyleType===t.id ? '#D4AF87' : 'rgba(255,255,255,0.4)',cursor:'pointer',fontSize:12}}>{t.label}</button>
+                <OutputCard icon="🖼️" title="Image Prompt" id="imgprompt" copyText={imagePromptText}>
+                  <div style={bodyText}>{imagePromptText?.substring(0, 320) || 'No image prompt generated.'}{imagePromptText?.length > 320 ? '...' : ''}</div>
+                  {imagePromptText && (
+                    <div style={{ marginTop: 10, display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                      {['Midjourney', 'Flux', 'Firefly'].map(tool => (
+                        <button key={tool} className="tool-btn" style={{
+                          background: T.bg3, border: `1px solid ${T.border}`,
+                          color: T.textMid, padding: '4px 10px', borderRadius: '3px',
+                          fontSize: '10px', cursor: 'pointer', letterSpacing: '0.06em',
+                          fontFamily: "'Inter', sans-serif", transition: 'all 0.2s',
+                        }}>Open in {tool} ↗</button>
                       ))}
                     </div>
-                    <Drop label="Hairstyle" field="hairstyle" options={hairstyleType==='black' ? MALE_HAIRSTYLES_BLACK : MALE_HAIRSTYLES_GENERAL} />
+                  )}
+                </OutputCard>
+
+                <OutputCard icon="🎬" title="Reel Direction" id="reel" copyText={reelText}>
+                  <div style={bodyText}>
+                    {data.seedance_master ? (
+                      data.seedance_master.split('\n').slice(0, 8).map((line: string, i: number) => (
+                        line.trim() ? <div key={i} style={{ marginBottom: 4 }}>{line}</div> : null
+                      ))
+                    ) : 'No reel direction generated.'}
                   </div>
-                )}
+                  {data.seedance_master && (
+                    <div style={{ marginTop: 10, display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                      {['Higgsfield / Seedance', 'Kling', 'Runway', 'Veo'].map(tool => (
+                        <button key={tool} className="tool-btn" style={{
+                          background: T.bg3, border: `1px solid ${T.border}`,
+                          color: T.textMid, padding: '4px 10px', borderRadius: '3px',
+                          fontSize: '10px', cursor: 'pointer', letterSpacing: '0.06em',
+                          fontFamily: "'Inter', sans-serif", transition: 'all 0.2s',
+                        }}>Open in {tool} ↗</button>
+                      ))}
+                    </div>
+                  )}
+                </OutputCard>
 
-                {form.gender==='female' && <Drop label="Hairstyle" field="hairstyle" options={FEMALE_HAIRSTYLES} />}
-                <Drop label="Hair Color" field="hairColor" options={HAIR_COLORS} />
+                <OutputCard icon="✍️" title="Hook + Caption" id="hookcap" copyText={hookCaption}>
+                  {data.brand_identity?.tiktok && (
+                    <div style={bodyText}>
+                      <div style={{ marginBottom: 8 }}><span style={boldKey}>Hook:</span> {data.brand_identity.tiktok.hooks?.[0]}</div>
+                      <div><span style={boldKey}>Caption:</span> {data.brand_identity.tiktok.caption}</div>
+                    </div>
+                  )}
+                </OutputCard>
 
-                {form.gender==='male' && (
-                  <>
-                    <Drop label="Beard" field="beardOption" options={BEARD_OPTIONS} />
-                    <Drop label="Tattoos" field="tattooOption" options={TATTOO_OPTIONS} />
-                  </>
-                )}
-
-                <div style={{marginBottom:14}}>
-                  <div style={lbl}>Outfit Category</div>
-                  <select value={outfitCat} onChange={e => { setOutfitCat(e.target.value); set('outfit',''); }} style={dropStyle}>
-                    {Object.keys(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS).map(c => <option key={c} value={c} style={{background:'#1A1015'}}>{c}</option>)}
-                  </select>
-                </div>
-                <div style={{marginBottom:14}}>
-                  <div style={lbl}>Specific Look</div>
-                  <select value={form.outfit} onChange={e => set('outfit',e.target.value)} style={dropStyle}>
-                    <option value="" style={{background:'#1A1015'}}>Select a look</option>
-                    {(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS)[outfitCat]?.map(o => <option key={o} value={o} style={{background:'#1A1015'}}>{o}</option>)}
-                  </select>
-                </div>
-                <Drop label="Accessories" field="accessories" options={form.gender==='female' ? FEMALE_ACCESSORIES : MALE_ACCESSORIES} />
-              </div>
-            )}
-
-            {/* ── STEP 4: SCENE ── */}
-            {step===4 && (
-              <div style={{animation:'fadeIn 0.3s ease'}}>
-                <div style={{marginBottom:24}}>
-                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>Set the scene.</div>
-                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>Where does this happen?</div>
-                </div>
-                <div style={{marginBottom:16}}>
-                  <div style={lbl}>Scene Location</div>
-                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6}}>
-                    {SCENE_LOCATIONS.map(scene => (
-                      <button key={scene.id} onClick={() => set('sceneLocation',scene.id)} style={{
-                        padding:'12px',borderRadius:6,cursor:'pointer',textAlign:'left' as const,
-                        border:'1px solid '+(form.sceneLocation===scene.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.07)'),
-                        background:form.sceneLocation===scene.id ? 'rgba(212,175,135,0.08)' : 'rgba(255,255,255,0.03)',
-                        transition:'all 0.2s',
-                      }}>
-                        <div style={{fontSize:12,fontWeight:600,color:form.sceneLocation===scene.id ? '#D4AF87' : 'rgba(255,255,255,0.75)',marginBottom:2}}>{scene.label}</div>
-                        <div style={{fontSize:10,color:'rgba(255,255,255,0.3)',fontWeight:300}}>{scene.desc}</div>
-                      </button>
-                    ))}
+                <OutputCard icon="#" title="Hashtags + Keywords" id="hashtags" copyText={hashtagsText}>
+                  <div style={{ marginBottom: 10 }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 5 }}>
+                      {data.brand_identity?.tiktok?.hashtags?.map((h: string, i: number) => (
+                        <span key={i} style={{
+                          background: T.ivoryFaint, border: `1px solid ${T.border}`,
+                          color: T.ivoryDim, padding: '3px 8px', borderRadius: '3px', fontSize: 11,
+                        }}>{h}</span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <Drop label="Camera Angle" field="cameraAngle" options={CAMERA_ANGLES} />
-                <Drop label="Lighting Type" field="lightingType" options={LIGHTING_TYPES} />
-              </div>
-            )}
+                  {data.brand_identity?.tiktok?.keywords?.length > 0 && (
+                    <div style={{ ...bodyText, fontSize: 12 }}>
+                      <span style={boldKey}>Keywords:</span> {data.brand_identity.tiktok.keywords?.join(', ')}
+                    </div>
+                  )}
+                </OutputCard>
 
-            {/* ── STEP 5: REALISM ── */}
-            {step===5 && (
-              <div style={{animation:'fadeIn 0.3s ease'}}>
-                <div style={{marginBottom:24}}>
-                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>Set the realism.</div>
-                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>How human does this feel?</div>
-                </div>
-                <div style={{display:'flex',flexDirection:'column' as const,gap:8,marginBottom:24}}>
-                  {REALISM_MODES.map(m => (
-                    <button key={m.id} onClick={() => set('realismMode',m.id)} style={{
-                      padding:'16px',borderRadius:6,cursor:'pointer',textAlign:'left' as const,
-                      border:'1px solid '+(form.realismMode===m.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.07)'),
-                      background:form.realismMode===m.id ? 'rgba(212,175,135,0.08)' : 'rgba(255,255,255,0.03)',
-                      transition:'all 0.2s',
-                    }}>
-                      <div style={{fontSize:13,fontWeight:600,color:form.realismMode===m.id ? '#D4AF87' : 'rgba(255,255,255,0.8)',marginBottom:4}}>{m.label}</div>
-                      <div style={{fontSize:11,color:'rgba(255,255,255,0.35)',fontWeight:300}}>{m.desc}</div>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Summary */}
-                <div style={{
-                  background:'rgba(255,255,255,0.02)',
-                  border:'1px solid rgba(255,255,255,0.06)',
-                  borderRadius:8,padding:16,
-                }}>
-                  <div style={{fontSize:9,fontWeight:600,color:'rgba(212,175,135,0.5)',letterSpacing:'0.16em',textTransform:'uppercase' as const,marginBottom:12}}>Campaign Summary</div>
-                  <div style={{display:'flex',flexDirection:'column' as const,gap:6}}>
+                <OutputCard icon="🎯" title="Motion Psychology" id="motion" copyText={motionText}>
+                  <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 6 }}>
                     {[
-                      {label:'Mode', value:mode==='ugc_ads' ? 'UGC Ads' : 'Content Creator'},
-                      {label:'Niche', value:form.niche},
-                      {label:'Platform', value:form.platform},
-                      {label:'Vibe', value:form.influencerVibe},
-                      {label:'Character', value:[form.gender, form.ethnicity, form.ageRange].filter(Boolean).join(' · ')},
-                      {label:'Look', value:form.outfit},
-                      {label:'Scene', value:SCENE_LOCATIONS.find(sc => sc.id===form.sceneLocation)?.label||''},
-                      {label:'Realism', value:REALISM_MODES.find(m => m.id===form.realismMode)?.label||''},
-                    ].filter(i => i.value).map(item => (
-                      <div key={item.label} style={{display:'flex',gap:8,fontSize:11}}>
-                        <span style={{color:'rgba(255,255,255,0.25)',minWidth:70,fontWeight:300}}>{item.label}</span>
-                        <span style={{color:'rgba(255,255,255,0.7)',fontWeight:400}}>{item.value}</span>
+                      'Slow, intentional movements',
+                      'Natural light = trust signal',
+                      'Close-ups increase perceived authenticity',
+                      'Soft pauses improve retention',
+                    ].map((point, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 12, color: T.ivoryDim, fontWeight: 300 }}>
+                        <span style={{ color: T.green, fontSize: 10, marginTop: 2, flexShrink: 0 }}>✓</span>
+                        {point}
                       </div>
                     ))}
                   </div>
-                </div>
+                </OutputCard>
+
               </div>
             )}
+
+            {/* ── CREATOR TAB ── */}
+            {activeTab === 'creator' && (
+              <div style={{ animation: 'fadeIn 0.3s ease' }}>
+                {['tiktok', 'instagram', 'youtube'].map(platform => {
+                  const pd = data.brand_identity?.[platform];
+                  if (!pd) return null;
+                  const labels: Record<string,string> = { tiktok: 'TikTok', instagram: 'Instagram', youtube: 'YouTube' };
+                  return (
+                    <div key={platform} style={{ marginBottom: 16 }}>
+                      <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase' as const, color: T.goldDim, marginBottom: 10 }}>{labels[platform]}</div>
+                      {pd.hooks?.length > 0 && (
+                        <OutputCard icon="🎣" title="Hooks" id={`${platform}-hooks`} copyText={pd.hooks?.join('\n')}>
+                          <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 6 }}>
+                            {pd.hooks?.map((h: string, i: number) => (
+                              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10, background: T.bg3, border: `1px solid ${T.border}`, borderRadius: '4px', padding: '8px 10px' }}>
+                                <div style={{ fontSize: 12, color: T.ivoryDim, lineHeight: 1.6, fontWeight: 300 }}>{h}</div>
+                                <CopyBtn text={h} id={`${platform}-h-${i}`} />
+                              </div>
+                            ))}
+                          </div>
+                        </OutputCard>
+                      )}
+                      {pd.caption && (
+                        <OutputCard icon="✍️" title="Caption" id={`${platform}-caption`} copyText={pd.caption}>
+                          <div style={bodyText}>{pd.caption}</div>
+                        </OutputCard>
+                      )}
+                    </div>
+                  );
+                })}
+                {!data.brand_identity?.tiktok && (
+                  <div style={{ textAlign: 'center' as const, padding: '40px 0', color: T.textLow, fontSize: 13 }}>No creator content generated.</div>
+                )}
+              </div>
+            )}
+
+            {/* ── CHARACTER TAB ── */}
+            {activeTab === 'character' && (
+              <div style={{ animation: 'fadeIn 0.3s ease' }}>
+                {data.brief_summary && (
+                  <OutputCard icon="👤" title="Character Direction" id="char" copyText={data.nanobanana_master || ''}>
+                    <div style={bodyText}>
+                      <div style={{ marginBottom: 8 }}>Your character has been engineered for biological realism — believable skin texture, natural movement, and emotional authenticity.</div>
+                      <div style={{ marginBottom: 6 }}><span style={boldKey}>Realism Mode:</span> Alive Realism™</div>
+                      <div style={{ marginBottom: 6 }}><span style={boldKey}>Scene:</span> {data.brief_summary.scene}</div>
+                    </div>
+                  </OutputCard>
+                )}
+                {data.nanobanana_master && (
+                  <OutputCard icon="🧬" title="Nano Banana Skin Prompt" id="nano" copyText={data.nanobanana_master}>
+                    <div style={{ ...bodyText, fontFamily: 'monospace', fontSize: 11 }}>{data.nanobanana_master?.substring(0, 500)}</div>
+                    <div style={{ marginTop: 10 }}>
+                      <button className="tool-btn" style={{ background: T.bg3, border: `1px solid ${T.border}`, color: T.textMid, padding: '4px 10px', borderRadius: '3px', fontSize: '10px', cursor: 'pointer', letterSpacing: '0.06em', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>Open in Nano Banana ↗</button>
+                    </div>
+                  </OutputCard>
+                )}
+              </div>
+            )}
+
+            {/* ── ENVIRONMENT TAB ── */}
+            {activeTab === 'environment' && (
+              <div style={{ animation: 'fadeIn 0.3s ease' }}>
+                {data.midjourney_master && (
+                  <OutputCard icon="🖼️" title="Midjourney Environment" id="mj" copyText={data.midjourney_master}>
+                    <div style={{ ...bodyText, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.8 }}>{data.midjourney_master}</div>
+                    <div style={{ marginTop: 10 }}>
+                      <button className="tool-btn" style={{ background: T.bg3, border: `1px solid ${T.border}`, color: T.textMid, padding: '4px 10px', borderRadius: '3px', fontSize: '10px', cursor: 'pointer', letterSpacing: '0.06em', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>Open in Midjourney ↗</button>
+                    </div>
+                  </OutputCard>
+                )}
+                {data.flux_master && (
+                  <OutputCard icon="✨" title="Flux Environment" id="flux" copyText={data.flux_master}>
+                    <div style={{ ...bodyText, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.8 }}>{data.flux_master}</div>
+                    <div style={{ marginTop: 10 }}>
+                      <button className="tool-btn" style={{ background: T.bg3, border: `1px solid ${T.border}`, color: T.textMid, padding: '4px 10px', borderRadius: '3px', fontSize: '10px', cursor: 'pointer', letterSpacing: '0.06em', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>Open in Flux ↗</button>
+                    </div>
+                  </OutputCard>
+                )}
+                {!data.midjourney_master && !data.flux_master && (
+                  <div style={{ textAlign: 'center' as const, padding: '40px 0', color: T.textLow, fontSize: 13 }}>No environment prompts generated.</div>
+                )}
+              </div>
+            )}
+
+            {/* ── MOTION TAB ── */}
+            {activeTab === 'motion' && (
+              <div style={{ animation: 'fadeIn 0.3s ease' }}>
+                {data.seedance_master && (
+                  <OutputCard icon="⚡" title="Seedance / Higgsfield" id="seedance" copyText={data.seedance_master}>
+                    <div style={{ ...bodyText, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.8, whiteSpace: 'pre-wrap' as const }}>{data.seedance_master}</div>
+                    <div style={{ marginTop: 10 }}>
+                      <button className="tool-btn" style={{ background: T.bg3, border: `1px solid ${T.border}`, color: T.textMid, padding: '4px 10px', borderRadius: '3px', fontSize: '10px', cursor: 'pointer', letterSpacing: '0.06em', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>Open in Higgsfield ↗</button>
+                    </div>
+                  </OutputCard>
+                )}
+                {data.kling_master && (
+                  <OutputCard icon="🎬" title="Kling 1.6" id="kling" copyText={data.kling_master}>
+                    <div style={{ ...bodyText, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.8, whiteSpace: 'pre-wrap' as const }}>{data.kling_master}</div>
+                    <div style={{ marginTop: 10 }}>
+                      <button className="tool-btn" style={{ background: T.bg3, border: `1px solid ${T.border}`, color: T.textMid, padding: '4px 10px', borderRadius: '3px', fontSize: '10px', cursor: 'pointer', letterSpacing: '0.06em', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>Open in Kling ↗</button>
+                    </div>
+                  </OutputCard>
+                )}
+                {data.runway_master && (
+                  <OutputCard icon="🎥" title="Runway Gen-4" id="runway" copyText={data.runway_master}>
+                    <div style={{ ...bodyText, fontFamily: 'monospace', fontSize: 11, lineHeight: 1.8, whiteSpace: 'pre-wrap' as const }}>{data.runway_master}</div>
+                    <div style={{ marginTop: 10 }}>
+                      <button className="tool-btn" style={{ background: T.bg3, border: `1px solid ${T.border}`, color: T.textMid, padding: '4px 10px', borderRadius: '3px', fontSize: '10px', cursor: 'pointer', letterSpacing: '0.06em', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>Open in Runway ↗</button>
+                    </div>
+                  </OutputCard>
+                )}
+              </div>
+            )}
+
+            {/* ── REALISM TAB ── */}
+            {activeTab === 'realism' && (
+              <div style={{ animation: 'fadeIn 0.3s ease' }}>
+                <OutputCard icon="🧬" title="Human Realism Engine™" id="realism-engine" copyText="">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+                    <span style={{ fontSize: 11, color: T.textMid }}>All realism systems active for this campaign</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: T.green, letterSpacing: '0.1em' }}>ACTIVE</span>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 20px' }}>
+                    {['Skin Texture Simulation', 'Natural Lighting', 'Behavioral Delay', 'Fabric & Hair Physics', 'Micro Expressions', 'Eye Movement Tracking', 'Breathing Architecture', 'Asymmetric Movement'].map(f => (
+                      <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: T.ivoryDim, fontWeight: 300 }}>
+                        <span style={{ color: T.green, fontSize: 9 }}>✓</span> {f}
+                      </div>
+                    ))}
+                  </div>
+                </OutputCard>
+
+                {data.calendar && (
+                  <OutputCard icon="📅" title="7-Day Content Calendar" id="calendar" copyText={data.calendar?.map((d: any) => `Day ${d.day}: ${d.concept}\nHook: ${d.hook}`).join('\n\n')}>
+                    <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 6 }}>
+                      {data.calendar?.map((item: any) => (
+                        <div key={item.day} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '8px 10px', background: T.bg3, border: `1px solid ${T.border}`, borderRadius: '4px' }}>
+                          <div style={{ width: 24, height: 24, borderRadius: '3px', background: T.goldFaint, border: `1px solid ${T.borderGold}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 600, color: T.gold, flexShrink: 0 }}>{item.day}</div>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ fontSize: 12, fontWeight: 500, color: T.ivory, marginBottom: 2 }}>{item.concept}</div>
+                            <div style={{ fontSize: 11, color: T.textMid, fontStyle: 'italic', fontWeight: 300 }}>{item.hook}</div>
+                          </div>
+                          <CopyBtn text={`Day ${item.day}: ${item.concept}\nHook: ${item.hook}`} id={`cal-${item.day}`} />
+                        </div>
+                      ))}
+                    </div>
+                  </OutputCard>
+                )}
+              </div>
+            )}
+
           </div>
 
-          {/* ── BOTTOM ACTIONS ── */}
+          {/* ── BOTTOM CTA ── */}
           <div style={{
-            padding:'14px 24px',
-            borderTop:'1px solid rgba(255,255,255,0.06)',
-            background:'rgba(255,255,255,0.02)',
-            display:'flex',alignItems:'center',justifyContent:'space-between',
-            flexShrink:0,
+            padding: '12px 20px',
+            borderTop: `1px solid ${T.border}`,
+            background: T.bg2, flexShrink: 0,
+            display: 'flex', gap: 10,
           }}>
-            <div>
-              {step > 1 && (
-                <button onClick={() => setStep(s => s-1)} style={{
-                  background:'none',border:'none',color:'rgba(255,255,255,0.3)',
-                  cursor:'pointer',fontSize:12,letterSpacing:'0.06em',
-                  fontFamily:"'Inter',sans-serif",
-                }}>← Back</button>
-              )}
-            </div>
-
-            <div style={{display:'flex',alignItems:'center',gap:12}}>
-              {/* Technical settings strip */}
-              {step===5 && (
-                <div style={{display:'flex',gap:16,marginRight:8}}>
-                  {[
-                    {icon:'📐',label:'Platform',val:form.platform},
-                    {icon:'📏',label:'Ratio',val:'9:16'},
-                    {icon:'⏱️',label:'Duration',val:'15 sec'},
-                  ].map(t => (
-                    <div key={t.label} style={{textAlign:'center' as const}}>
-                      <div style={{fontSize:14,marginBottom:2}}>{t.icon}</div>
-                      <div style={{fontSize:9,color:'rgba(255,255,255,0.2)',textTransform:'uppercase' as const,letterSpacing:'0.1em'}}>{t.label}</div>
-                      <div style={{fontSize:10,color:'rgba(255,255,255,0.5)',fontWeight:500,textTransform:'capitalize' as const}}>{t.val}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {step < 5 ? (
-                <button
-                  onClick={() => setStep(s => s+1)}
-                  disabled={step===1 && !form.niche}
-                  style={{
-                    background:step===1 && !form.niche ? 'rgba(212,175,135,0.3)' : '#D4AF87',
-                    color:'#0D0A0E',padding:'10px 28px',borderRadius:4,
-                    fontSize:12,fontWeight:600,cursor:step===1 && !form.niche ? 'not-allowed' : 'pointer',
-                    border:'none',letterSpacing:'0.08em',textTransform:'uppercase' as const,
-                    transition:'all 0.2s',
-                  }}
-                >
-                  Continue →
-                </button>
-              ) : (
-                <button
-                  onClick={handleGenerate}
-                  style={{
-                    background:'#D4AF87',color:'#0D0A0E',
-                    padding:'10px 32px',borderRadius:4,
-                    fontSize:12,fontWeight:700,cursor:'pointer',
-                    border:'none',letterSpacing:'0.08em',textTransform:'uppercase' as const,
-                    display:'flex',alignItems:'center',gap:8,
-                    boxShadow:'0 4px 20px rgba(212,175,135,0.3)',
-                  }}
-                >
-                  <span>⚡</span> Generate Campaign
-                </button>
-              )}
-            </div>
+            <button
+              onClick={() => copy(JSON.stringify({ brief: briefText, imagePrompt: imagePromptText, reel: reelText, caption: hookCaption, hashtags: hashtagsText }, null, 2), 'download')}
+              style={{
+                flex: 1, background: 'transparent',
+                border: `1px solid ${T.border}`,
+                color: T.textMid, padding: '11px', borderRadius: '4px',
+                fontSize: '11px', fontWeight: 500, cursor: 'pointer',
+                letterSpacing: '0.08em', fontFamily: "'Inter', sans-serif",
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+              }}
+            >
+              ⬇ Download All
+            </button>
+            <button
+              onClick={() => router.push('/generate')}
+              style={{
+                flex: 2, background: T.gold, color: T.bg,
+                border: 'none', padding: '11px', borderRadius: '4px',
+                fontSize: '12px', fontWeight: 600, cursor: 'pointer',
+                letterSpacing: '0.08em', fontFamily: "'Inter', sans-serif",
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+              }}
+            >
+              ⚡ Generate Full Campaign
+            </button>
           </div>
         </div>
       </div>
 
-      {/* ── MOBILE ── */}
+      {/* Mobile: stack vertically */}
       <style>{`
         @media (max-width: 768px) {
           .split-left { display: none !important; }
-          .split-right { width: 100% !important; }
         }
       `}</style>
     </div>
