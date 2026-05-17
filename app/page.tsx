@@ -51,12 +51,13 @@ export default function Home() {
           gap: 60px; align-items: center;
           background: var(--oat);
           position: relative; overflow: hidden;
+          isolation: isolate;
         }
         .hero::before {
           content: ''; position: absolute; top: -200px; right: -200px;
           width: 600px; height: 600px; border-radius: 50%;
-          background: radial-gradient(circle, rgba(249,203,214,0.6) 0%, transparent 70%);
-          pointer-events: none;
+          background: radial-gradient(circle, rgba(249,203,214,0.5) 0%, transparent 70%);
+          pointer-events: none; z-index: 0;
         }
         .hero-left { position: relative; z-index: 2; }
         .hero-kicker { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--wine); }
@@ -76,25 +77,25 @@ export default function Home() {
         .proof-lbl { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 400; color: rgba(26,10,14,0.45); letter-spacing: 0.06em; text-transform: uppercase; }
 
         /* HERO RIGHT — image collage */
-        .hero-right { position: relative; z-index: 2; height: 580px; }
+        .hero-right { position: relative; z-index: 2; height: 560px; }
         .hero-img-main {
-          position: absolute; top: 0; left: 0; right: 60px; bottom: 60px;
-          border-radius: 4px; overflow: hidden;
-          box-shadow: 0 24px 64px rgba(26,10,14,0.2);
+          position: absolute; top: 0; left: 0; right: 56px; bottom: 56px;
+          border-radius: 6px; overflow: hidden;
+          box-shadow: 0 24px 64px rgba(26,10,14,0.25);
+          background: #C9A882;
         }
-        .hero-img-main img { width: 100%; height: 100%; object-fit: cover; }
         .hero-img-float {
-          position: absolute; bottom: 0; right: 0; width: 200px; height: 220px;
-          border-radius: 4px; overflow: hidden;
+          position: absolute; bottom: 0; right: 0; width: 190px; height: 210px;
+          border-radius: 6px; overflow: hidden;
           box-shadow: 0 16px 40px rgba(26,10,14,0.25);
           border: 4px solid var(--cream);
+          background: #E8C4C4;
         }
-        .hero-img-float img { width: 100%; height: 100%; object-fit: cover; }
         .hero-badge {
-          position: absolute; top: 24px; right: 80px;
+          position: absolute; top: 20px; left: 20px; z-index: 10;
           background: var(--wine); color: white;
           font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
-          padding: 8px 16px; border-radius: 100px;
+          padding: 7px 14px; border-radius: 100px;
           box-shadow: 0 4px 16px rgba(158,24,43,0.4);
           white-space: nowrap;
         }
@@ -285,10 +286,10 @@ export default function Home() {
 
         <div className="hero-right">
           <div className="hero-img-main">
-            <Image src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=800&q=85" alt="Creator" fill style={{objectFit:'cover'}} />
+            <Image src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&q=85" alt="Creator" fill style={{objectFit:'cover'}} />
           </div>
           <div className="hero-img-float">
-            <Image src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=85" alt="Beauty creator" fill style={{objectFit:'cover'}} />
+            <Image src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&q=85" alt="Beauty creator" fill style={{objectFit:'cover'}} />
           </div>
           <div className="hero-badge dm">⚡ Campaign ready in 60s</div>
         </div>
@@ -312,7 +313,7 @@ export default function Home() {
         <div className="pain-inner">
           <div className="pain-grid">
             <div className="pain-img">
-              <Image src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=700&q=85" alt="Creator frustrated" fill style={{objectFit:'cover',filter:'grayscale(20%)'}} />
+              <Image src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=700&q=85" alt="Creator" fill style={{objectFit:'cover',filter:'grayscale(30%)'}} />
             </div>
             <div>
               <div className="sec-tag-light dm">Be honest</div>
@@ -411,7 +412,7 @@ export default function Home() {
               <h2 className="realism-h2 pf">We don't sell prompts.<br /><em>We sell realism.</em></h2>
               <p className="realism-sub dm">Every brief is engineered for motion, emotion and human behaviour — the exact things that make people stop scrolling and start buying.</p>
               <div className="realism-img">
-                <Image src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=85" alt="Cinematic beauty" fill style={{objectFit:'cover'}} />
+                <Image src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=700&q=85" alt="Cinematic beauty" fill style={{objectFit:'cover'}} />
               </div>
             </div>
             <div>
