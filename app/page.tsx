@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import HomeNav from "./components/HomeNav";
 
 export default function Home() {
   return (
@@ -246,14 +248,7 @@ export default function Home() {
       `}</style>
 
       {/* NAV */}
-      <nav className="nav">
-        <a href="/" className="logo dm"><strong>SUPER</strong>COOL Influencer</a>
-        <div className="nav-links">
-          <a href="/sign-in" className="nav-a">Sign in</a>
-          <a href="/pricing" className="nav-a">Pricing</a>
-          <a href="/generate" className="nav-cta">Start Free</a>
-        </div>
-      </nav>
+      <HomeNav />
 
       {/* STICKY MOBILE */}
       <div className="sticky-mob">
@@ -290,18 +285,10 @@ export default function Home() {
 
         <div className="hero-right">
           <div className="hero-img-main">
-            <img
-              src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=800&q=85"
-              alt="Creator"
-              onError={(e) => { (e.target as HTMLImageElement).style.background = 'linear-gradient(135deg, #8B5E3C, #D4AF87)'; }}
-            />
+            <Image src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=800&q=85" alt="Creator" fill style={{objectFit:'cover'}} />
           </div>
           <div className="hero-img-float">
-            <img
-              src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=85"
-              alt="Beauty creator"
-              onError={(e) => { (e.target as HTMLImageElement).style.background = '#F9CBD6'; }}
-            />
+            <Image src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=85" alt="Beauty creator" fill style={{objectFit:'cover'}} />
           </div>
           <div className="hero-badge dm">⚡ Campaign ready in 60s</div>
         </div>
@@ -325,11 +312,7 @@ export default function Home() {
         <div className="pain-inner">
           <div className="pain-grid">
             <div className="pain-img">
-              <img
-                src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=700&q=85"
-                alt="Creator frustrated"
-                onError={(e) => { (e.target as HTMLImageElement).style.background = '#2A1218'; }}
-              />
+              <Image src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=700&q=85" alt="Creator frustrated" fill style={{objectFit:'cover',filter:'grayscale(20%)'}} />
             </div>
             <div>
               <div className="sec-tag-light dm">Be honest</div>
@@ -428,11 +411,7 @@ export default function Home() {
               <h2 className="realism-h2 pf">We don't sell prompts.<br /><em>We sell realism.</em></h2>
               <p className="realism-sub dm">Every brief is engineered for motion, emotion and human behaviour — the exact things that make people stop scrolling and start buying.</p>
               <div className="realism-img">
-                <img
-                  src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=85"
-                  alt="Cinematic beauty"
-                  onError={(e) => { (e.target as HTMLImageElement).style.background = '#8B5E3C'; }}
-                />
+                <Image src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=85" alt="Cinematic beauty" fill style={{objectFit:'cover'}} />
               </div>
             </div>
             <div>
