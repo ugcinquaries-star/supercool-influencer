@@ -37,7 +37,7 @@ export default function OutputPage() {
       <div style={{ background: `${color}15`, border: `1px solid ${color}40`, borderRadius: '10px', padding: '12px 16px', fontSize: '12px', color, marginBottom: '16px' }}>
         💡 Paste this entire prompt directly into <strong>{tool}</strong>. This is your complete production document.
       </div>
-      <div style={{ background: '#0d0d14', border: `1px solid ${color}30`, borderRadius: '14px', padding: '28px', position: 'relative' }}>
+      <div style={{ background: '#131013', border: `1px solid ${color}30`, borderRadius: '14px', padding: '28px', position: 'relative' }}>
         <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
           <CopyBtn text={content} id={id} />
         </div>
@@ -49,7 +49,7 @@ export default function OutputPage() {
   const ListBlock = ({ items, prefix, color }: { items: string[]; prefix: string; color: string }) => (
     <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '10px' }}>
       {items?.map((item, i) => (
-        <div key={i} style={{ background: '#0d0d14', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
+        <div key={i} style={{ background: '#131013', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
           <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6 }}>{item}</div>
           <CopyBtn text={item} id={`${prefix}-${i}`} />
         </div>
@@ -58,7 +58,7 @@ export default function OutputPage() {
   );
 
   if (!data) return (
-    <div style={{ background: '#06060b', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontFamily: 'sans-serif', fontSize: '16px' }}>
+    <div style={{ background: '#0D0A0E', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontFamily: 'sans-serif', fontSize: '16px' }}>
       Loading your production brief...
     </div>
   );
@@ -76,16 +76,16 @@ export default function OutputPage() {
   ];
 
   return (
-    <div style={{ background: '#06060b', minHeight: '100vh', color: 'white', fontFamily: 'sans-serif' }}>
+    <div style={{ background: '#0D0A0E', minHeight: '100vh', color: 'white', fontFamily: 'sans-serif' }}>
 
       {/* NAV */}
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 32px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-        <div style={{ fontWeight: 800, fontSize: '16px' }}>super<span style={{ color: '#a78bfa' }}>cool</span> influencer</div>
+        <div style={{ fontWeight: 800, fontSize: '16px' }}>super<span style={{ color: '#D4AF87' }}>cool</span> influencer</div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <button onClick={() => copy(JSON.stringify(data, null, 2), 'full')} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: copied === 'full' ? '#6ee7b7' : 'rgba(255,255,255,0.7)', padding: '8px 16px', borderRadius: '100px', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
             {copied === 'full' ? '✓ Copied!' : '📋 Copy Full Brief'}
           </button>
-          <button onClick={() => router.push('/generate')} style={{ background: 'linear-gradient(135deg, #7c3aed, #ec4899)', color: 'white', padding: '8px 20px', borderRadius: '100px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', border: 'none' }}>
+          <button onClick={() => router.push('/generate')} style={{ background: 'linear-gradient(135deg, #9E182B, #D4AF87)', color: 'white', padding: '8px 20px', borderRadius: '100px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', border: 'none' }}>
             ⚡ New Brief
           </button>
         </div>
@@ -94,7 +94,7 @@ export default function OutputPage() {
       {/* TABS */}
       <div style={{ display: 'flex', gap: '2px', padding: '0 16px', borderBottom: '1px solid rgba(255,255,255,0.07)', overflowX: 'auto' as const }}>
         {tabs.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ padding: '12px 16px', background: 'none', border: 'none', borderBottom: `2px solid ${activeTab === tab.id ? '#7c3aed' : 'transparent'}`, color: activeTab === tab.id ? 'white' : 'rgba(255,255,255,0.35)', cursor: 'pointer', fontSize: '12px', fontWeight: 700, whiteSpace: 'nowrap' as const, letterSpacing: '0.04em' }}>
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ padding: '12px 16px', background: 'none', border: 'none', borderBottom: `2px solid ${activeTab === tab.id ? '#9E182B' : 'transparent'}`, color: activeTab === tab.id ? 'white' : 'rgba(255,255,255,0.35)', cursor: 'pointer', fontSize: '12px', fontWeight: 700, whiteSpace: 'nowrap' as const, letterSpacing: '0.04em' }}>
             {tab.label}
           </button>
         ))}
@@ -105,11 +105,11 @@ export default function OutputPage() {
         {/* BRIEF */}
         {activeTab === 'brief' && data.brief_summary && (
           <div>
-            <div style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.15), rgba(236,72,153,0.08))', border: '1px solid rgba(124,58,237,0.3)', borderRadius: '20px', padding: '32px', marginBottom: '20px' }}>
+            <div style={{ background: 'linear-gradient(135deg, rgba(158,24,43,0.12), rgba(236,72,153,0.08))', border: '1px solid rgba(158,24,43,0.3)', borderRadius: '20px', padding: '32px', marginBottom: '20px' }}>
               <div style={{ fontSize: '24px', fontWeight: 800, letterSpacing: '-0.5px', marginBottom: '8px' }}>{data.brief_summary.title}</div>
               <div style={{ fontSize: '15px', color: 'rgba(255,255,255,0.6)', marginBottom: '16px', fontStyle: 'italic' }}>{data.brief_summary.concept}</div>
               <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginBottom: '20px' }}>
-                <span style={{ color: '#a78bfa', fontWeight: 600 }}>Emotional Arc: </span>{data.brief_summary.emotional_arc}
+                <span style={{ color: '#D4AF87', fontWeight: 600 }}>Emotional Arc: </span>{data.brief_summary.emotional_arc}
               </div>
               <div style={{ background: 'rgba(255,255,255,0.06)', borderRadius: '10px', padding: '14px 16px' }}>
                 <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '6px' }}>Opening Hook (0-3s)</div>
@@ -122,7 +122,7 @@ export default function OutputPage() {
                 { label: 'Mode', value: data.brief_summary.mode === 'ugc_ads' ? '📢 UGC Ads' : '🎬 Content Creator' },
                 { label: 'Tools Ready', value: 'Seedance · Kling · Runway · MJ · Flux' },
               ].map(item => (
-                <div key={item.label} style={{ background: '#0d0d14', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: '16px' }}>
+                <div key={item.label} style={{ background: '#131013', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: '16px' }}>
                   <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '6px' }}>{item.label}</div>
                   <div style={{ fontSize: '13px', color: 'white', fontWeight: 500 }}>{item.value}</div>
                 </div>
@@ -133,12 +133,12 @@ export default function OutputPage() {
 
         {/* SEEDANCE */}
         {activeTab === 'seedance' && data.seedance_master && (
-          <PromptBlock content={data.seedance_master} id="seedance" color="#a78bfa" tool="Seedance 2.0 on Higgsfield" />
+          <PromptBlock content={data.seedance_master} id="seedance" color="#D4AF87" tool="Seedance 2.0 on Higgsfield" />
         )}
 
         {/* KLING */}
         {activeTab === 'kling' && data.kling_master && (
-          <PromptBlock content={data.kling_master} id="kling" color="#f9a8d4" tool="Kling 1.6" />
+          <PromptBlock content={data.kling_master} id="kling" color="#F9CBD6" tool="Kling 1.6" />
         )}
 
         {/* RUNWAY */}
@@ -167,8 +167,8 @@ export default function OutputPage() {
 
             {/* Research Insight */}
             {data.brand_identity.research_insight && (
-              <div style={{ background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)', borderRadius: '12px', padding: '16px 20px' }}>
-                <div style={{ fontSize: '11px', fontWeight: 700, color: '#a78bfa', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '8px' }}>🔍 What's Working Right Now</div>
+              <div style={{ background: 'rgba(158,24,43,0.1)', border: '1px solid rgba(158,24,43,0.3)', borderRadius: '12px', padding: '16px 20px' }}>
+                <div style={{ fontSize: '11px', fontWeight: 700, color: '#D4AF87', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '8px' }}>🔍 What's Working Right Now</div>
                 <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6 }}>{data.brand_identity.research_insight}</div>
               </div>
             )}
@@ -177,11 +177,11 @@ export default function OutputPage() {
             {['tiktok', 'instagram', 'youtube'].map(p => {
               const pd = data.brand_identity[p];
               if (!pd) return null;
-              const colors: Record<string, string> = { tiktok: '#f9a8d4', instagram: '#c4b5fd', youtube: '#fca5a5' };
+              const colors: Record<string, string> = { tiktok: '#F9CBD6', instagram: '#F2AFBC', youtube: '#fca5a5' };
               const icons: Record<string, string> = { tiktok: '⚡', instagram: '💎', youtube: '🔴' };
               const color = colors[p];
               return (
-                <div key={p} style={{ background: '#0d0d14', border: `1px solid ${color}30`, borderRadius: '16px', overflow: 'hidden' }}>
+                <div key={p} style={{ background: '#131013', border: `1px solid ${color}30`, borderRadius: '16px', overflow: 'hidden' }}>
                   <div style={{ background: `${color}15`, padding: '14px 20px', borderBottom: `1px solid ${color}20` }}>
                     <div style={{ fontSize: '14px', fontWeight: 800, color, textTransform: 'uppercase' as const, letterSpacing: '0.08em' }}>{icons[p]} {p}</div>
                   </div>
@@ -248,7 +248,7 @@ export default function OutputPage() {
 
             {/* Voiceover */}
             {data.brand_identity.voiceover && (
-              <div style={{ background: '#0d0d14', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '16px', padding: '24px' }}>
+              <div style={{ background: '#131013', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '16px', padding: '24px' }}>
                 <div style={{ fontSize: '11px', fontWeight: 700, color: '#6ee7b7', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '16px' }}>🎙 Voiceover Script</div>
                 <div style={{ marginBottom: '12px', fontSize: '13px', color: 'rgba(255,255,255,0.5)' }}><strong style={{ color: 'rgba(255,255,255,0.7)' }}>Accent:</strong> {data.brand_identity.voiceover.accent}</div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
@@ -269,13 +269,13 @@ export default function OutputPage() {
               <CopyBtn text={data.calendar.map((d: any) => `Day ${d.day}: ${d.concept}\nHook: ${d.hook}\nFormat: ${d.format}\nGoal: ${d.goal}`).join('\n\n')} id="cal-all" />
             </div>
             {data.calendar.map((item: any) => (
-              <div key={item.day} style={{ background: '#0d0d14', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: '18px 20px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                <a href="/dashboard" style={{ fontWeight: 800, fontSize: '16px', textDecoration: 'none', color: 'white' }}>super<span style={{ color: '#a78bfa' }}>cool</span> influencer</a>
+              <div key={item.day} style={{ background: '#131013', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: '18px 20px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                <a href="/dashboard" style={{ fontWeight: 800, fontSize: '16px', textDecoration: 'none', color: 'white' }}>super<span style={{ color: '#D4AF87' }}>cool</span> influencer</a>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '14px', fontWeight: 700, marginBottom: '4px' }}>{item.concept}</div>
                   <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', marginBottom: '8px', fontStyle: 'italic' }}>{item.hook}</div>
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' as const }}>
-                    {item.format && <span style={{ fontSize: '11px', background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(124,58,237,0.3)', color: '#c4b5fd', padding: '3px 10px', borderRadius: '6px' }}>{item.format}</span>}
+                    {item.format && <span style={{ fontSize: '11px', background: 'rgba(158,24,43,0.12)', border: '1px solid rgba(158,24,43,0.3)', color: '#F2AFBC', padding: '3px 10px', borderRadius: '6px' }}>{item.format}</span>}
                     {item.goal && <span style={{ fontSize: '11px', background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)', color: '#6ee7b7', padding: '3px 10px', borderRadius: '6px' }}>{item.goal}</span>}
                   </div>
                 </div>
