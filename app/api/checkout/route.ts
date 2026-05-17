@@ -1,15 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { auth } from '@clerk/nextjs/server';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-const PLANS: Record<string, { price: number; credits: number; name: string; recurring: boolean }> = {
-  starter: { price: 900, credits: 5, name: 'Starter — 5 Briefs', recurring: false },
-  creator: { price: 2900, credits: 30, name: 'Creator — 30 Briefs/mo', recurring: true },
-  agency: { price: 7900, credits: 999, name: 'Agency — Unlimited', recurring: true },
-};
-
+'use client';
+import { useUser } from '@clerk/nextjs';
+export default function PricingPage() {
+  const { isSignedIn } = useUser();
+  const handleCheckout = async (plan: string) => {
+    if (!isSignedIn) {
+      window.location.href = '/sign-in';
+      return;
+    }
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan }),
+    });
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+    else alert(data.error || 'Something went wrong');
+  };
 export async function POST(req: NextRequest) {
   try {
     const { userId } = await auth();
