@@ -1,824 +1,820 @@
-import Link from "next/link";
+'use client';
 
-export default function Home() {
-  return (
-    <div style={{ background: '#080608', minHeight: '100vh', color: 'white', overflowX: 'hidden' }}>
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+// ── Constants ──────────────────────────────────────────────
+const AD_ANGLES = ['Before vs After','GRWM','Unboxing','Testimonial','Problem Solution','POV Storytime','Transformation','Myth Busting','TikTok Made Me Buy It','Honest Review','Day in the Life','Tutorial / How To'];
+const NICHES = ['Beauty & Skincare','Fitness & Health','Finance & Crypto','Fashion & Style','Food & Cooking','Tech & AI','Travel','Mindset & Self-Help','Business','Home & Living','Pet Care','Baby & Parenting'];
+const PLATFORMS = [{id:'tiktok',label:'TikTok'},{id:'instagram',label:'Instagram Reels'},{id:'youtube_shorts',label:'YT Shorts'},{id:'meta_ads',label:'Meta Ads'},{id:'tiktok_ads',label:'TikTok Ads'}];
+const VIBES = ['Luxury & Aspirational','Raw & Authentic','Bold & Controversial','Educational','Funny & Relatable','Dark & Mysterious','Motivational','Soft & Feminine','Clean & Minimal'];
+const AESTHETICS = ['Clean White Studio','Dark Moody Cinematic','Pastel Dreamy','Golden Hour Warm','Neon Futuristic','Cozy Home','Luxury Marble','Outdoor Natural'];
+const CHARACTERS = ['The Busy Founder','The Everyday Creator','The Wellness Seeker','The Social Connector','The Travel Explorer','The Professional','The Parent / Caregiver','The Creative Artist','The Bold Expressor'];
+const ETHNICITIES = ['African American','Mixed Race','Caucasian','Asian','Latina','Middle Eastern','South Asian','East African','Caribbean'];
+const AGE_RANGES = ['18-22','22-28','28-35','35-45','45-55','55+'];
+const FEMALE_BODY_TYPES = ['Slim','Tall','Average','Toned','Curvy','Plus-Size','Hourglass','Petite Curvy','Athletic Build','Soft Average','Strong & Curvy'];
+const MALE_BODY_TYPES = ['Slim','Tall','Average','Toned','Muscular','Athletic Build','Dad Bod','Plus-Size','Lean Muscle','Stocky'];
+const FEMALE_HAIRSTYLES = ['Messy Bun','Low Sleek Bun','Beach Waves','Defined Curly','Coily / Afro','Bone Straight Silk Press','Bouncy Blowout','Blunt Bob','Knotless Braids','Boho Braids','Butterfly Locs','Box Braids','High Ponytail','Half-Up Half-Down','Pixie Cut','Curtain Bangs','Space Buns'];
+const MALE_HAIRSTYLES_BLACK = ['Textured crop + low taper fade','360 waves + drop fade','Taper Afro','High top fade','Buzz cut + beard combo','Coily low taper','Twist out + mid fade','Flat top','Sponge curls + taper','Burst fade','Shape-up / edge-up only','Afro fade','Short dreadlocks','Long dreadlocks','Cornrows straight back','High skin fade + shape-up'];
+const MALE_HAIRSTYLES_GENERAL = ['Textured crop + mid fade','French crop + skin fade','Crew cut','Soft mullet + taper','Curtains / center part','Buzz cut','Pompadour','Caesar cut','Bro flow / flow cut','Skin fade + slick back','Low fade + side part','Shaved head','Short wavy + taper'];
+const BEARD_OPTIONS = ['No beard / clean shaven','Light stubble','Short neat beard','Full beard','Long full beard','Goatee','Fade beard','Beard + line-up'];
+const TATTOO_OPTIONS = ['No tattoos','Sleeve tattoo (one arm)','Sleeve tattoo (both arms)','Neck tattoo','Hand tattoos','Chest tattoo','Minimal tattoos','Mixed tattoos'];
+const HAIR_COLORS = ['Natural Black','Dark Brown','Medium Brown','Golden Brown / Honey','Copper / Auburn','Caramel Balayage','Platinum Blonde','Rose Gold','Silver / Cool Grey','Bleached Blonde','Natural Grey'];
+const FEMALE_OUTFIT_CATS: Record<string,string[]> = {
+  'AI UGC / Creator':['Beauty creator outfit','GRWM outfit','Luxury skincare creator fit','Hyperreal influencer look'],
+  'Luxury / High Fashion':['Quiet luxury outfit','Old money outfit','Parisian chic','Editorial fashion look'],
+  'Baddie / Trendy':['Clean girl outfit','It girl outfit','Hot girl summer outfit','Viral TikTok fit'],
+  'Soft Girl / Feminine':['Soft girl outfit','Coquette outfit','Balletcore look','Romantic girl outfit'],
+  'Fitness / Sporty':['Pilates princess outfit','Gym baddie fit','Athleisure look','Luxury activewear'],
+};
+const MALE_OUTFIT_CATS: Record<string,string[]> = {
+  'Streetwear / Hype':['Oversized hoodie + cargo pants','Hype fit','Graphic tee + baggy jeans','Vintage streetwear'],
+  'Clean / Minimal':['White tee + slim jeans + white sneakers','Minimalist neutral tones','Smart casual','Quiet luxury menswear'],
+  'Luxury / Designer':['Designer fit','Luxury casual premium basics','Editorial menswear'],
+  'Fitness / Active':['Gym fit compression + shorts','Athleisure joggers + hoodie','Luxury activewear'],
+};
+const FEMALE_ACCESSORIES = ['No accessories','Gold necklace (delicate)','Gold necklace (statement)','Pearl necklace','Hoop earrings (small)','Hoop earrings (large)','Luxury handbag','Watch (luxury)','Bracelet stack','Rings (multiple)','Sunglasses'];
+const MALE_ACCESSORIES = ['No accessories','Gold chain (thin)','Gold chain (thick / Cuban link)','Silver chain','Diamond stud earrings','Watch (luxury)','Rings (multiple)','Sunglasses','Cap (fitted)'];
+const SCENE_LOCATIONS = [
+  {id:'bathroom',label:'Bathroom',desc:'Skincare, mirror moments'},
+  {id:'bedroom',label:'Bedroom',desc:'Morning / night routine'},
+  {id:'kitchen',label:'Kitchen',desc:'Coffee ritual, supplements'},
+  {id:'living_room',label:'Living Room',desc:'Relaxed, cozy'},
+  {id:'car',label:'Car',desc:'Parking lot, drive reveal'},
+  {id:'hotel',label:'Hotel / Airbnb',desc:'Luxury bathroom, travel'},
+  {id:'spa',label:'Spa / Salon',desc:'Post-treatment, self-care'},
+  {id:'fitness',label:'Gym / Fitness',desc:'Post-workout, active'},
+  {id:'coffee_shop',label:'Coffee Shop',desc:'Café table, between meetings'},
+  {id:'outdoor_street',label:'Street / Outdoor',desc:'Golden hour, city walk'},
+];
+const CAMERA_ANGLES = ['Selfie angle','Eye-level angle','Mirror angle','Over-the-shoulder','POV angle','Low angle','Overhead angle','Three-quarter angle','Intimate close angle'];
+const LIGHTING_TYPES = ['Golden hour light','Window light','Ring light','Soft diffused light','Low-key moody light','Beauty lighting','Natural room lighting','Backlit window','Warm ambient lighting'];
+const REALISM_MODES = [
+  {id:'alive',label:'Alive Realism™',desc:'Motion truth + biological realism'},
+  {id:'ultra',label:'Ultra Realism',desc:'Maximum raw authenticity, unfiltered'},
+  {id:'everyday',label:'Everyday Realism',desc:'Relatable, natural, unposed'},
+  {id:'brand_clean',label:'Brand Clean',desc:'Polished but human — luxury/corporate'},
+];
+const UGC_STYLES = ['Raw authentic UGC','Aesthetic UGC','Documentary-style','POV UGC','Talking-head','Voiceover','ASMR','Faceless','Hands-only','Testimonial','Vlog-style'];
+
+const LOADING_STEPS = [
+  'Analyzing creator identity...',
+  'Building campaign brief...',
+  'Engineering human realism...',
+  'Generating cinematic direction...',
+  'Calibrating motion psychology...',
+  'Optimizing retention architecture...',
+  'Finalizing your campaign...',
+];
+
+const PREVIEW_SCENES = [
+  { bg: 'linear-gradient(135deg, #2C1810 0%, #5C3317 30%, #8B5E3C 60%, #C4956A 100%)', label: 'Golden Hour · Bathroom' },
+  { bg: 'linear-gradient(135deg, #0D0D0D 0%, #1A1A2E 40%, #16213E 80%, #0F3460 100%)', label: 'Night Ritual · Bedroom' },
+  { bg: 'linear-gradient(135deg, #F5F0E8 0%, #E8DDD0 40%, #D4C5B0 80%, #C4B49A 100%)', label: 'Soft Morning · Studio' },
+  { bg: 'linear-gradient(135deg, #1A0A0A 0%, #3D1515 40%, #6B2525 80%, #9E3535 100%)', label: 'Moody Edit · Interior' },
+  { bg: 'linear-gradient(135deg, #0A1628 0%, #1E3A5F 40%, #2E5F8A 80%, #4A90C4 100%)', label: 'Cool Cinematic · Outdoor' },
+];
+
+export default function GeneratePage() {
+  const router = useRouter();
+  const [step, setStep] = useState(1);
+  const [mode, setMode] = useState<'content'|'ugc_ads'>('content');
+  const [loading, setLoading] = useState(false);
+  const [loadStep, setLoadStep] = useState(0);
+  const [previewIdx, setPreviewIdx] = useState(0);
+  const [outfitCat, setOutfitCat] = useState('AI UGC / Creator');
+  const [hairstyleType, setHairstyleType] = useState('general');
+  const [form, setForm] = useState({
+    mode:'content', niche:'', platform:'tiktok', adAngle:'',
+    targetAudience:'', influencerVibe:'', aesthetic:'',
+    avatarAction:'', customBrief:'',
+    gender:'female', characterArchetype:'', ethnicity:'',
+    ageRange:'', bodyType:'', hairstyle:'', hairColor:'',
+    beardOption:'', tattooOption:'', accessories:'', outfit:'',
+    sceneLocation:'bathroom', cameraAngle:'', lightingType:'',
+    realismMode:'alive', ugcStyle:'', productDescription:'',
+  });
+
+  const set = (f: string, v: string) => setForm(p => ({...p, [f]: v}));
+
+  useEffect(() => {
+    if (!loading) return;
+    let i = 0;
+    const iv = setInterval(() => {
+      i++;
+      if (i < LOADING_STEPS.length) setLoadStep(i);
+      else clearInterval(iv);
+    }, 3500);
+    return () => clearInterval(iv);
+  }, [loading]);
+
+  useEffect(() => {
+    const iv = setInterval(() => setPreviewIdx(p => (p + 1) % PREVIEW_SCENES.length), 4000);
+    return () => clearInterval(iv);
+  }, []);
+
+  const handleGenerate = async () => {
+    setLoading(true);
+    setLoadStep(0);
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({...form, mode}),
+      });
+      const data = await res.json();
+      if (data.success) {
+        sessionStorage.setItem('brief', JSON.stringify(data.data));
+        router.push('/output');
+      } else {
+        alert('Failed: ' + data.error);
+        setLoading(false);
+      }
+    } catch {
+      alert('Something went wrong. Try again.');
+      setLoading(false);
+    }
+  };
+
+  const Chip = ({label, field, val}: any) => {
+    const active = form[field as keyof typeof form] === val;
+    return (
+      <button onClick={() => set(field, val)} style={{
+        padding:'8px 14px', borderRadius:'6px', fontSize:'12px', fontWeight:500,
+        cursor:'pointer', border:'1px solid '+(active ? 'rgba(212,175,135,0.6)' : 'rgba(255,255,255,0.1)'),
+        background:active ? 'rgba(212,175,135,0.15)' : 'rgba(255,255,255,0.03)',
+        color:active ? '#D4AF87' : 'rgba(255,255,255,0.5)',
+        transition:'all 0.2s', letterSpacing:'0.02em',
+      }}>{label}</button>
+    );
+  };
+
+  const ChipGroup = ({label, field, options}: any) => (
+    <div style={{marginBottom:'20px'}}>
+      <div style={lbl}>{label}</div>
+      <div style={{display:'flex', flexWrap:'wrap' as const, gap:'6px'}}>
+        {options.map((o: string) => <Chip key={o} label={o} field={field} val={o} />)}
+      </div>
+    </div>
+  );
+
+  const Drop = ({label, field, options, placeholder}: any) => (
+    <div style={{marginBottom:'14px'}}>
+      <div style={lbl}>{label}</div>
+      <select value={form[field as keyof typeof form]} onChange={e => set(field, e.target.value)} style={dropStyle}>
+        <option value="" style={{background:'#1A1015'}}>{placeholder || 'Select...'}</option>
+        {options.map((o: string) => <option key={o} value={o} style={{background:'#1A1015'}}>{o}</option>)}
+      </select>
+    </div>
+  );
+
+  const lbl: any = {
+    fontSize:'10px', fontWeight:600, letterSpacing:'0.16em',
+    textTransform:'uppercase', color:'rgba(212,175,135,0.6)',
+    marginBottom:'8px', display:'block',
+  };
+
+  const dropStyle: any = {
+    width:'100%', background:'rgba(255,255,255,0.04)',
+    border:'1px solid rgba(255,255,255,0.08)',
+    borderRadius:'6px', padding:'10px 12px',
+    color:'rgba(255,255,255,0.8)', fontSize:'13px',
+    outline:'none', cursor:'pointer', appearance:'none',
+  };
+
+  const ta: any = {
+    width:'100%', background:'rgba(255,255,255,0.04)',
+    border:'1px solid rgba(255,255,255,0.08)',
+    borderRadius:'6px', padding:'12px',
+    color:'rgba(255,255,255,0.8)', fontSize:'13px',
+    resize:'none', outline:'none', boxSizing:'border-box',
+    lineHeight:'1.6',
+  };
+
+  const STEPS = ['Content','Creative','Character','Scene','Realism'];
+  const progress = ((step - 1) / 4) * 100;
+  const scene = PREVIEW_SCENES[previewIdx];
+
+  // ── LOADING SCREEN ──
+  if (loading) return (
+    <div style={{
+      background:'#0D0A0E', minHeight:'100vh', color:'white',
+      display:'flex', flexDirection:'column' as const,
+      alignItems:'center', justifyContent:'center',
+      fontFamily:"'Inter', sans-serif",
+      position:'relative', overflow:'hidden',
+    }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap');
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-          --ivory: #F5F0E8;
-          --cream: #E8DDD0;
-          --warm: #C9B49A;
-          --wine: #6B1A2A;
-          --wine-bright: #9E182B;
-          --blush: #D4A0A8;
-          --dark: #080608;
-          --dark2: #0E0A0C;
-          --dark3: #140F11;
-          --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-        }
-
-        html { scroll-behavior: smooth; }
-
-        .cg { font-family: 'Cormorant Garamond', Georgia, serif; }
-        .inter { font-family: 'Inter', sans-serif; }
-
-        /* GRAIN OVERLAY */
-        body::after {
-          content: ''; position: fixed; inset: 0;
-          background-image: var(--grain);
-          pointer-events: none; z-index: 9999; opacity: 0.35;
-        }
-
-        /* ── NAV ── */
-        .nav {
-          position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-          display: flex; justify-content: space-between; align-items: center;
-          padding: 20px 32px;
-          background: linear-gradient(to bottom, rgba(8,6,8,0.95) 0%, transparent 100%);
-          backdrop-filter: blur(2px);
-        }
-        .nav-logo {
-          font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 15px;
-          color: var(--ivory); letter-spacing: 0.18em; text-transform: uppercase;
-        }
-        .nav-logo em { color: var(--blush); font-style: italic; font-weight: 300; }
-        .nav-r { display: flex; gap: 20px; align-items: center; }
-        .nav-link {
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400;
-          letter-spacing: 0.12em; text-transform: uppercase;
-          color: rgba(245,240,232,0.45); text-decoration: none;
-          transition: color 0.3s;
-        }
-        .nav-link:hover { color: var(--ivory); }
-        .nav-cta {
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500;
-          letter-spacing: 0.1em; text-transform: uppercase;
-          background: var(--ivory); color: var(--dark); padding: 9px 22px;
-          border-radius: 2px; text-decoration: none; transition: background 0.3s;
-        }
-        .nav-cta:hover { background: var(--cream); }
-
-        /* ── STICKY CTA (mobile) ── */
-        .sticky-cta {
-          display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-          z-index: 998; width: calc(100% - 48px); max-width: 380px;
-        }
-        .sticky-cta-btn {
-          display: block; text-align: center; width: 100%;
-          background: var(--ivory); color: var(--dark);
-          font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
-          letter-spacing: 0.12em; text-transform: uppercase;
-          padding: 16px 32px; border-radius: 2px; text-decoration: none;
-          box-shadow: 0 16px 48px rgba(0,0,0,0.6);
-        }
-
-        /* ── HERO ── */
-        .hero {
-          min-height: 100svh; display: flex; flex-direction: column;
-          justify-content: flex-end; align-items: flex-start;
-          padding: 0 32px 72px; position: relative; overflow: hidden;
-        }
-        .hero-bg {
-          position: absolute; inset: 0;
-          background:
-            radial-gradient(ellipse 100% 80% at 60% 20%, rgba(107,26,42,0.25) 0%, transparent 55%),
-            radial-gradient(ellipse 60% 60% at 20% 80%, rgba(158,24,43,0.12) 0%, transparent 50%),
-            linear-gradient(165deg, #0E0608 0%, #080608 40%, #0A0608 100%);
-        }
-        .hero-grid-lines {
-          position: absolute; inset: 0; opacity: 0.04;
-          background-image:
-            linear-gradient(to right, var(--ivory) 1px, transparent 1px),
-            linear-gradient(to bottom, var(--ivory) 1px, transparent 1px);
-          background-size: 80px 80px;
-        }
-        .hero-content { position: relative; z-index: 2; max-width: 800px; }
-        .hero-kicker {
-          display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px;
-          font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500;
-          letter-spacing: 0.22em; text-transform: uppercase; color: var(--blush);
-        }
-        .hero-kicker::before {
-          content: ''; width: 24px; height: 1px; background: var(--blush);
-        }
-        .hero-h1 {
-          font-family: 'Cormorant Garamond', serif; font-weight: 300;
-          font-size: clamp(52px, 11vw, 120px); line-height: 0.92;
-          letter-spacing: -2px; color: var(--ivory); margin-bottom: 32px;
-        }
-        .hero-h1 em {
-          font-style: italic; color: var(--blush); display: block;
-          font-weight: 300;
-        }
-        .hero-h1 strong {
-          font-weight: 600; display: block; font-style: normal;
-        }
-        .hero-sub {
-          font-family: 'Inter', sans-serif; font-size: clamp(13px, 2vw, 15px);
-          font-weight: 300; line-height: 1.8; color: rgba(245,240,232,0.45);
-          max-width: 400px; margin-bottom: 48px; letter-spacing: 0.02em;
-        }
-        .hero-ctas { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-        .btn-primary-lg {
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
-          letter-spacing: 0.14em; text-transform: uppercase;
-          background: var(--ivory); color: var(--dark);
-          padding: 16px 40px; border-radius: 2px; text-decoration: none;
-          transition: all 0.3s; box-shadow: 0 8px 40px rgba(245,240,232,0.12);
-        }
-        .btn-primary-lg:hover { background: var(--cream); box-shadow: 0 12px 48px rgba(245,240,232,0.2); }
-        .btn-ghost-lg {
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400;
-          letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.45);
-          text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;
-        }
-        .btn-ghost-lg:hover { color: var(--ivory); }
-        .hero-scroll {
-          position: absolute; bottom: 32px; right: 32px; z-index: 2;
-          display: flex; flex-direction: column; align-items: center; gap: 8px;
-          font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 400;
-          letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.2);
-        }
-        .hero-scroll-line {
-          width: 1px; height: 48px;
-          background: linear-gradient(to bottom, rgba(245,240,232,0.2), transparent);
-          animation: scrollline 2s ease-in-out infinite;
-        }
-        @keyframes scrollline {
-          0%, 100% { opacity: 0.3; transform: scaleY(1); }
-          50% { opacity: 1; transform: scaleY(1.2); }
-        }
-
-        /* ── MARQUEE ── */
-        .marquee-wrap {
-          border-top: 1px solid rgba(245,240,232,0.06);
-          border-bottom: 1px solid rgba(245,240,232,0.06);
-          padding: 18px 0; overflow: hidden; background: var(--dark2);
-        }
-        .marquee-track {
-          display: flex; gap: 0; white-space: nowrap;
-          animation: marquee 30s linear infinite;
-        }
-        .marquee-item {
-          display: inline-flex; align-items: center; gap: 32px; padding: 0 32px;
-          font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 400;
-          font-style: italic; color: rgba(245,240,232,0.25); letter-spacing: 0.06em;
-          flex-shrink: 0;
-        }
-        .marquee-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--blush); opacity: 0.5; }
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-
-        /* ── SECTION BASE ── */
-        .section { padding: 120px 32px; }
-        .section-inner { max-width: 1100px; margin: 0 auto; }
-        .section-tag {
-          font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500;
-          letter-spacing: 0.24em; text-transform: uppercase; color: var(--blush);
-          margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
-        }
-        .section-tag::before { content: ''; width: 20px; height: 1px; background: var(--blush); }
-        .section-h2 {
-          font-family: 'Cormorant Garamond', serif; font-weight: 300;
-          font-size: clamp(40px, 7vw, 80px); line-height: 0.95;
-          letter-spacing: -1.5px; color: var(--ivory); margin-bottom: 24px;
-        }
-        .section-h2 em { font-style: italic; color: var(--blush); font-weight: 300; }
-        .section-sub {
-          font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 300;
-          line-height: 1.85; color: rgba(245,240,232,0.4); max-width: 480px;
-          letter-spacing: 0.02em;
-        }
-
-        /* ── PAIN / BEFORE ── */
-        .pain { background: var(--dark); }
-        .pain-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-        .pain-list { margin-top: 48px; display: flex; flex-direction: column; gap: 0; }
-        .pain-item {
-          display: flex; gap: 20px; align-items: flex-start;
-          padding: 24px 0; border-bottom: 1px solid rgba(245,240,232,0.05);
-        }
-        .pain-item:first-child { border-top: 1px solid rgba(245,240,232,0.05); }
-        .pain-num {
-          font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 300;
-          color: rgba(245,240,232,0.2); letter-spacing: 0.1em; flex-shrink: 0; margin-top: 2px;
-        }
-        .pain-text { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; color: rgba(245,240,232,0.35); line-height: 1.7; letter-spacing: 0.02em; }
-        .pain-text strong { color: rgba(245,240,232,0.6); font-weight: 500; }
-        .pain-right { padding-top: 80px; }
-        .pain-quote {
-          font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 4vw, 36px);
-          font-weight: 300; font-style: italic; line-height: 1.4;
-          color: var(--ivory); margin-bottom: 32px; letter-spacing: -0.5px;
-        }
-        .pain-quote em { color: var(--blush); }
-
-        /* ── DIFF / TRANSFORMATION ── */
-        .diff { background: var(--dark2); border-top: 1px solid rgba(245,240,232,0.04); }
-        .diff-grid { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0; margin-top: 64px; }
-        .diff-divider { background: rgba(245,240,232,0.06); }
-        .diff-col { padding: 0 48px; }
-        .diff-col:first-child { padding-left: 0; }
-        .diff-col:last-child { padding-right: 0; }
-        .diff-col-label {
-          font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500;
-          letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 36px;
-          padding-bottom: 20px; border-bottom: 1px solid rgba(245,240,232,0.06);
-        }
-        .diff-col-before .diff-col-label { color: rgba(245,240,232,0.2); }
-        .diff-col-after .diff-col-label { color: var(--blush); }
-        .diff-row { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 20px; }
-        .diff-icon { font-size: 12px; flex-shrink: 0; margin-top: 2px; opacity: 0.5; }
-        .diff-col-after .diff-icon { opacity: 1; }
-        .diff-text {
-          font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300;
-          line-height: 1.65; letter-spacing: 0.02em;
-        }
-        .diff-col-before .diff-text { color: rgba(245,240,232,0.25); }
-        .diff-col-after .diff-text { color: rgba(245,240,232,0.75); }
-
-        /* ── REALISM ENGINE ── */
-        .realism { background: var(--dark); position: relative; overflow: hidden; }
-        .realism::before {
-          content: ''; position: absolute;
-          top: -200px; right: -200px; width: 600px; height: 600px;
-          background: radial-gradient(circle, rgba(107,26,42,0.15) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .realism-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-        .realism-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(245,240,232,0.05); border: 1px solid rgba(245,240,232,0.05); margin-top: 48px; }
-        .realism-card {
-          background: var(--dark); padding: 28px 24px;
-          transition: background 0.4s;
-        }
-        .realism-card:hover { background: var(--dark3); }
-        .realism-card-icon { font-size: 18px; margin-bottom: 14px; display: block; }
-        .realism-card-title {
-          font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
-          color: var(--ivory); margin-bottom: 8px; letter-spacing: 0.04em;
-        }
-        .realism-card-desc {
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300;
-          color: rgba(245,240,232,0.35); line-height: 1.7; letter-spacing: 0.02em;
-        }
-        .realism-tag {
-          display: inline-block; margin-top: 12px;
-          font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500;
-          letter-spacing: 0.16em; text-transform: uppercase; color: var(--blush);
-        }
-        .realism-right { padding-top: 120px; }
-
-        /* ── MOTION PSYCHOLOGY ── */
-        .motion { background: var(--dark2); border-top: 1px solid rgba(245,240,232,0.04); }
-        .motion-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 80px; align-items: end; }
-        .motion-principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(245,240,232,0.05); }
-        .motion-card {
-          background: var(--dark2); padding: 36px 28px;
-          border-top: 2px solid transparent; transition: border-color 0.4s;
-        }
-        .motion-card:hover { border-top-color: var(--blush); }
-        .motion-card-num {
-          font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300;
-          color: rgba(245,240,232,0.06); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;
-        }
-        .motion-card-title {
-          font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
-          color: var(--ivory); margin-bottom: 10px; letter-spacing: 0.04em;
-        }
-        .motion-card-desc {
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300;
-          color: rgba(245,240,232,0.35); line-height: 1.75; letter-spacing: 0.02em;
-        }
-
-        /* ── GENERATE FLOW ── */
-        .flow { background: var(--dark); border-top: 1px solid rgba(245,240,232,0.04); }
-        .flow-ui {
-          margin-top: 64px;
-          background: var(--dark2); border: 1px solid rgba(245,240,232,0.07);
-          border-radius: 4px; overflow: hidden;
-        }
-        .flow-ui-bar {
-          display: flex; align-items: center; gap: 8px; padding: 14px 20px;
-          border-bottom: 1px solid rgba(245,240,232,0.06); background: var(--dark3);
-        }
-        .flow-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .flow-url {
-          flex: 1; background: rgba(245,240,232,0.04); border-radius: 2px;
-          padding: 5px 12px; font-family: 'Inter', sans-serif; font-size: 10px;
-          color: rgba(245,240,232,0.25); letter-spacing: 0.04em; margin: 0 12px;
-        }
-        .flow-body { display: grid; grid-template-columns: 280px 1fr; min-height: 480px; }
-        .flow-input {
-          border-right: 1px solid rgba(245,240,232,0.06); padding: 32px 24px;
-          display: flex; flex-direction: column; gap: 16px;
-        }
-        .flow-input-label {
-          font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500;
-          letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.2);
-          margin-bottom: 4px;
-        }
-        .flow-input-field {
-          background: rgba(245,240,232,0.04); border: 1px solid rgba(245,240,232,0.08);
-          border-radius: 2px; padding: 12px 14px;
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300;
-          color: rgba(245,240,232,0.6); line-height: 1.5;
-        }
-        .flow-input-field.active { border-color: rgba(212,160,168,0.4); color: var(--ivory); }
-        .flow-generate {
-          margin-top: auto; background: var(--ivory); color: var(--dark);
-          text-align: center; padding: 14px; border-radius: 2px;
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
-          letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer;
-        }
-        .flow-output { padding: 32px; display: flex; flex-direction: column; gap: 16px; }
-        .flow-output-tab {
-          display: flex; align-items: flex-start; gap: 16px; padding: 16px;
-          border: 1px solid rgba(245,240,232,0.06); border-radius: 2px;
-          transition: border-color 0.3s;
-        }
-        .flow-output-tab:hover { border-color: rgba(212,160,168,0.2); }
-        .flow-output-tab-icon {
-          font-size: 14px; flex-shrink: 0; margin-top: 1px;
-        }
-        .flow-output-tab-title {
-          font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600;
-          letter-spacing: 0.12em; text-transform: uppercase; color: var(--blush);
-          margin-bottom: 6px;
-        }
-        .flow-output-tab-content {
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300;
-          color: rgba(245,240,232,0.4); line-height: 1.65;
-        }
-        .flow-output-tab-content strong { color: rgba(245,240,232,0.7); font-weight: 400; }
-
-        /* ── FOR WHO ── */
-        .forwho { background: var(--dark2); border-top: 1px solid rgba(245,240,232,0.04); }
-        .forwho-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(245,240,232,0.05); margin-top: 64px; }
-        .forwho-card {
-          background: var(--dark2); padding: 36px 24px;
-          border-top: 1px solid transparent; transition: all 0.4s;
-        }
-        .forwho-card:hover { background: var(--dark3); border-top-color: var(--blush); }
-        .forwho-emoji { font-size: 24px; display: block; margin-bottom: 20px; }
-        .forwho-title {
-          font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
-          color: var(--ivory); margin-bottom: 10px; letter-spacing: 0.04em;
-        }
-        .forwho-desc {
-          font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300;
-          color: rgba(245,240,232,0.35); line-height: 1.75; letter-spacing: 0.02em;
-        }
-
-        /* ── PLATFORMS ── */
-        .platforms { background: var(--dark); border-top: 1px solid rgba(245,240,232,0.04); padding: 80px 32px; }
-        .platforms-inner { max-width: 1100px; margin: 0 auto; }
-        .platforms-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
-        .platform-pill {
-          font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400;
-          letter-spacing: 0.1em; text-transform: uppercase;
-          border: 1px solid rgba(245,240,232,0.1); color: rgba(245,240,232,0.35);
-          padding: 9px 18px; border-radius: 1px; transition: all 0.3s;
-        }
-        .platform-pill:hover { border-color: var(--blush); color: var(--blush); }
-
-        /* ── FINAL CTA ── */
-        .cta-final {
-          min-height: 80vh; display: flex; flex-direction: column;
-          justify-content: center; align-items: center; text-align: center;
-          padding: 120px 32px; position: relative; overflow: hidden;
-          background: var(--dark);
-        }
-        .cta-final::before {
-          content: ''; position: absolute; inset: 0;
-          background:
-            radial-gradient(ellipse 80% 60% at 50% 50%, rgba(107,26,42,0.2) 0%, transparent 65%);
-          pointer-events: none;
-        }
-        .cta-final-content { position: relative; z-index: 2; max-width: 700px; }
-        .cta-final-h2 {
-          font-family: 'Cormorant Garamond', serif; font-weight: 300;
-          font-size: clamp(48px, 9vw, 100px); line-height: 0.9;
-          letter-spacing: -2px; color: var(--ivory); margin-bottom: 32px;
-        }
-        .cta-final-h2 em { font-style: italic; color: var(--blush); display: block; font-weight: 300; }
-        .cta-final-sub {
-          font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 300;
-          color: rgba(245,240,232,0.35); margin-bottom: 48px; line-height: 1.8; letter-spacing: 0.02em;
-        }
-        .cta-final-note {
-          margin-top: 24px; font-family: 'Inter', sans-serif; font-size: 10px;
-          font-weight: 300; letter-spacing: 0.1em; color: rgba(245,240,232,0.2);
-          text-transform: uppercase;
-        }
-
-        /* ── FOOTER ── */
-        .footer {
-          border-top: 1px solid rgba(245,240,232,0.06); padding: 40px 32px;
-          display: flex; justify-content: space-between; align-items: center;
-          flex-wrap: wrap; gap: 16px; background: var(--dark);
-        }
-        .footer-logo {
-          font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 13px;
-          color: var(--ivory); letter-spacing: 0.18em; text-transform: uppercase;
-        }
-        .footer-logo em { color: var(--blush); font-style: italic; font-weight: 300; }
-        .footer-links { display: flex; gap: 24px; }
-        .footer-link {
-          font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
-          letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.2);
-          text-decoration: none; transition: color 0.3s;
-        }
-        .footer-link:hover { color: var(--ivory); }
-        .footer-copy {
-          font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300;
-          color: rgba(245,240,232,0.15); letter-spacing: 0.08em;
-        }
-
-        /* ── MOBILE ── */
-        @media (max-width: 768px) {
-          .nav { padding: 18px 20px; }
-          .nav-link { display: none; }
-          .sticky-cta { display: block; }
-
-          .hero { padding: 0 20px 100px; min-height: 100svh; justify-content: flex-end; }
-          .hero-h1 { letter-spacing: -1.5px; }
-          .hero-ctas { flex-direction: column; width: 100%; }
-          .btn-primary-lg { text-align: center; width: 100%; }
-          .btn-ghost-lg { justify-content: center; }
-          .hero-scroll { display: none; }
-
-          .section { padding: 80px 20px; }
-
-          .pain-layout { grid-template-columns: 1fr; gap: 0; }
-          .pain-right { padding-top: 48px; }
-
-          .diff-grid { grid-template-columns: 1fr; }
-          .diff-divider { display: none; }
-          .diff-col { padding: 0; }
-          .diff-col:first-child { margin-bottom: 40px; }
-
-          .realism-layout { grid-template-columns: 1fr; gap: 0; }
-          .realism-right { padding-top: 48px; }
-          .realism-grid { grid-template-columns: 1fr; }
-
-          .motion-header { grid-template-columns: 1fr; gap: 32px; margin-bottom: 48px; }
-          .motion-principles { grid-template-columns: 1fr; }
-
-          .flow-body { grid-template-columns: 1fr; }
-          .flow-input { border-right: none; border-bottom: 1px solid rgba(245,240,232,0.06); }
-
-          .forwho-grid { grid-template-columns: 1fr 1fr; }
-
-          .footer { flex-direction: column; align-items: flex-start; }
-          .footer-links { flex-wrap: wrap; gap: 16px; }
-
-          .cta-final { padding: 100px 20px 140px; min-height: auto; }
-        }
-
-        @media (max-width: 480px) {
-          .forwho-grid { grid-template-columns: 1fr; }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+        @keyframes pulse { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
+        @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes spin { to{transform:rotate(360deg)} }
+        @keyframes glow { 0%,100%{box-shadow:0 0 20px rgba(212,175,135,0.2)} 50%{box-shadow:0 0 60px rgba(212,175,135,0.5)} }
       `}</style>
 
-      {/* ── NAV ── */}
-      <nav className="nav">
-        <div className="nav-logo inter">Super<em>cool</em></div>
-        <div className="nav-r">
-          <a href="/sign-in" className="nav-link">Sign in</a>
-          <a href="/pricing" className="nav-link">Pricing</a>
-          <a href="/generate" className="nav-cta inter">Start Free</a>
+      {/* ambient bg */}
+      <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(158,90,43,0.12) 0%, transparent 65%)',pointerEvents:'none'}} />
+
+      <div style={{position:'relative',textAlign:'center',maxWidth:'480px',padding:'0 32px'}}>
+        <div style={{
+          width:72,height:72,borderRadius:'50%',
+          border:'1px solid rgba(212,175,135,0.3)',
+          display:'flex',alignItems:'center',justifyContent:'center',
+          margin:'0 auto 32px',
+          animation:'glow 2s ease-in-out infinite',
+          background:'rgba(212,175,135,0.06)',
+        }}>
+          <div style={{fontSize:28,animation:'pulse 2s ease-in-out infinite'}}>⚡</div>
         </div>
-      </nav>
 
-      {/* ── STICKY MOBILE CTA ── */}
-      <div className="sticky-cta">
-        <a href="/generate" className="sticky-cta-btn inter">⚡ Generate Free — No Card</a>
-      </div>
+        <div style={{
+          fontFamily:"'Cormorant Garamond', serif", fontWeight:300,
+          fontSize:36, lineHeight:1.1, color:'#F5F0E8',
+          letterSpacing:'-0.5px', marginBottom:16,
+        }}>
+          Building your<br /><em style={{color:'#D4AF87'}}>campaign</em>
+        </div>
 
-      {/* ── HERO ── */}
-      <section className="hero">
-        <div className="hero-bg" />
-        <div className="hero-grid-lines" />
-        <div className="hero-content">
-          <div className="hero-kicker inter">
-            The AI Cinematic Creator OS
+        <div key={loadStep} style={{
+          fontSize:13, color:'rgba(212,175,135,0.7)', marginBottom:48,
+          letterSpacing:'0.06em', animation:'fadeUp 0.5s ease',
+          fontFamily:"'Inter', sans-serif", fontWeight:300,
+        }}>
+          {LOADING_STEPS[loadStep]}
+        </div>
+
+        {/* progress */}
+        <div style={{
+          width:'100%', height:1,
+          background:'rgba(255,255,255,0.08)', borderRadius:1,
+          marginBottom:16, overflow:'hidden', position:'relative',
+        }}>
+          <div style={{
+            height:'100%',
+            width:`${((loadStep + 1) / LOADING_STEPS.length) * 100}%`,
+            background:'linear-gradient(90deg, rgba(212,175,135,0.4), #D4AF87)',
+            transition:'width 3.5s linear',
+            position:'relative',
+          }}>
+            <div style={{
+              position:'absolute',inset:0,
+              background:'linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent)',
+              animation:'shimmer 1.5s infinite',
+            }} />
           </div>
-          <h1 className="hero-h1 cg">
-            <strong>Your content.</strong>
-            <em>Cinematically</em>
-            real.
-          </h1>
-          <p className="hero-sub inter">
-            From idea to campaign-ready content in under 60 seconds.
-            Briefings. Image prompts. Reel direction. Captions. All of it.
-            Built on human realism — not generic AI.
-          </p>
-          <div className="hero-ctas">
-            <Link href="/generate" className="btn-primary-lg inter">Generate Free Now</Link>
-            <Link href="/pricing" className="btn-ghost-lg inter">
-              View Pricing <span style={{ opacity: 0.4 }}>→</span>
-            </Link>
-          </div>
         </div>
-        <div className="hero-scroll">
-          <div className="hero-scroll-line" />
-          <span className="inter">Scroll</span>
-        </div>
-      </section>
 
-      {/* ── MARQUEE ── */}
-      <div className="marquee-wrap">
-        <div className="marquee-track">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} style={{ display: 'flex', flexShrink: 0 }}>
-              {['Human Realism Engine™', 'Motion Psychology™', 'GTA-Style Behavioral Realism', 'Cinematic Campaign Briefings', 'Anti-Generic AI Output', 'Biological Movement Systems', 'Identity Lock™', 'Emotion Architecture', '60-Second Campaigns', 'Creator OS'].map((t, j) => (
-                <span key={j} className="marquee-item cg">
-                  {t}
-                  <span className="marquee-dot" />
-                </span>
-              ))}
-            </div>
+        <div style={{
+          display:'flex', justifyContent:'space-between',
+          fontFamily:"'Inter', sans-serif", fontSize:10,
+          color:'rgba(255,255,255,0.2)', letterSpacing:'0.1em',
+          textTransform:'uppercase',
+        }}>
+          <span>Human Realism Engine™</span>
+          <span>{Math.round(((loadStep + 1) / LOADING_STEPS.length) * 100)}%</span>
+        </div>
+
+        <div style={{marginTop:48, display:'flex', gap:8, justifyContent:'center', flexWrap:'wrap' as const}}>
+          {['Analyzing','Briefing','Realism','Motion','Retention','Finalizing'].map((s,i) => (
+            <div key={s} style={{
+              padding:'6px 12px', borderRadius:4,
+              background: i <= loadStep ? 'rgba(212,175,135,0.12)' : 'rgba(255,255,255,0.03)',
+              border:'1px solid '+(i <= loadStep ? 'rgba(212,175,135,0.3)' : 'rgba(255,255,255,0.06)'),
+              fontSize:10, fontFamily:"'Inter',sans-serif", letterSpacing:'0.1em',
+              color: i <= loadStep ? '#D4AF87' : 'rgba(255,255,255,0.2)',
+              transition:'all 0.5s',
+            }}>{s}</div>
           ))}
         </div>
       </div>
+    </div>
+  );
 
-      {/* ── PAIN ── */}
-      <section className="section pain">
-        <div className="section-inner">
-          <div className="pain-layout">
-            <div>
-              <div className="section-tag inter">The reality</div>
-              <h2 className="section-h2 cg">Your content<br /><em>is suffering.</em></h2>
-              <div className="pain-list">
-                {[
-                  { title: 'Content burnout', desc: 'You\'ve run out of ideas. The blank page wins every day. Creative paralysis is real — and expensive.' },
-                  { title: 'Generic AI output', desc: 'Your AI content looks like everyone else\'s. Robotic faces, stiff motion, dead eyes. Scroll-past energy.' },
-                  { title: 'No direction', desc: 'You know what to post but not how to make it feel cinematic, believable, or emotionally resonant.' },
-                  { title: 'Inconsistent identity', desc: 'Your brand changes every week. No visual signature. No recognisable aesthetic. Just content for the algorithm.' },
-                  { title: 'Zero engagement', desc: 'Posting consistently and getting nothing back. The problem isn\'t frequency — it\'s quality and feeling.' },
-                ].map((p, i) => (
-                  <div className="pain-item" key={p.title}>
-                    <span className="pain-num inter">0{i + 1}</span>
-                    <div className="pain-text inter">
-                      <strong>{p.title} — </strong>{p.desc}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="pain-right">
-              <div className="pain-quote cg">
-                "Most AI content doesn't fail because of the tool.<br />It fails because there was <em>no direction</em> behind it."
-              </div>
-              <p className="section-sub inter" style={{ fontSize: '13px' }}>
-                SuperCool isn't a prompt generator. It's a creative operating system that thinks like a cinematic director — and builds campaigns that feel emotionally real.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+  // ── MAIN GENERATE UI ──
+  return (
+    <div style={{
+      background:'#0D0A0E', minHeight:'100vh', color:'white',
+      fontFamily:"'Inter', sans-serif", display:'flex', flexDirection:'column' as const,
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+        * { box-sizing: border-box; }
+        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(212,175,135,0.2); border-radius: 2px; }
+        select option { background: #1A1015 !important; color: white; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes sceneIn { from{opacity:0} to{opacity:1} }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+        .step-btn:hover { background: rgba(212,175,135,0.08) !important; border-color: rgba(212,175,135,0.3) !important; }
+        .platform-btn:hover { border-color: rgba(212,175,135,0.4) !important; color: #D4AF87 !important; }
+        textarea::placeholder { color: rgba(255,255,255,0.2); }
+        textarea:focus { border-color: rgba(212,175,135,0.3) !important; outline: none; }
+        select:focus { border-color: rgba(212,175,135,0.3) !important; outline: none; }
+      `}</style>
 
-      {/* ── TRANSFORMATION ── */}
-      <section className="section diff">
-        <div className="section-inner">
-          <div className="section-tag inter">The transformation</div>
-          <h2 className="section-h2 cg">Before.<br /><em>After.</em></h2>
-          <div className="diff-grid">
-            <div className="diff-col diff-col-before">
-              <div className="diff-col-label inter">Without SuperCool</div>
-              {[
-                'Hours spent guessing what to post',
-                'Robotic AI humans with dead eyes',
-                'Generic prompts, generic output',
-                'Content that looks AI-generated',
-                'No brand identity or visual signature',
-                'Low engagement, no emotional connection',
-                'Creative burnout every single week',
-              ].map(t => (
-                <div className="diff-row" key={t}>
-                  <span className="diff-icon">—</span>
-                  <span className="diff-text inter">{t}</span>
-                </div>
-              ))}
+      {/* ── TOP NAV ── */}
+      <nav style={{
+        display:'flex', alignItems:'center', justifyContent:'space-between',
+        padding:'0 24px', height:52, flexShrink:0,
+        borderBottom:'1px solid rgba(255,255,255,0.06)',
+        background:'rgba(13,10,14,0.98)', backdropFilter:'blur(12px)',
+        position:'sticky', top:0, zIndex:100,
+      }}>
+        <div style={{display:'flex',alignItems:'center',gap:32}}>
+          <a href="/" style={{textDecoration:'none'}}>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:600,fontSize:14,color:'#F5F0E8',letterSpacing:'0.12em',textTransform:'uppercase' as const,lineHeight:1}}>
+              Super<em style={{color:'#D4AF87',fontStyle:'italic',fontWeight:300}}>cool</em>
             </div>
-            <div className="diff-divider" />
-            <div className="diff-col diff-col-after">
-              <div className="diff-col-label inter">With SuperCool</div>
-              {[
-                'Full campaign ready in 60 seconds',
-                'Believable human motion and skin realism',
-                'Cinematic direction built into every brief',
-                'Content that looks filmed, not generated',
-                'Locked creator identity across every post',
-                'Emotional storytelling that drives results',
-                'Creative confidence — never blank again',
-              ].map(t => (
-                <div className="diff-row" key={t}>
-                  <span className="diff-icon" style={{ color: 'var(--blush)' }}>↗</span>
-                  <span className="diff-text inter">{t}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── HUMAN REALISM ENGINE ── */}
-      <section className="section realism">
-        <div className="section-inner">
-          <div className="realism-layout">
-            <div>
-              <div className="section-tag inter">Human Realism Engine™</div>
-              <h2 className="section-h2 cg">We engineer<br /><em>believable</em><br />humans.</h2>
-              <p className="section-sub inter" style={{ marginTop: '24px' }}>
-                Every AI character generated through SuperCool is built on a biological realism system — the same principles that make Rockstar Games characters feel alive. Not avatars. Not templates. Humans.
-              </p>
-            </div>
-            <div className="realism-right">
-              <div className="realism-grid">
-                {[
-                  { icon: '👁️', title: 'Eye Behaviour System', desc: 'Saccadic movement, lid weight, dilation response. Eyes that actually see — not eyes that stare.', tag: 'Ocular Realism' },
-                  { icon: '🫁', title: 'Breathing Architecture', desc: 'Chest rise, clavicle shift, subtle shoulder movement. The character breathes between every line.', tag: 'Respiratory Motion' },
-                  { icon: '🤝', title: 'Asymmetric Movement', desc: 'Real humans don\'t move symmetrically. Micro-asymmetry is built into every gesture and expression.', tag: 'Natural Imperfection' },
-                  { icon: '🎭', title: 'Micro-Expression Engine', desc: 'Involuntary facial movements — jaw tension, nostril flare, brow microlifts — before the emotion lands.', tag: 'Emotional Leakage' },
-                  { icon: '👗', title: 'Fabric Physics', desc: 'Clothing moves with the body. Gravity, weight, texture response — material that behaves like material.', tag: 'Procedural Fabric' },
-                  { icon: '⏱️', title: 'Behavioural Delay', desc: 'Real humans hesitate. Pause. Self-correct. Timing imperfection is the signature of a real person.', tag: 'Temporal Realism' },
-                  { icon: '🧬', title: 'Skin Truth System', desc: 'Pore depth, subsurface scattering, oil variation, flush response. Skin that reacts to light correctly.', tag: 'Biological Texture' },
-                  { icon: '🎬', title: 'GTA-Style Realism', desc: 'Procedural NPC-level movement systems applied to creator characters. Inhabited, not performed.', tag: 'Motion Capture Logic' },
-                ].map(r => (
-                  <div className="realism-card" key={r.title}>
-                    <span className="realism-card-icon">{r.icon}</span>
-                    <div className="realism-card-title inter">{r.title}</div>
-                    <div className="realism-card-desc inter">{r.desc}</div>
-                    <span className="realism-tag inter">{r.tag}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── MOTION PSYCHOLOGY ── */}
-      <section className="section motion">
-        <div className="section-inner">
-          <div className="motion-header">
-            <div>
-              <div className="section-tag inter">Motion Psychology™</div>
-              <h2 className="section-h2 cg">Movement<br /><em>engineered</em><br />to retain.</h2>
-            </div>
-            <div>
-              <p className="section-sub inter">
-                Every camera angle, cut timing, and body movement in your brief is calculated to hold attention, trigger emotion, and drive action — based on how the human nervous system processes visual motion.
-              </p>
-            </div>
-          </div>
-          <div className="motion-principles">
-            {[
-              { n: '01', title: 'Attention Engineering', desc: 'The first 0.3 seconds determine everything. SuperCool briefs are built to interrupt the scroll with pattern-breaking visual information that forces attention.' },
-              { n: '02', title: 'Retention Pacing', desc: 'Cognitive load, visual novelty cycles, and tension-release pacing — structured to hold watch-through from first frame to CTA.' },
-              { n: '03', title: 'Subconscious Realism', desc: 'Your brain detects fake humans in milliseconds. Our realism systems neutralise the uncanny valley — so trust is felt, not decided.' },
-              { n: '04', title: 'Platform-Native Movement', desc: 'TikTok physics, Reels pacing, Shorts rhythm — each brief is calibrated to how movement performs on each specific platform.' },
-              { n: '05', title: 'Emotional Camera Behaviour', desc: 'Camera distance, angle, lens choice and movement direction are psychological tools. SuperCool assigns each based on the emotional outcome required.' },
-              { n: '06', title: 'Narrative Escalation', desc: 'Desire → friction → release → aspiration. Every campaign follows emotional escalation architecture — the same structure used in luxury advertising.' },
-            ].map(m => (
-              <div className="motion-card" key={m.n}>
-                <div className="motion-card-num cg">{m.n}</div>
-                <div className="motion-card-title inter">{m.title}</div>
-                <div className="motion-card-desc inter">{m.desc}</div>
-              </div>
+            <div style={{fontSize:8,color:'rgba(255,255,255,0.2)',letterSpacing:'0.2em',textTransform:'uppercase' as const}}>Influencer</div>
+          </a>
+          <div style={{display:'flex',gap:4}}>
+            {['Generate','History','Templates','Brand Kit'].map((item,i) => (
+              <button key={item} style={{
+                padding:'6px 14px', borderRadius:4, fontSize:12, fontWeight:i===0?500:400,
+                border:'none', cursor:'pointer',
+                background:i===0 ? 'rgba(212,175,135,0.12)' : 'transparent',
+                color:i===0 ? '#D4AF87' : 'rgba(255,255,255,0.35)',
+                display:'flex',alignItems:'center',gap:6,
+              }}>
+                {i===0 && <span style={{fontSize:10}}>⚡</span>}
+                {item}
+              </button>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* ── GENERATE FLOW ── */}
-      <section className="section flow">
-        <div className="section-inner">
-          <div className="section-tag inter">The experience</div>
-          <h2 className="section-h2 cg">One idea.<br /><em>Full campaign.</em><br />60 seconds.</h2>
-          <div className="flow-ui">
-            <div className="flow-ui-bar">
-              <div className="flow-dot" style={{ background: '#FF5F57' }} />
-              <div className="flow-dot" style={{ background: '#FFBD2E' }} />
-              <div className="flow-dot" style={{ background: '#28CA41' }} />
-              <div className="flow-url inter">supercoolinfluencer.com/generate</div>
+        <div style={{display:'flex',alignItems:'center',gap:16}}>
+          <div style={{
+            display:'flex',alignItems:'center',gap:8,padding:'6px 14px',
+            border:'1px solid rgba(212,175,135,0.2)',borderRadius:4,
+            background:'rgba(212,175,135,0.06)',
+          }}>
+            <span style={{fontSize:12}}>⚡</span>
+            <div>
+              <div style={{fontSize:9,color:'rgba(255,255,255,0.3)',letterSpacing:'0.1em',textTransform:'uppercase' as const}}>Credits</div>
+              <div style={{fontSize:13,fontWeight:600,color:'#D4AF87'}}>1,250</div>
             </div>
-            <div className="flow-body">
-              <div className="flow-input">
-                <div>
-                  <div className="flow-input-label inter">Your Idea</div>
-                  <div className="flow-input-field active inter">"Luxury skincare morning routine. Soft natural light. Real skin texture. Confident, unhurried energy."</div>
-                </div>
-                <div>
-                  <div className="flow-input-label inter">Platform</div>
-                  <div className="flow-input-field inter">Instagram Reels + TikTok</div>
-                </div>
-                <div>
-                  <div className="flow-input-label inter">Angle</div>
-                  <div className="flow-input-field inter">Before vs After — Skin Transformation</div>
-                </div>
-                <div>
-                  <div className="flow-input-label inter">Creator Style</div>
-                  <div className="flow-input-field inter">Luxury lifestyle — minimal, cinematic</div>
-                </div>
-                <div className="flow-generate inter">⚡ Generate Campaign</div>
+          </div>
+          <div style={{
+            width:32,height:32,borderRadius:'50%',
+            background:'linear-gradient(135deg,#8B5E3C,#D4AF87)',
+            display:'flex',alignItems:'center',justifyContent:'center',
+            fontSize:13,fontWeight:600,color:'white',cursor:'pointer',
+          }}>K</div>
+        </div>
+      </nav>
+
+      {/* ── MAIN SPLIT ── */}
+      <div style={{display:'flex',flex:1,overflow:'hidden',minHeight:0}}>
+
+        {/* ── LEFT: VISUAL PREVIEW ── */}
+        <div style={{
+          width:'47%', flexShrink:0, position:'relative',
+          background:'#0A0709', overflow:'hidden',
+          display:'flex', flexDirection:'column' as const,
+        }}>
+          {/* Scene preview */}
+          <div key={previewIdx} style={{
+            flex:1, background:scene.bg,
+            position:'relative', animation:'sceneIn 1.2s ease',
+            display:'flex', flexDirection:'column' as const,
+            justifyContent:'space-between', padding:20,
+          }}>
+            {/* Overlay */}
+            <div style={{position:'absolute',inset:0,background:'linear-gradient(to bottom,rgba(0,0,0,0.15) 0%,transparent 40%,rgba(0,0,0,0.6) 100%)',pointerEvents:'none'}} />
+
+            {/* Top badge */}
+            <div style={{position:'relative',zIndex:2,display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
+              <div style={{
+                display:'flex',alignItems:'center',gap:6,
+                background:'rgba(0,0,0,0.4)',backdropFilter:'blur(8px)',
+                border:'1px solid rgba(255,255,255,0.15)',
+                borderRadius:4,padding:'5px 10px',
+              }}>
+                <div style={{width:6,height:6,borderRadius:'50%',background:'#4ADE80',animation:'pulse 1.5s infinite'}} />
+                <span style={{fontSize:10,fontWeight:600,letterSpacing:'0.1em',color:'white'}}>VISUAL PREVIEW</span>
               </div>
-              <div className="flow-output">
-                {[
-                  { icon: '🎬', title: 'Campaign Brief', content: '<strong>Concept:</strong> Morning ritual as devotion. Character wakes before the city. Soft amber. Real skin. No performance. Pure presence.' },
-                  { icon: '🖼️', title: 'Image Prompt', content: '<strong>Seedance:</strong> "Close ECU, cheekbone to clavicle. Subsurface scattering active. Morning light from left. Skin pore depth 0.4. Nostril fill shadow. No symmetry lock."' },
-                  { icon: '🎥', title: 'Reel Direction', content: '<strong>Scene 1 [0–3s]:</strong> Macro on eyelid opening. Blink delay 0.3s. Catch light enters iris. No cut. Hold.' },
-                  { icon: '✍️', title: 'Caption + Hook', content: '<strong>Hook:</strong> "The AI skin that breaks the uncanny valley." Caption: Scientifically engineered. Emotionally real. This is what good looks like.' },
-                  { icon: '#', title: 'Hashtags + Keywords', content: '#AICreator #SkinRealism #LuxuryContent #CinematicAI #MotionPsychology #ViralReels' },
-                ].map(o => (
-                  <div className="flow-output-tab" key={o.title}>
-                    <span className="flow-output-tab-icon">{o.icon}</span>
+              <div style={{
+                background:'rgba(0,0,0,0.5)',backdropFilter:'blur(8px)',
+                border:'1px solid rgba(255,255,255,0.15)',
+                borderRadius:4,padding:'5px 10px',fontSize:11,fontWeight:600,color:'white',
+              }}>9:16</div>
+            </div>
+
+            {/* Bottom info */}
+            <div style={{position:'relative',zIndex:2}}>
+              {/* Shot insight card */}
+              <div style={{
+                background:'rgba(0,0,0,0.55)',backdropFilter:'blur(12px)',
+                border:'1px solid rgba(255,255,255,0.1)',
+                borderRadius:8,padding:'12px 14px',marginBottom:12,
+              }}>
+                <div style={{fontSize:9,fontWeight:600,letterSpacing:'0.14em',color:'rgba(212,175,135,0.7)',textTransform:'uppercase' as const,marginBottom:6}}>Shot Insight</div>
+                <div style={{fontSize:12,color:'rgba(255,255,255,0.75)',lineHeight:1.5,fontWeight:300}}>
+                  {scene.label} creates cinematic depth and emotional warmth — ideal for retention.
+                </div>
+              </div>
+
+              {/* Thumbnail strip */}
+              <div style={{display:'flex',gap:6}}>
+                {PREVIEW_SCENES.map((sc,i) => (
+                  <div
+                    key={i}
+                    onClick={() => setPreviewIdx(i)}
+                    style={{
+                      flex:1,height:48,borderRadius:4,cursor:'pointer',
+                      background:sc.bg,
+                      border:'1px solid '+(i===previewIdx ? 'rgba(212,175,135,0.8)' : 'rgba(255,255,255,0.15)'),
+                      transition:'border-color 0.3s',overflow:'hidden',
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Playbar */}
+              <div style={{marginTop:12,display:'flex',alignItems:'center',gap:10}}>
+                <div style={{width:24,height:24,borderRadius:'50%',background:'rgba(255,255,255,0.15)',display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',fontSize:10}}>▶</div>
+                <div style={{flex:1,height:2,background:'rgba(255,255,255,0.15)',borderRadius:1,position:'relative'}}>
+                  <div style={{width:'30%',height:'100%',background:'rgba(212,175,135,0.8)',borderRadius:1}} />
+                  <div style={{position:'absolute',top:'50%',left:'30%',transform:'translate(-50%,-50%)',width:8,height:8,borderRadius:'50%',background:'#D4AF87'}} />
+                </div>
+                <span style={{fontSize:10,color:'rgba(255,255,255,0.4)',fontFamily:'monospace'}}>00:12</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Realism Engine Status */}
+          <div style={{
+            background:'#0F0B10',
+            borderTop:'1px solid rgba(255,255,255,0.06)',
+            padding:'14px 20px',
+          }}>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}}>
+              <span style={{fontSize:10,fontWeight:600,letterSpacing:'0.14em',color:'rgba(255,255,255,0.5)',textTransform:'uppercase' as const}}>Human Realism Engine</span>
+              <span style={{fontSize:10,fontWeight:700,color:'#4ADE80',letterSpacing:'0.08em'}}>ACTIVE</span>
+            </div>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'6px 16px'}}>
+              {['Skin Texture Simulation','Natural Lighting','Behavioral Delay','Fabric & Hair Physics','Micro Expressions','Eye Movement Tracking'].map(f => (
+                <div key={f} style={{display:'flex',alignItems:'center',gap:6,fontSize:11,color:'rgba(255,255,255,0.45)'}}>
+                  <span style={{color:'#4ADE80',fontSize:9}}>✓</span> {f}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── RIGHT: FORM ── */}
+        <div style={{flex:1,display:'flex',flexDirection:'column' as const,overflow:'hidden',borderLeft:'1px solid rgba(255,255,255,0.06)'}}>
+
+          {/* Step nav */}
+          <div style={{
+            padding:'0 24px',height:44,display:'flex',alignItems:'center',
+            justifyContent:'space-between',
+            borderBottom:'1px solid rgba(255,255,255,0.06)',
+            background:'rgba(255,255,255,0.02)',flexShrink:0,
+          }}>
+            <div style={{display:'flex',gap:4}}>
+              {STEPS.map((s,i) => (
+                <button
+                  key={s}
+                  onClick={() => i < step && setStep(i+1)}
+                  className="step-btn"
+                  style={{
+                    padding:'4px 12px',borderRadius:4,fontSize:11,fontWeight:500,
+                    cursor:i < step ? 'pointer' : 'default',
+                    border:'1px solid '+(i+1===step ? 'rgba(212,175,135,0.4)' : 'transparent'),
+                    background:i+1===step ? 'rgba(212,175,135,0.1)' : 'transparent',
+                    color:i+1===step ? '#D4AF87' : i+1<step ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.2)',
+                    letterSpacing:'0.04em',
+                  }}
+                >
+                  {i+1 < step && <span style={{marginRight:4,color:'rgba(212,175,135,0.5)'}}>✓</span>}
+                  {s}
+                </button>
+              ))}
+            </div>
+            <div style={{
+              width:120,height:2,background:'rgba(255,255,255,0.08)',
+              borderRadius:1,overflow:'hidden',
+            }}>
+              <div style={{
+                height:'100%',width:`${progress}%`,
+                background:'linear-gradient(90deg,rgba(212,175,135,0.5),#D4AF87)',
+                transition:'width 0.4s ease',borderRadius:1,
+              }} />
+            </div>
+          </div>
+
+          {/* Form content */}
+          <div style={{flex:1,overflowY:'auto' as const,padding:'24px'}}>
+
+            {/* ── STEP 1: CONTENT ── */}
+            {step===1 && (
+              <div style={{animation:'fadeIn 0.3s ease'}}>
+                <div style={{marginBottom:24}}>
+                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>What are you creating?</div>
+                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>Define your content mode and niche.</div>
+                </div>
+
+                <div style={{marginBottom:20}}>
+                  <div style={lbl}>Mode</div>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+                    {[{id:'content',icon:'🎬',title:'Content Creator',desc:'Organic TikTok, Reels, Shorts'},{id:'ugc_ads',icon:'📢',title:'UGC Ads Mode',desc:'Meta Ads, TikTok Ads Manager'}].map(m => (
+                      <button key={m.id} onClick={() => {setMode(m.id as any); set('mode',m.id);}} style={{
+                        padding:'14px',borderRadius:6,textAlign:'left' as const,cursor:'pointer',
+                        border:'1px solid '+(mode===m.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.07)'),
+                        background:mode===m.id ? 'rgba(212,175,135,0.08)' : 'rgba(255,255,255,0.03)',
+                        transition:'all 0.2s',
+                      }}>
+                        <div style={{fontSize:18,marginBottom:6}}>{m.icon}</div>
+                        <div style={{fontSize:13,fontWeight:600,color:mode===m.id ? '#D4AF87' : 'rgba(255,255,255,0.8)',marginBottom:3}}>{m.title}</div>
+                        <div style={{fontSize:11,color:'rgba(255,255,255,0.3)',fontWeight:300}}>{m.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {mode==='ugc_ads' && (
+                  <div style={{marginBottom:20}}>
+                    <ChipGroup label="Ad Angle" field="adAngle" options={AD_ANGLES} />
                     <div>
-                      <div className="flow-output-tab-title inter">{o.title}</div>
-                      <div className="flow-output-tab-content inter" dangerouslySetInnerHTML={{ __html: o.content }} />
+                      <div style={lbl}>Product Description</div>
+                      <textarea
+                        placeholder="e.g. Dina Bright Radiant Glow Knuckle Serum — brightening serum for dark knuckles..."
+                        value={form.productDescription}
+                        onChange={e => set('productDescription',e.target.value)}
+                        rows={3} style={ta}
+                      />
                     </div>
                   </div>
-                ))}
+                )}
+
+                <ChipGroup label="Niche" field="niche" options={NICHES} />
+
+                <div style={{marginBottom:20}}>
+                  <div style={lbl}>Platform</div>
+                  <div style={{display:'flex',gap:6,flexWrap:'wrap' as const}}>
+                    {PLATFORMS.map(p => (
+                      <button key={p.id} onClick={() => set('platform',p.id)} className="platform-btn" style={{
+                        padding:'8px 14px',borderRadius:5,fontSize:12,fontWeight:500,cursor:'pointer',
+                        border:'1px solid '+(form.platform===p.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.08)'),
+                        background:form.platform===p.id ? 'rgba(212,175,135,0.1)' : 'rgba(255,255,255,0.03)',
+                        color:form.platform===p.id ? '#D4AF87' : 'rgba(255,255,255,0.4)',
+                        transition:'all 0.2s',
+                      }}>{p.label}</button>
+                    ))}
+                  </div>
+                </div>
               </div>
+            )}
+
+            {/* ── STEP 2: CREATIVE ── */}
+            {step===2 && (
+              <div style={{animation:'fadeIn 0.3s ease'}}>
+                <div style={{marginBottom:24}}>
+                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>Define the creative.</div>
+                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>Who speaks, who watches, what happens.</div>
+                </div>
+
+                <div style={{marginBottom:16}}>
+                  <div style={lbl}>Target Audience</div>
+                  <textarea placeholder="e.g. Women 25-35 who want glowy skin but are overwhelmed by routines..." value={form.targetAudience} onChange={e => set('targetAudience',e.target.value)} rows={2} style={ta} />
+                </div>
+                <div style={{marginBottom:16}}>
+                  <div style={lbl}>Avatar Action — What Happens in the Video</div>
+                  <textarea placeholder="e.g. She applies serum to her knuckles mid-FaceTime call, shows before/after..." value={form.avatarAction} onChange={e => set('avatarAction',e.target.value)} rows={2} style={ta} />
+                </div>
+                <div style={{marginBottom:20}}>
+                  <div style={lbl}>Your Brief — Extra Direction</div>
+                  <textarea placeholder="e.g. Tone should feel like a real girl sharing a secret with her friend, not a polished ad..." value={form.customBrief} onChange={e => set('customBrief',e.target.value)} rows={3} style={ta} />
+                </div>
+                <ChipGroup label="Content Vibe" field="influencerVibe" options={VIBES} />
+                <ChipGroup label="Visual Aesthetic" field="aesthetic" options={AESTHETICS} />
+                {mode==='ugc_ads' && <ChipGroup label="UGC Style" field="ugcStyle" options={UGC_STYLES} />}
+              </div>
+            )}
+
+            {/* ── STEP 3: CHARACTER ── */}
+            {step===3 && (
+              <div style={{animation:'fadeIn 0.3s ease'}}>
+                <div style={{marginBottom:24}}>
+                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>Build your character.</div>
+                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>Who is the AI human in your video?</div>
+                </div>
+
+                <div style={{marginBottom:14}}>
+                  <div style={lbl}>Gender</div>
+                  <div style={{display:'flex',gap:8}}>
+                    {['female','male'].map(g => (
+                      <button key={g} onClick={() => { set('gender',g); set('hairstyle',''); set('outfit',''); setOutfitCat(g==='female' ? 'AI UGC / Creator' : 'Streetwear / Hype'); setHairstyleType('general'); }} style={{
+                        flex:1,padding:'10px',borderRadius:6,cursor:'pointer',
+                        border:'1px solid '+(form.gender===g ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.08)'),
+                        background:form.gender===g ? 'rgba(212,175,135,0.1)' : 'rgba(255,255,255,0.03)',
+                        color:form.gender===g ? '#D4AF87' : 'rgba(255,255,255,0.4)',
+                        fontSize:13,fontWeight:500,textTransform:'capitalize' as const,
+                      }}>{g}</button>
+                    ))}
+                  </div>
+                </div>
+
+                <Drop label="Character Archetype" field="characterArchetype" options={CHARACTERS} />
+                <Drop label="Ethnicity" field="ethnicity" options={ETHNICITIES} />
+                <Drop label="Age Range" field="ageRange" options={AGE_RANGES} />
+                <Drop label="Body Type" field="bodyType" options={form.gender==='female' ? FEMALE_BODY_TYPES : MALE_BODY_TYPES} />
+
+                {form.gender==='male' && (
+                  <div style={{marginBottom:14}}>
+                    <div style={lbl}>Hairstyle Type</div>
+                    <div style={{display:'flex',gap:6,marginBottom:10}}>
+                      {[{id:'general',label:'General'},{id:'black',label:'Black / Dark Skin'}].map(t => (
+                        <button key={t.id} onClick={() => { setHairstyleType(t.id); set('hairstyle',''); }} style={{flex:1,padding:'8px',borderRadius:5,border:'1px solid '+(hairstyleType===t.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.08)'),background:hairstyleType===t.id ? 'rgba(212,175,135,0.1)' : 'rgba(255,255,255,0.03)',color:hairstyleType===t.id ? '#D4AF87' : 'rgba(255,255,255,0.4)',cursor:'pointer',fontSize:12}}>{t.label}</button>
+                      ))}
+                    </div>
+                    <Drop label="Hairstyle" field="hairstyle" options={hairstyleType==='black' ? MALE_HAIRSTYLES_BLACK : MALE_HAIRSTYLES_GENERAL} />
+                  </div>
+                )}
+
+                {form.gender==='female' && <Drop label="Hairstyle" field="hairstyle" options={FEMALE_HAIRSTYLES} />}
+                <Drop label="Hair Color" field="hairColor" options={HAIR_COLORS} />
+
+                {form.gender==='male' && (
+                  <>
+                    <Drop label="Beard" field="beardOption" options={BEARD_OPTIONS} />
+                    <Drop label="Tattoos" field="tattooOption" options={TATTOO_OPTIONS} />
+                  </>
+                )}
+
+                <div style={{marginBottom:14}}>
+                  <div style={lbl}>Outfit Category</div>
+                  <select value={outfitCat} onChange={e => { setOutfitCat(e.target.value); set('outfit',''); }} style={dropStyle}>
+                    {Object.keys(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS).map(c => <option key={c} value={c} style={{background:'#1A1015'}}>{c}</option>)}
+                  </select>
+                </div>
+                <div style={{marginBottom:14}}>
+                  <div style={lbl}>Specific Look</div>
+                  <select value={form.outfit} onChange={e => set('outfit',e.target.value)} style={dropStyle}>
+                    <option value="" style={{background:'#1A1015'}}>Select a look</option>
+                    {(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS)[outfitCat]?.map(o => <option key={o} value={o} style={{background:'#1A1015'}}>{o}</option>)}
+                  </select>
+                </div>
+                <Drop label="Accessories" field="accessories" options={form.gender==='female' ? FEMALE_ACCESSORIES : MALE_ACCESSORIES} />
+              </div>
+            )}
+
+            {/* ── STEP 4: SCENE ── */}
+            {step===4 && (
+              <div style={{animation:'fadeIn 0.3s ease'}}>
+                <div style={{marginBottom:24}}>
+                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>Set the scene.</div>
+                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>Where does this happen?</div>
+                </div>
+                <div style={{marginBottom:16}}>
+                  <div style={lbl}>Scene Location</div>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6}}>
+                    {SCENE_LOCATIONS.map(scene => (
+                      <button key={scene.id} onClick={() => set('sceneLocation',scene.id)} style={{
+                        padding:'12px',borderRadius:6,cursor:'pointer',textAlign:'left' as const,
+                        border:'1px solid '+(form.sceneLocation===scene.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.07)'),
+                        background:form.sceneLocation===scene.id ? 'rgba(212,175,135,0.08)' : 'rgba(255,255,255,0.03)',
+                        transition:'all 0.2s',
+                      }}>
+                        <div style={{fontSize:12,fontWeight:600,color:form.sceneLocation===scene.id ? '#D4AF87' : 'rgba(255,255,255,0.75)',marginBottom:2}}>{scene.label}</div>
+                        <div style={{fontSize:10,color:'rgba(255,255,255,0.3)',fontWeight:300}}>{scene.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <Drop label="Camera Angle" field="cameraAngle" options={CAMERA_ANGLES} />
+                <Drop label="Lighting Type" field="lightingType" options={LIGHTING_TYPES} />
+              </div>
+            )}
+
+            {/* ── STEP 5: REALISM ── */}
+            {step===5 && (
+              <div style={{animation:'fadeIn 0.3s ease'}}>
+                <div style={{marginBottom:24}}>
+                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontWeight:300,fontSize:26,color:'#F5F0E8',letterSpacing:'-0.5px',marginBottom:4}}>Set the realism.</div>
+                  <div style={{fontSize:12,color:'rgba(255,255,255,0.3)',fontWeight:300}}>How human does this feel?</div>
+                </div>
+                <div style={{display:'flex',flexDirection:'column' as const,gap:8,marginBottom:24}}>
+                  {REALISM_MODES.map(m => (
+                    <button key={m.id} onClick={() => set('realismMode',m.id)} style={{
+                      padding:'16px',borderRadius:6,cursor:'pointer',textAlign:'left' as const,
+                      border:'1px solid '+(form.realismMode===m.id ? 'rgba(212,175,135,0.5)' : 'rgba(255,255,255,0.07)'),
+                      background:form.realismMode===m.id ? 'rgba(212,175,135,0.08)' : 'rgba(255,255,255,0.03)',
+                      transition:'all 0.2s',
+                    }}>
+                      <div style={{fontSize:13,fontWeight:600,color:form.realismMode===m.id ? '#D4AF87' : 'rgba(255,255,255,0.8)',marginBottom:4}}>{m.label}</div>
+                      <div style={{fontSize:11,color:'rgba(255,255,255,0.35)',fontWeight:300}}>{m.desc}</div>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Summary */}
+                <div style={{
+                  background:'rgba(255,255,255,0.02)',
+                  border:'1px solid rgba(255,255,255,0.06)',
+                  borderRadius:8,padding:16,
+                }}>
+                  <div style={{fontSize:9,fontWeight:600,color:'rgba(212,175,135,0.5)',letterSpacing:'0.16em',textTransform:'uppercase' as const,marginBottom:12}}>Campaign Summary</div>
+                  <div style={{display:'flex',flexDirection:'column' as const,gap:6}}>
+                    {[
+                      {label:'Mode', value:mode==='ugc_ads' ? 'UGC Ads' : 'Content Creator'},
+                      {label:'Niche', value:form.niche},
+                      {label:'Platform', value:form.platform},
+                      {label:'Vibe', value:form.influencerVibe},
+                      {label:'Character', value:[form.gender, form.ethnicity, form.ageRange].filter(Boolean).join(' · ')},
+                      {label:'Look', value:form.outfit},
+                      {label:'Scene', value:SCENE_LOCATIONS.find(sc => sc.id===form.sceneLocation)?.label||''},
+                      {label:'Realism', value:REALISM_MODES.find(m => m.id===form.realismMode)?.label||''},
+                    ].filter(i => i.value).map(item => (
+                      <div key={item.label} style={{display:'flex',gap:8,fontSize:11}}>
+                        <span style={{color:'rgba(255,255,255,0.25)',minWidth:70,fontWeight:300}}>{item.label}</span>
+                        <span style={{color:'rgba(255,255,255,0.7)',fontWeight:400}}>{item.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ── BOTTOM ACTIONS ── */}
+          <div style={{
+            padding:'14px 24px',
+            borderTop:'1px solid rgba(255,255,255,0.06)',
+            background:'rgba(255,255,255,0.02)',
+            display:'flex',alignItems:'center',justifyContent:'space-between',
+            flexShrink:0,
+          }}>
+            <div>
+              {step > 1 && (
+                <button onClick={() => setStep(s => s-1)} style={{
+                  background:'none',border:'none',color:'rgba(255,255,255,0.3)',
+                  cursor:'pointer',fontSize:12,letterSpacing:'0.06em',
+                  fontFamily:"'Inter',sans-serif",
+                }}>← Back</button>
+              )}
+            </div>
+
+            <div style={{display:'flex',alignItems:'center',gap:12}}>
+              {/* Technical settings strip */}
+              {step===5 && (
+                <div style={{display:'flex',gap:16,marginRight:8}}>
+                  {[
+                    {icon:'📐',label:'Platform',val:form.platform},
+                    {icon:'📏',label:'Ratio',val:'9:16'},
+                    {icon:'⏱️',label:'Duration',val:'15 sec'},
+                  ].map(t => (
+                    <div key={t.label} style={{textAlign:'center' as const}}>
+                      <div style={{fontSize:14,marginBottom:2}}>{t.icon}</div>
+                      <div style={{fontSize:9,color:'rgba(255,255,255,0.2)',textTransform:'uppercase' as const,letterSpacing:'0.1em'}}>{t.label}</div>
+                      <div style={{fontSize:10,color:'rgba(255,255,255,0.5)',fontWeight:500,textTransform:'capitalize' as const}}>{t.val}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {step < 5 ? (
+                <button
+                  onClick={() => setStep(s => s+1)}
+                  disabled={step===1 && !form.niche}
+                  style={{
+                    background:step===1 && !form.niche ? 'rgba(212,175,135,0.3)' : '#D4AF87',
+                    color:'#0D0A0E',padding:'10px 28px',borderRadius:4,
+                    fontSize:12,fontWeight:600,cursor:step===1 && !form.niche ? 'not-allowed' : 'pointer',
+                    border:'none',letterSpacing:'0.08em',textTransform:'uppercase' as const,
+                    transition:'all 0.2s',
+                  }}
+                >
+                  Continue →
+                </button>
+              ) : (
+                <button
+                  onClick={handleGenerate}
+                  style={{
+                    background:'#D4AF87',color:'#0D0A0E',
+                    padding:'10px 32px',borderRadius:4,
+                    fontSize:12,fontWeight:700,cursor:'pointer',
+                    border:'none',letterSpacing:'0.08em',textTransform:'uppercase' as const,
+                    display:'flex',alignItems:'center',gap:8,
+                    boxShadow:'0 4px 20px rgba(212,175,135,0.3)',
+                  }}
+                >
+                  <span>⚡</span> Generate Campaign
+                </button>
+              )}
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* ── FOR WHO ── */}
-      <section className="section forwho">
-        <div className="section-inner">
-          <div className="section-tag inter">This is built for</div>
-          <h2 className="section-h2 cg">Every creator.<br /><em>Every brand.</em></h2>
-          <div className="forwho-grid">
-            {[
-              { e: '🎬', title: 'AI Creators', desc: 'You create with AI tools and need output that doesn\'t look AI-generated. Realism is your competitive edge.' },
-              { e: '💄', title: 'Beauty & Lifestyle', desc: 'Your niche is visual luxury. You need skin truth, texture, light behaviour. SuperCool was built with you first.' },
-              { e: '👗', title: 'Fashion & Aesthetic', desc: 'Fabric physics, editorial composition, identity lock across every frame. Your aesthetic — consistent, cinematic.' },
-              { e: '🛍️', title: 'Brand Owners', desc: 'Product ads that feel human. No production team. No weeks of creative. Brief → campaign in 60 seconds.' },
-              { e: '📱', title: 'Content Agencies', desc: 'Scale output without scaling headcount. Generate client campaigns in minutes — not days.' },
-              { e: '🌍', title: 'Luxury Lifestyle', desc: 'Your world is elevated. Your content should feel the same. Cinematic direction built into every single brief.' },
-              { e: '🧠', title: 'Burned-Out Creators', desc: 'The blank page is over. SuperCool generates the idea, the direction, the prompts, and the copy. You just create.' },
-              { e: '⚡', title: 'Fast Movers', desc: 'Trend moves fast. SuperCool moves faster. Idea to campaign-ready content before the moment passes.' },
-            ].map(f => (
-              <div className="forwho-card" key={f.title}>
-                <span className="forwho-emoji">{f.e}</span>
-                <div className="forwho-title inter">{f.title}</div>
-                <div className="forwho-desc inter">{f.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── PLATFORMS ── */}
-      <section className="platforms">
-        <div className="platforms-inner">
-          <div className="section-tag inter">Works with every tool</div>
-          <h2 className="section-h2 cg" style={{ fontSize: 'clamp(32px, 5vw, 56px)', marginBottom: '8px' }}>Your brief.<br /><em>Any platform.</em></h2>
-          <div className="platforms-row">
-            {['Seedance 2.0', 'Kling 1.6', 'Runway Gen-4', 'Midjourney', 'Flux', 'HeyGen', 'TikTok', 'Instagram Reels', 'YouTube Shorts', 'Facebook', 'Nano Banana', 'Enhancor'].map(p => (
-              <span className="platform-pill inter" key={p}>{p}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <section className="cta-final">
-        <div className="cta-final-content">
-          <h2 className="cta-final-h2 cg">
-            Stop creating.
-            <em>Start directing.</em>
-          </h2>
-          <p className="cta-final-sub inter">
-            3 free campaigns. No credit card. No setup.<br />
-            Just your idea — and 60 seconds.
-          </p>
-          <Link href="/generate" className="btn-primary-lg inter">
-            Enter SuperCool
-          </Link>
-          <p className="cta-final-note inter">Human Realism Engine™ · Motion Psychology™ · Creator OS</p>
-        </div>
-      </section>
-
-      {/* ── FOOTER ── */}
-      <footer className="footer">
-        <div className="footer-logo">Super<em>cool</em> Influencer</div>
-        <div className="footer-links">
-          <a href="/pricing" className="footer-link inter">Pricing</a>
-          <a href="/generate" className="footer-link inter">Generate</a>
-          <a href="/sign-in" className="footer-link inter">Sign in</a>
-        </div>
-        <div className="footer-copy inter">© 2026 SuperCool Influencer. All rights reserved.</div>
-      </footer>
+      {/* ── MOBILE ── */}
+      <style>{`
+        @media (max-width: 768px) {
+          .split-left { display: none !important; }
+          .split-right { width: 100% !important; }
+        }
+      `}</style>
     </div>
   );
 }
