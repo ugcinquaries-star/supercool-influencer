@@ -111,13 +111,13 @@ if (credits <= 0) {
     const b5_nano = `You are an elite AI image director. Write ONE complete Nano Banana 2 prompt only.\n\n${ctxLines}\n\n${SKIN_ENGINE}\n\nStart with ACTION — what the character is doing. Apply full skin realism engine. HAIR: individual strands visible, natural movement, flyaways, NO helmet hair NO waxy shine. Full character, scene, lighting, emotion, camera. Every word must reinforce biological accuracy. Minimum 250 words.`;
 
     const [r1, r2, r3, r4, r_mj, r_flux, r_nano] = await Promise.all([
-      ask(b1, 1500),
-      ask(b2, 2500),
-      ask(b3, 3000),
+      ask(b1, 800),
+      ask(b2, 1200),
+      ask(b3, 1200),
       ask(b4, 2000),
-      ask(b5_mj, 1200),
-      ask(b5_flux, 1200),
-      ask(b5_nano, 1800),
+      ask(b5_mj, 600),
+      ask(b5_flux, 600),
+      ask(b5_nano, 800),
     ]);
 
     const briefData = safeJSON(r1, {
