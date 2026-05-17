@@ -2,6 +2,8 @@
 
 export default function PricingPage() {
   const handleCheckout = async (plan: string) => {
+    window.location.href = `/sign-in?redirect_url=/pricing`;
+    return;
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
