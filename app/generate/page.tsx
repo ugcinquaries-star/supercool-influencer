@@ -135,31 +135,31 @@ export default function GeneratePage() {
     <div style={{marginBottom:'16px'}}>
       <span style={s.label}>{label}</span>
       <select value={form[field as keyof typeof form]} onChange={e => set(field, e.target.value)} style={s.drop}>
-        <option value="" style={{background:'#0d0d14'}}>{placeholder || 'Select '+label}</option>
-        {options.map((o: string) => <option key={o} value={o} style={{background:'#0d0d14'}}>{o}</option>)}
+        <option value="" style={{background:'#131013'}}>{placeholder || 'Select '+label}</option>
+        {options.map((o: string) => <option key={o} value={o} style={{background:'#131013'}}>{o}</option>)}
       </select>
     </div>
   );
 
   if (loading) return (
-    <div style={{background:'#06060b',minHeight:'100vh',color:'white',fontFamily:'sans-serif',display:'flex',flexDirection:'column' as const,alignItems:'center',justifyContent:'center',gap:'24px'}}>
+    <div style={{background:'#0D0A0E',minHeight:'100vh',color:'white',fontFamily:'sans-serif',display:'flex',flexDirection:'column' as const,alignItems:'center',justifyContent:'center',gap:'24px'}}>
       <div style={{fontSize:'56px'}}>⚡</div>
       <h1 style={{fontSize:'32px',fontWeight:800,letterSpacing:'-1px'}}>Building your production brief...</h1>
       <p style={{color:'rgba(255,255,255,0.4)',fontSize:'16px'}}>Applying Alive Realism system. About 30 seconds.</p>
       <div style={{width:'240px',height:'3px',background:'rgba(255,255,255,0.1)',borderRadius:'2px',overflow:'hidden'}}>
-        <div style={{height:'100%',background:'linear-gradient(90deg, #7c3aed, #ec4899)',animation:'load 30s linear forwards',borderRadius:'2px'}} />
+        <div style={{height:'100%',background:'linear-gradient(90deg, #9E182B, #D4AF87)',animation:'load 30s linear forwards',borderRadius:'2px'}} />
       </div>
       <style>{'@keyframes load { from { width: 0% } to { width: 100% } }'}</style>
     </div>
   );
 
   return (
-    <div style={{background:'#06060b',minHeight:'100vh',color:'white',fontFamily:'sans-serif'}}>
+    <div style={{background:'#0D0A0E',minHeight:'100vh',color:'white',fontFamily:'sans-serif'}}>
       <div style={{height:'3px',background:'rgba(255,255,255,0.1)'}}>
-        <div style={{height:'100%',width:((step/5)*100)+'%',background:'linear-gradient(90deg, #7c3aed, #ec4899)',transition:'width 0.4s'}} />
+        <div style={{height:'100%',width:((step/5)*100)+'%',background:'linear-gradient(90deg, #9E182B, #D4AF87)',transition:'width 0.4s'}} />
       </div>
       <nav style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'18px 48px',borderBottom:'1px solid rgba(255,255,255,0.07)'}}>
-        <a href="/dashboard" style={{fontWeight:800,fontSize:'18px',textDecoration:'none',color:'white'}}>super<span style={{color:'#a78bfa'}}>cool</span> influencer</a>
+        <a href="/dashboard" style={{fontWeight:800,fontSize:'18px',textDecoration:'none',color:'white'}}>super<span style={{color:'#D4AF87'}}>cool</span> influencer</a>
         <div style={{fontSize:'13px',color:'rgba(255,255,255,0.4)'}}>Step {step} of 5</div>
       </nav>
 
@@ -174,9 +174,9 @@ export default function GeneratePage() {
               <span style={s.label}>Creation Mode</span>
               <div style={{display:'flex',gap:'12px'}}>
                 {[{id:'content',icon:'🎬',title:'Content Creator',desc:'Organic TikTok, Reels, Shorts'},{id:'ugc_ads',icon:'📢',title:'UGC Ads Mode',desc:'Meta Ads, TikTok Ads Manager'}].map(m => (
-                  <button key={m.id} onClick={() => {setMode(m.id as any); set('mode',m.id);}} style={{flex:1,padding:'18px',borderRadius:'12px',border:'1px solid '+(mode===m.id ? 'rgba(124,58,237,0.6)' : 'rgba(255,255,255,0.1)'),background:mode===m.id ? 'rgba(124,58,237,0.15)' : 'rgba(255,255,255,0.04)',cursor:'pointer',textAlign:'left' as const}}>
+                  <button key={m.id} onClick={() => {setMode(m.id as any); set('mode',m.id);}} style={{flex:1,padding:'18px',borderRadius:'12px',border:'1px solid '+(mode===m.id ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.1)'),background:mode===m.id ? 'rgba(158,24,43,0.12)' : 'rgba(255,255,255,0.04)',cursor:'pointer',textAlign:'left' as const}}>
                     <div style={{fontSize:'20px',marginBottom:'6px'}}>{m.icon}</div>
-                    <div style={{fontSize:'14px',fontWeight:700,color:mode===m.id ? '#c4b5fd' : 'white',marginBottom:'4px'}}>{m.title}</div>
+                    <div style={{fontSize:'14px',fontWeight:700,color:mode===m.id ? '#F2E0D2' : 'white',marginBottom:'4px'}}>{m.title}</div>
                     <div style={{fontSize:'12px',color:'rgba(255,255,255,0.4)'}}>{m.desc}</div>
                   </button>
                 ))}
@@ -191,12 +191,12 @@ export default function GeneratePage() {
                 </div>
               </div>
             )}
-            <ChipGroup label="Niche" field="niche" options={NICHES} color="#a78bfa" />
+            <ChipGroup label="Niche" field="niche" options={NICHES} color="#D4AF87" />
             <div style={{marginBottom:'24px'}}>
               <span style={s.label}>Platform</span>
               <div style={{display:'flex',gap:'8px',flexWrap:'wrap' as const}}>
                 {PLATFORMS.map(p => (
-                  <button key={p.id} onClick={() => set('platform',p.id)} style={{padding:'12px 16px',borderRadius:'10px',border:'1px solid '+(form.platform===p.id ? 'rgba(124,58,237,0.6)' : 'rgba(255,255,255,0.1)'),background:form.platform===p.id ? 'rgba(124,58,237,0.2)' : 'rgba(255,255,255,0.04)',color:form.platform===p.id ? '#c4b5fd' : 'rgba(255,255,255,0.6)',cursor:'pointer',fontSize:'13px',fontWeight:600}}>{p.label}</button>
+                  <button key={p.id} onClick={() => set('platform',p.id)} style={{padding:'12px 16px',borderRadius:'10px',border:'1px solid '+(form.platform===p.id ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.1)'),background:form.platform===p.id ? 'rgba(158,24,43,0.15)' : 'rgba(255,255,255,0.04)',color:form.platform===p.id ? '#F2E0D2' : 'rgba(255,255,255,0.6)',cursor:'pointer',fontSize:'13px',fontWeight:600}}>{p.label}</button>
                 ))}
               </div>
             </div>
@@ -236,7 +236,7 @@ export default function GeneratePage() {
               <span style={s.label}>Gender</span>
               <div style={{display:'flex',gap:'10px'}}>
                 {['female','male'].map(g => (
-                  <button key={g} onClick={() => { set('gender',g); set('hairstyle',''); set('outfit',''); setOutfitCat(g==='female' ? 'AI UGC / Creator' : 'Streetwear / Hype'); setHairstyleType('general'); }} style={{flex:1,padding:'12px',borderRadius:'10px',border:'1px solid '+(form.gender===g ? 'rgba(124,58,237,0.6)' : 'rgba(255,255,255,0.1)'),background:form.gender===g ? 'rgba(124,58,237,0.2)' : 'rgba(255,255,255,0.04)',color:form.gender===g ? '#c4b5fd' : 'rgba(255,255,255,0.6)',cursor:'pointer',fontSize:'14px',fontWeight:600,textTransform:'capitalize' as const}}>{g}</button>
+                  <button key={g} onClick={() => { set('gender',g); set('hairstyle',''); set('outfit',''); setOutfitCat(g==='female' ? 'AI UGC / Creator' : 'Streetwear / Hype'); setHairstyleType('general'); }} style={{flex:1,padding:'12px',borderRadius:'10px',border:'1px solid '+(form.gender===g ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.1)'),background:form.gender===g ? 'rgba(158,24,43,0.15)' : 'rgba(255,255,255,0.04)',color:form.gender===g ? '#F2E0D2' : 'rgba(255,255,255,0.6)',cursor:'pointer',fontSize:'14px',fontWeight:600,textTransform:'capitalize' as const}}>{g}</button>
                 ))}
               </div>
             </div>
@@ -251,7 +251,7 @@ export default function GeneratePage() {
                 <span style={s.label}>Hairstyle Type</span>
                 <div style={{display:'flex',gap:'8px',marginBottom:'10px'}}>
                   {[{id:'general',label:'General / Caucasian'},{id:'black',label:'Black / Dark Skin'}].map(t => (
-                    <button key={t.id} onClick={() => { setHairstyleType(t.id); set('hairstyle',''); }} style={{flex:1,padding:'10px',borderRadius:'8px',border:'1px solid '+(hairstyleType===t.id ? 'rgba(124,58,237,0.6)' : 'rgba(255,255,255,0.1)'),background:hairstyleType===t.id ? 'rgba(124,58,237,0.2)' : 'rgba(255,255,255,0.04)',color:hairstyleType===t.id ? '#c4b5fd' : 'rgba(255,255,255,0.6)',cursor:'pointer',fontSize:'13px',fontWeight:600}}>{t.label}</button>
+                    <button key={t.id} onClick={() => { setHairstyleType(t.id); set('hairstyle',''); }} style={{flex:1,padding:'10px',borderRadius:'8px',border:'1px solid '+(hairstyleType===t.id ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.1)'),background:hairstyleType===t.id ? 'rgba(158,24,43,0.15)' : 'rgba(255,255,255,0.04)',color:hairstyleType===t.id ? '#F2E0D2' : 'rgba(255,255,255,0.6)',cursor:'pointer',fontSize:'13px',fontWeight:600}}>{t.label}</button>
                   ))}
                 </div>
                 <Drop label="Hairstyle" field="hairstyle" options={hairstyleType==='black' ? MALE_HAIRSTYLES_BLACK : MALE_HAIRSTYLES_GENERAL} />
@@ -272,15 +272,15 @@ export default function GeneratePage() {
             <div style={{marginBottom:'16px'}}>
               <span style={s.label}>Outfit Category</span>
               <select value={outfitCat} onChange={e => { setOutfitCat(e.target.value); set('outfit',''); }} style={s.drop}>
-                {Object.keys(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS).map(c => <option key={c} value={c} style={{background:'#0d0d14'}}>{c}</option>)}
+                {Object.keys(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS).map(c => <option key={c} value={c} style={{background:'#131013'}}>{c}</option>)}
               </select>
             </div>
 
             <div style={{marginBottom:'16px'}}>
               <span style={s.label}>Specific Look</span>
               <select value={form.outfit} onChange={e => set('outfit',e.target.value)} style={s.drop}>
-                <option value="" style={{background:'#0d0d14'}}>Select a look</option>
-                {(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS)[outfitCat]?.map(o => <option key={o} value={o} style={{background:'#0d0d14'}}>{o}</option>)}
+                <option value="" style={{background:'#131013'}}>Select a look</option>
+                {(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS)[outfitCat]?.map(o => <option key={o} value={o} style={{background:'#131013'}}>{o}</option>)}
               </select>
             </div>
 
@@ -297,8 +297,8 @@ export default function GeneratePage() {
               <span style={s.label}>Scene Location</span>
               <div style={{display:'flex',flexDirection:'column' as const,gap:'8px'}}>
                 {SCENE_LOCATIONS.map(scene => (
-                  <button key={scene.id} onClick={() => set('sceneLocation',scene.id)} style={{padding:'14px 16px',borderRadius:'10px',border:'1px solid '+(form.sceneLocation===scene.id ? 'rgba(124,58,237,0.6)' : 'rgba(255,255,255,0.08)'),background:form.sceneLocation===scene.id ? 'rgba(124,58,237,0.12)' : 'rgba(255,255,255,0.03)',cursor:'pointer',textAlign:'left' as const}}>
-                    <div style={{fontSize:'13px',fontWeight:600,color:form.sceneLocation===scene.id ? '#c4b5fd' : 'white'}}>{scene.label}</div>
+                  <button key={scene.id} onClick={() => set('sceneLocation',scene.id)} style={{padding:'14px 16px',borderRadius:'10px',border:'1px solid '+(form.sceneLocation===scene.id ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.08)'),background:form.sceneLocation===scene.id ? 'rgba(158,24,43,0.1)' : 'rgba(255,255,255,0.03)',cursor:'pointer',textAlign:'left' as const}}>
+                    <div style={{fontSize:'13px',fontWeight:600,color:form.sceneLocation===scene.id ? '#F2E0D2' : 'white'}}>{scene.label}</div>
                     <div style={{fontSize:'12px',color:'rgba(255,255,255,0.4)',marginTop:'2px'}}>{scene.desc}</div>
                   </button>
                 ))}
@@ -316,8 +316,8 @@ export default function GeneratePage() {
             <p style={{color:'rgba(255,255,255,0.4)',marginBottom:'32px'}}>How human does this feel?</p>
             <div style={{display:'flex',flexDirection:'column' as const,gap:'10px',marginBottom:'32px'}}>
               {REALISM_MODES.map(m => (
-                <button key={m.id} onClick={() => set('realismMode',m.id)} style={{padding:'18px 20px',borderRadius:'12px',border:'1px solid '+(form.realismMode===m.id ? 'rgba(124,58,237,0.6)' : 'rgba(255,255,255,0.08)'),background:form.realismMode===m.id ? 'rgba(124,58,237,0.15)' : 'rgba(255,255,255,0.03)',cursor:'pointer',textAlign:'left' as const}}>
-                  <div style={{fontSize:'15px',fontWeight:700,color:form.realismMode===m.id ? '#c4b5fd' : 'white',marginBottom:'4px'}}>{m.label}</div>
+                <button key={m.id} onClick={() => set('realismMode',m.id)} style={{padding:'18px 20px',borderRadius:'12px',border:'1px solid '+(form.realismMode===m.id ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.08)'),background:form.realismMode===m.id ? 'rgba(158,24,43,0.12)' : 'rgba(255,255,255,0.03)',cursor:'pointer',textAlign:'left' as const}}>
+                  <div style={{fontSize:'15px',fontWeight:700,color:form.realismMode===m.id ? '#F2E0D2' : 'white',marginBottom:'4px'}}>{m.label}</div>
                   <div style={{fontSize:'13px',color:'rgba(255,255,255,0.4)'}}>{m.desc}</div>
                 </button>
               ))}
@@ -359,7 +359,7 @@ export default function GeneratePage() {
               Continue →
             </button>
           ) : (
-            <button onClick={handleGenerate} style={{background:'linear-gradient(135deg, #7c3aed, #ec4899)',color:'white',padding:'14px 36px',borderRadius:'100px',fontSize:'15px',fontWeight:700,cursor:'pointer',border:'none'}}>
+            <button onClick={handleGenerate} style={{background:'linear-gradient(135deg, #9E182B, #D4AF87)',color:'white',padding:'14px 36px',borderRadius:'100px',fontSize:'15px',fontWeight:700,cursor:'pointer',border:'none'}}>
               ⚡ Generate Production Brief
             </button>
           )}
