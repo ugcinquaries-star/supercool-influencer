@@ -1,4 +1,4 @@
-cat > middleware.ts << 'EOF'
+
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPublicRoute = createRouteMatcher([
@@ -22,4 +22,3 @@ export const config = {
     '/(api|trpc)(.*)',
   ],
 };
-EOF
