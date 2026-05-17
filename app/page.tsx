@@ -2,243 +2,252 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div style={{ background: '#0A0608', minHeight: '100vh', color: 'white', overflowX: 'hidden' }}>
+    <div style={{ background: '#F2E0D2', color: '#1A0A0E', overflowX: 'hidden', fontFamily: 'sans-serif' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:wght@300;400;500;600&display=swap');
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-          --ivory: #F5F0E8;
+          --oat: #F2E0D2;
+          --rose: #F9CBD6;
           --blush: #F2AFBC;
           --wine: #9E182B;
-          --oat: #F2E0D2;
+          --wine-dark: #6B1020;
+          --cream: #FAF3EE;
+          --dark: #1A0A0E;
+          --dark2: #2A1218;
           --gold: #D4AF87;
-          --dark: #0A0608;
-          --dark2: #110C0F;
-          --dark3: #1A1318;
         }
         html { scroll-behavior: smooth; }
-        .cg { font-family: 'Cormorant Garamond', Georgia, serif; }
-        .inter { font-family: 'Inter', sans-serif; }
-        body::after {
-          content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9998; opacity: 0.3;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
-        }
+        .pf { font-family: 'Playfair Display', Georgia, serif; }
+        .dm { font-family: 'DM Sans', sans-serif; }
 
-        /* NAV */
+        /* ── NAV ── */
         .nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
           display: flex; justify-content: space-between; align-items: center;
-          padding: 22px 48px;
-          background: linear-gradient(to bottom, rgba(10,6,8,0.95), transparent);
-          backdrop-filter: blur(4px);
+          padding: 18px 48px;
+          background: rgba(242,224,210,0.92);
+          backdrop-filter: blur(12px);
+          border-bottom: 1px solid rgba(158,24,43,0.1);
         }
-        .logo-wrap { display: flex; flex-direction: column; gap: 0; text-decoration: none; }
-        .logo-sup { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 16px; color: var(--ivory); letter-spacing: 0.25em; text-transform: uppercase; line-height: 1; }
-        .logo-sup strong { font-weight: 600; }
-        .logo-sub-line { font-family: 'Inter', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(245,240,232,0.3); margin-top: 3px; }
-        .nav-links { display: flex; gap: 32px; align-items: center; }
-        .nav-a { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,240,232,0.45); text-decoration: none; transition: color 0.3s; }
-        .nav-a:hover { color: var(--ivory); }
-        .nav-cta { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; background: var(--ivory); color: var(--dark); padding: 10px 24px; border-radius: 2px; text-decoration: none; transition: background 0.3s; }
-        .nav-cta:hover { background: var(--oat); }
+        .logo { font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 15px; color: var(--dark); letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; }
+        .logo strong { font-weight: 700; }
+        .nav-links { display: flex; gap: 28px; align-items: center; }
+        .nav-a { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,10,14,0.5); text-decoration: none; transition: color 0.2s; }
+        .nav-a:hover { color: var(--wine); }
+        .nav-cta { background: var(--wine); color: white; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 24px; border-radius: 2px; text-decoration: none; transition: background 0.2s; }
+        .nav-cta:hover { background: var(--wine-dark); }
 
-        /* STICKY MOBILE CTA */
-        .sticky-mobile { display: none; position: fixed; bottom: 20px; left: 24px; right: 24px; z-index: 999; }
-        .sticky-mobile-btn { display: block; text-align: center; background: var(--ivory); color: var(--dark); font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 16px; border-radius: 2px; text-decoration: none; box-shadow: 0 16px 48px rgba(0,0,0,0.7); }
+        /* ── STICKY MOBILE CTA ── */
+        .sticky-mob { display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 999; }
+        .sticky-mob a { display: block; text-align: center; background: var(--wine); color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 16px; border-radius: 3px; text-decoration: none; box-shadow: 0 8px 32px rgba(158,24,43,0.4); }
 
-        /* HERO */
+        /* ── HERO ── */
         .hero {
-          min-height: 100svh; display: flex; flex-direction: column;
-          justify-content: flex-end; padding: 0 48px 80px;
+          min-height: 100svh; padding: 120px 48px 80px;
+          display: grid; grid-template-columns: 1fr 1fr;
+          gap: 60px; align-items: center;
+          background: var(--oat);
           position: relative; overflow: hidden;
         }
-        .hero-bg {
-          position: absolute; inset: 0;
-          background: radial-gradient(ellipse 90% 70% at 65% 25%, rgba(158,24,43,0.2) 0%, transparent 55%),
-                      radial-gradient(ellipse 50% 50% at 15% 75%, rgba(212,175,135,0.08) 0%, transparent 50%),
-                      linear-gradient(160deg, #110609 0%, #0A0608 50%, #0C0608 100%);
+        .hero::before {
+          content: ''; position: absolute; top: -200px; right: -200px;
+          width: 600px; height: 600px; border-radius: 50%;
+          background: radial-gradient(circle, rgba(249,203,214,0.6) 0%, transparent 70%);
+          pointer-events: none;
         }
-        .hero-grid {
-          position: absolute; inset: 0; opacity: 0.035;
-          background-image: linear-gradient(to right, var(--ivory) 1px, transparent 1px), linear-gradient(to bottom, var(--ivory) 1px, transparent 1px);
-          background-size: 72px 72px;
+        .hero-left { position: relative; z-index: 2; }
+        .hero-kicker { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--wine); }
+        .hero-kicker::before { content: ''; width: 20px; height: 1px; background: var(--wine); }
+        .hero-h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(44px, 6vw, 80px); line-height: 0.95; letter-spacing: -2px; color: var(--dark); margin-bottom: 24px; }
+        .hero-h1 em { font-style: italic; color: var(--wine); display: block; }
+        .hero-sub { font-family: 'DM Sans', sans-serif; font-size: clamp(14px, 2vw, 17px); font-weight: 300; line-height: 1.75; color: rgba(26,10,14,0.6); max-width: 440px; margin-bottom: 40px; }
+        .hero-sub strong { color: var(--dark); font-weight: 500; }
+        .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-wine { background: var(--wine); color: white; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 36px; border-radius: 2px; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 20px rgba(158,24,43,0.3); }
+        .btn-wine:hover { background: var(--wine-dark); transform: translateY(-1px); }
+        .btn-outline { border: 1.5px solid rgba(26,10,14,0.25); color: rgba(26,10,14,0.6); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 16px 32px; border-radius: 2px; text-decoration: none; transition: all 0.2s; }
+        .btn-outline:hover { border-color: var(--wine); color: var(--wine); }
+        .hero-proof { display: flex; gap: 32px; margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(26,10,14,0.1); flex-wrap: wrap; }
+        .proof-item { display: flex; flex-direction: column; gap: 3px; }
+        .proof-num { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: var(--wine); line-height: 1; }
+        .proof-lbl { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 400; color: rgba(26,10,14,0.45); letter-spacing: 0.06em; text-transform: uppercase; }
+
+        /* HERO RIGHT — image collage */
+        .hero-right { position: relative; z-index: 2; height: 580px; }
+        .hero-img-main {
+          position: absolute; top: 0; left: 0; right: 60px; bottom: 60px;
+          border-radius: 4px; overflow: hidden;
+          box-shadow: 0 24px 64px rgba(26,10,14,0.2);
         }
-        .hero-content { position: relative; z-index: 2; max-width: 820px; }
-        .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 32px; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blush); }
-        .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--blush); }
-        .hero-h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(56px, 10vw, 112px); line-height: 0.92; letter-spacing: -2px; color: var(--ivory); margin-bottom: 32px; }
-        .hero-h1 em { font-style: italic; color: var(--blush); display: block; }
-        .hero-h1 strong { font-weight: 600; display: block; }
-        .hero-sub { font-family: 'Inter', sans-serif; font-size: clamp(13px, 2vw, 16px); font-weight: 300; line-height: 1.8; color: rgba(245,240,232,0.45); max-width: 420px; margin-bottom: 48px; letter-spacing: 0.02em; }
-        .hero-sub strong { color: var(--ivory); font-weight: 500; }
-        .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-        .btn-ivory { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; background: var(--ivory); color: var(--dark); padding: 16px 40px; border-radius: 2px; text-decoration: none; transition: all 0.3s; box-shadow: 0 8px 32px rgba(245,240,232,0.1); }
-        .btn-ivory:hover { background: var(--oat); }
-        .btn-ghost { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid rgba(245,240,232,0.18); color: rgba(245,240,232,0.45); padding: 16px 36px; border-radius: 2px; text-decoration: none; transition: all 0.3s; }
-        .btn-ghost:hover { color: var(--ivory); border-color: rgba(245,240,232,0.4); }
-        .hero-scroll { position: absolute; bottom: 32px; right: 48px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .hero-scroll-line { width: 1px; height: 52px; background: linear-gradient(to bottom, rgba(245,240,232,0.2), transparent); animation: scrollpulse 2s ease-in-out infinite; }
-        .hero-scroll-label { font-family: 'Inter', sans-serif; font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(245,240,232,0.2); }
-        @keyframes scrollpulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+        .hero-img-main img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-img-float {
+          position: absolute; bottom: 0; right: 0; width: 200px; height: 220px;
+          border-radius: 4px; overflow: hidden;
+          box-shadow: 0 16px 40px rgba(26,10,14,0.25);
+          border: 4px solid var(--cream);
+        }
+        .hero-img-float img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-badge {
+          position: absolute; top: 24px; right: 80px;
+          background: var(--wine); color: white;
+          font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+          padding: 8px 16px; border-radius: 100px;
+          box-shadow: 0 4px 16px rgba(158,24,43,0.4);
+          white-space: nowrap;
+        }
 
-        /* MARQUEE */
-        .marquee { border-top: 1px solid rgba(245,240,232,0.06); border-bottom: 1px solid rgba(245,240,232,0.06); padding: 16px 0; overflow: hidden; background: var(--dark2); }
-        .marquee-track { display: flex; white-space: nowrap; animation: marquee 28s linear infinite; }
-        .marquee-item { display: inline-flex; align-items: center; gap: 28px; padding: 0 28px; font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: rgba(245,240,232,0.22); letter-spacing: 0.06em; flex-shrink: 0; }
-        .marquee-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--blush); opacity: 0.5; }
-        @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        /* ── MARQUEE ── */
+        .marquee { background: var(--wine); padding: 14px 0; overflow: hidden; }
+        .marquee-track { display: flex; white-space: nowrap; animation: mq 24s linear infinite; }
+        .marquee-item { display: inline-flex; align-items: center; gap: 24px; padding: 0 24px; font-family: 'Playfair Display', serif; font-size: 14px; font-style: italic; color: rgba(255,255,255,0.7); flex-shrink: 0; }
+        .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+        @keyframes mq { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-        /* SECTION BASE */
-        .sec { padding: 120px 48px; }
-        .sec-inner { max-width: 1100px; margin: 0 auto; }
-        .sec-tag { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.26em; text-transform: uppercase; color: var(--blush); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
-        .sec-tag::before { content: ''; width: 20px; height: 1px; background: var(--blush); }
-        .sec-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(38px, 6vw, 72px); line-height: 0.95; letter-spacing: -1.5px; color: var(--ivory); margin-bottom: 20px; }
-        .sec-h2 em { font-style: italic; color: var(--blush); }
-        .sec-sub { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 300; line-height: 1.85; color: rgba(245,240,232,0.38); max-width: 460px; letter-spacing: 0.02em; }
+        /* ── PAIN SECTION — DARK ── */
+        .pain { background: var(--dark); padding: 100px 48px; }
+        .pain-inner { max-width: 1100px; margin: 0 auto; }
+        .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .pain-img { border-radius: 4px; overflow: hidden; height: 500px; position: relative; }
+        .pain-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); }
+        .pain-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, var(--dark)); }
+        .sec-tag-light { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--blush); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .sec-tag-light::before { content: ''; width: 18px; height: 1px; background: var(--blush); }
+        .pain-h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(36px, 5vw, 60px); line-height: 0.95; letter-spacing: -1.5px; color: white; margin-bottom: 32px; }
+        .pain-h2 em { font-style: italic; color: var(--blush); }
+        .pain-list { display: flex; flex-direction: column; gap: 0; }
+        .pain-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .pain-row:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+        .pain-n { font-family: 'Playfair Display', serif; font-size: 11px; color: rgba(255,255,255,0.2); flex-shrink: 0; margin-top: 2px; }
+        .pain-t { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.65; }
+        .pain-t strong { color: rgba(255,255,255,0.8); font-weight: 500; }
 
-        /* PAIN */
-        .pain-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-        .pain-list { margin-top: 40px; }
-        .pain-item { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid rgba(245,240,232,0.05); }
-        .pain-item:first-child { border-top: 1px solid rgba(245,240,232,0.05); }
-        .pain-num { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: rgba(245,240,232,0.18); letter-spacing: 0.1em; flex-shrink: 0; margin-top: 2px; }
-        .pain-txt { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; color: rgba(245,240,232,0.35); line-height: 1.7; }
-        .pain-txt strong { color: rgba(245,240,232,0.6); font-weight: 500; }
-        .pain-right { padding-top: 80px; }
-        .pain-quote { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3.5vw, 34px); font-weight: 300; font-style: italic; line-height: 1.4; color: var(--ivory); margin-bottom: 28px; letter-spacing: -0.5px; }
-        .pain-quote em { color: var(--blush); }
+        /* ── TRANSFORMATION — LIGHT ── */
+        .transf { background: var(--cream); padding: 100px 48px; }
+        .transf-inner { max-width: 1100px; margin: 0 auto; }
+        .sec-tag-dark { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--wine); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .sec-tag-dark::before { content: ''; width: 18px; height: 1px; background: var(--wine); }
+        .transf-h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(36px, 5vw, 64px); line-height: 0.95; letter-spacing: -2px; color: var(--dark); margin-bottom: 56px; }
+        .transf-h2 em { font-style: italic; color: var(--wine); }
+        .transf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+        .transf-col { padding: 40px 36px; }
+        .transf-before { background: rgba(26,10,14,0.04); }
+        .transf-after { background: var(--wine); }
+        .transf-lbl { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid rgba(26,10,14,0.1); }
+        .transf-before .transf-lbl { color: rgba(26,10,14,0.3); border-color: rgba(26,10,14,0.1); }
+        .transf-after .transf-lbl { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.15); }
+        .transf-item { display: flex; gap: 10px; margin-bottom: 14px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 300; line-height: 1.6; }
+        .transf-before .transf-item { color: rgba(26,10,14,0.35); }
+        .transf-after .transf-item { color: rgba(255,255,255,0.85); font-weight: 400; }
 
-        /* DIFF */
-        .diff-bg { background: var(--dark2); border-top: 1px solid rgba(245,240,232,0.04); }
-        .diff-grid { display: grid; grid-template-columns: 1fr 1px 1fr; margin-top: 60px; }
-        .diff-div { background: rgba(245,240,232,0.05); }
-        .diff-col { padding: 0 44px; }
-        .diff-col:first-child { padding-left: 0; }
-        .diff-col:last-child { padding-right: 0; }
-        .diff-lbl { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 32px; padding-bottom: 18px; border-bottom: 1px solid rgba(245,240,232,0.06); }
-        .diff-before .diff-lbl { color: rgba(245,240,232,0.2); }
-        .diff-after .diff-lbl { color: var(--blush); }
-        .diff-row { display: flex; gap: 12px; margin-bottom: 18px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; line-height: 1.6; letter-spacing: 0.02em; }
-        .diff-before .diff-row { color: rgba(245,240,232,0.22); }
-        .diff-after .diff-row { color: rgba(245,240,232,0.75); font-weight: 400; }
-        .diff-icon { flex-shrink: 0; margin-top: 2px; font-size: 12px; }
+        /* ── PRODUCT SHOWCASE ── */
+        .showcase { background: var(--dark2); padding: 100px 48px; }
+        .showcase-inner { max-width: 1100px; margin: 0 auto; }
+        .showcase-header { text-align: center; margin-bottom: 56px; }
+        .showcase-h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(32px, 5vw, 56px); line-height: 1; letter-spacing: -1px; color: white; margin-bottom: 14px; }
+        .showcase-h2 em { font-style: italic; color: var(--blush); }
+        .showcase-sub { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.4); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+        /* UI mockup */
+        .ui-mock { background: #131013; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; overflow: hidden; }
+        .ui-bar { display: flex; align-items: center; gap: 6px; padding: 10px 16px; background: #1A1418; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .ui-dot { width: 7px; height: 7px; border-radius: 50%; }
+        .ui-url { flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px; padding: 4px 10px; font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.2); margin: 0 8px; }
+        .ui-body { display: grid; grid-template-columns: 240px 1fr; min-height: 380px; }
+        .ui-left { border-right: 1px solid rgba(255,255,255,0.06); padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .ui-lbl { font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,175,135,0.5); margin-bottom: 3px; }
+        .ui-field { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 3px; padding: 9px 11px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.5; }
+        .ui-field.hi { border-color: rgba(212,175,135,0.25); color: white; }
+        .ui-gen { margin-top: auto; background: var(--gold); color: var(--dark); text-align: center; padding: 11px; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+        .ui-right { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .ui-card { display: flex; gap: 12px; padding: 12px; border: 1px solid rgba(255,255,255,0.06); border-radius: 3px; }
+        .ui-card-title { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blush); margin-bottom: 4px; }
+        .ui-card-text { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.38); line-height: 1.6; }
+        .ui-card-text strong { color: rgba(255,255,255,0.65); font-weight: 400; }
 
-        /* REALISM */
+        /* ── REALISM — LIGHT ── */
+        .realism { background: var(--oat); padding: 100px 48px; }
+        .realism-inner { max-width: 1100px; margin: 0 auto; }
         .realism-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-        .realism-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(245,240,232,0.05); margin-top: 40px; }
-        .realism-card { background: var(--dark); padding: 26px 22px; transition: background 0.3s; }
-        .realism-card:hover { background: var(--dark3); }
-        .realism-icon { font-size: 18px; margin-bottom: 12px; display: block; }
-        .realism-title { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--ivory); margin-bottom: 7px; letter-spacing: 0.03em; }
-        .realism-desc { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; color: rgba(245,240,232,0.33); line-height: 1.7; }
-        .realism-tag { display: inline-block; margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blush); }
-        .realism-right { padding-top: 100px; }
+        .realism-h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(36px, 5vw, 60px); line-height: 0.95; letter-spacing: -1.5px; color: var(--dark); margin-bottom: 20px; }
+        .realism-h2 em { font-style: italic; color: var(--wine); }
+        .realism-sub { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300; line-height: 1.8; color: rgba(26,10,14,0.55); margin-bottom: 32px; }
+        .realism-img { border-radius: 4px; overflow: hidden; height: 460px; }
+        .realism-img img { width: 100%; height: 100%; object-fit: cover; }
+        .realism-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 16px; }
+        .realism-card { background: white; padding: 20px 18px; transition: background 0.2s; }
+        .realism-card:hover { background: var(--rose); }
+        .realism-icon { font-size: 16px; margin-bottom: 10px; }
+        .realism-ct { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+        .realism-cd { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 300; color: rgba(26,10,14,0.5); line-height: 1.65; }
+        .realism-tag { font-family: 'DM Sans', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--wine); margin-top: 8px; display: block; }
 
-        /* MOTION */
-        .motion-bg { background: var(--dark2); border-top: 1px solid rgba(245,240,232,0.04); }
-        .motion-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 64px; align-items: end; }
-        .motion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(245,240,232,0.05); }
-        .motion-card { background: var(--dark2); padding: 32px 26px; border-top: 2px solid transparent; transition: border-color 0.3s; }
-        .motion-card:hover { border-top-color: var(--blush); }
-        .motion-num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: rgba(245,240,232,0.05); line-height: 1; margin-bottom: 18px; letter-spacing: -2px; }
-        .motion-title { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--ivory); margin-bottom: 10px; letter-spacing: 0.04em; }
-        .motion-desc { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; color: rgba(245,240,232,0.33); line-height: 1.75; }
+        /* ── FOR WHO — WINE BACKGROUND ── */
+        .forwho { background: var(--wine); padding: 100px 48px; }
+        .forwho-inner { max-width: 1100px; margin: 0 auto; }
+        .forwho-h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(36px, 5vw, 64px); line-height: 0.95; letter-spacing: -2px; color: white; margin-bottom: 56px; }
+        .forwho-h2 em { font-style: italic; color: var(--rose); }
+        .forwho-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+        .forwho-card { background: rgba(255,255,255,0.06); padding: 28px 22px; border-top: 2px solid transparent; transition: all 0.2s; }
+        .forwho-card:hover { background: rgba(255,255,255,0.12); border-top-color: var(--rose); }
+        .forwho-e { font-size: 20px; margin-bottom: 14px; display: block; }
+        .forwho-t { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: white; margin-bottom: 8px; }
+        .forwho-d { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.7; }
 
-        /* FLOW */
-        .flow-bg { border-top: 1px solid rgba(245,240,232,0.04); }
-        .flow-ui { margin-top: 56px; background: var(--dark2); border: 1px solid rgba(245,240,232,0.07); border-radius: 4px; overflow: hidden; }
-        .flow-bar { display: flex; align-items: center; gap: 7px; padding: 12px 18px; background: var(--dark3); border-bottom: 1px solid rgba(245,240,232,0.06); }
-        .flow-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .flow-url { flex: 1; background: rgba(245,240,232,0.04); border-radius: 2px; padding: 4px 10px; font-family: 'Inter', sans-serif; font-size: 10px; color: rgba(245,240,232,0.22); margin: 0 10px; letter-spacing: 0.04em; }
-        .flow-body { display: grid; grid-template-columns: 260px 1fr; min-height: 440px; }
-        .flow-left { border-right: 1px solid rgba(245,240,232,0.06); padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
-        .flow-lbl { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,175,135,0.55); margin-bottom: 4px; }
-        .flow-field { background: rgba(245,240,232,0.04); border: 1px solid rgba(245,240,232,0.07); border-radius: 3px; padding: 10px 12px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; color: rgba(245,240,232,0.55); line-height: 1.5; }
-        .flow-field.act { border-color: rgba(212,175,135,0.3); color: var(--ivory); }
-        .flow-gen { margin-top: auto; background: var(--ivory); color: var(--dark); text-align: center; padding: 12px; border-radius: 2px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
-        .flow-right { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
-        .flow-card { display: flex; gap: 14px; padding: 14px; border: 1px solid rgba(245,240,232,0.06); border-radius: 3px; }
-        .flow-card-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
-        .flow-card-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blush); margin-bottom: 5px; }
-        .flow-card-text { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; color: rgba(245,240,232,0.38); line-height: 1.6; }
-        .flow-card-text strong { color: rgba(245,240,232,0.65); font-weight: 400; }
-
-        /* FOR WHO */
-        .forwho-bg { background: var(--dark2); border-top: 1px solid rgba(245,240,232,0.04); }
-        .forwho-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(245,240,232,0.05); margin-top: 56px; }
-        .forwho-card { background: var(--dark2); padding: 32px 22px; border-top: 1px solid transparent; transition: all 0.3s; }
-        .forwho-card:hover { background: var(--dark3); border-top-color: var(--blush); }
-        .forwho-emoji { font-size: 22px; display: block; margin-bottom: 18px; }
-        .forwho-title { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--ivory); margin-bottom: 8px; letter-spacing: 0.03em; }
-        .forwho-desc { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 300; color: rgba(245,240,232,0.33); line-height: 1.75; }
-
-        /* PLATFORMS */
-        .plat { border-top: 1px solid rgba(245,240,232,0.04); padding: 72px 48px; }
-        .plat-inner { max-width: 1100px; margin: 0 auto; }
-        .plat-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
-        .plat-pill { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(245,240,232,0.1); color: rgba(245,240,232,0.3); padding: 8px 16px; border-radius: 1px; transition: all 0.3s; }
-        .plat-pill:hover { border-color: var(--blush); color: var(--blush); }
-
-        /* CTA FINAL */
-        .cta-final { min-height: 75vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 32px; position: relative; overflow: hidden; }
-        .cta-final::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 55% at 50% 50%, rgba(158,24,43,0.18) 0%, transparent 65%); pointer-events: none; }
-        .cta-final-inner { position: relative; z-index: 2; max-width: 680px; }
-        .cta-h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(44px, 8vw, 92px); line-height: 0.9; letter-spacing: -2px; color: var(--ivory); margin-bottom: 28px; }
+        /* ── FINAL CTA ── */
+        .cta { background: var(--dark); padding: 120px 48px; text-align: center; position: relative; overflow: hidden; }
+        .cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(249,203,214,0.08) 0%, transparent 70%); pointer-events: none; }
+        .cta-inner { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; }
+        .cta-h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(40px, 7vw, 80px); line-height: 0.92; letter-spacing: -2px; color: white; margin-bottom: 24px; }
         .cta-h2 em { font-style: italic; color: var(--blush); display: block; }
-        .cta-sub { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 300; color: rgba(245,240,232,0.32); margin-bottom: 44px; line-height: 1.8; }
-        .cta-note { margin-top: 20px; font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 300; letter-spacing: 0.12em; color: rgba(245,240,232,0.18); text-transform: uppercase; }
+        .cta-sub { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 44px; line-height: 1.8; }
+        .cta-note { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.1em; color: rgba(255,255,255,0.2); text-transform: uppercase; margin-top: 20px; }
 
-        /* FOOTER */
-        .footer { border-top: 1px solid rgba(245,240,232,0.06); padding: 36px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-        .footer-logo { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px; color: var(--ivory); letter-spacing: 0.18em; text-transform: uppercase; }
-        .footer-logo strong { font-weight: 600; }
-        .footer-links { display: flex; gap: 24px; }
-        .footer-link { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.2); text-decoration: none; transition: color 0.3s; }
-        .footer-link:hover { color: var(--ivory); }
-        .footer-copy { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 300; color: rgba(245,240,232,0.14); letter-spacing: 0.06em; }
+        /* ── FOOTER ── */
+        .footer { background: var(--dark); border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .footer-logo { font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 13px; color: white; letter-spacing: 0.18em; text-transform: uppercase; }
+        .footer-logo strong { font-weight: 700; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-link { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.2s; }
+        .footer-link:hover { color: white; }
+        .footer-copy { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.15); }
 
         /* ── MOBILE ── */
         @media (max-width: 768px) {
-          .nav { padding: 16px 20px; }
-          .nav-links .nav-a { display: none; }
-          .sticky-mobile { display: block; }
-          .hero { padding: 0 20px 110px; min-height: 100svh; }
-          .hero-h1 { letter-spacing: -1.5px; }
-          .hero-ctas { flex-direction: column; }
-          .btn-ivory, .btn-ghost { text-align: center; }
-          .hero-scroll { display: none; }
-          .sec { padding: 72px 20px; }
-          .pain-layout { grid-template-columns: 1fr; gap: 0; }
-          .pain-right { padding-top: 40px; }
-          .diff-grid { grid-template-columns: 1fr; }
-          .diff-div { display: none; }
-          .diff-col { padding: 0; }
-          .diff-before { margin-bottom: 36px; }
-          .realism-layout { grid-template-columns: 1fr; gap: 0; }
-          .realism-right { padding-top: 40px; }
-          .realism-grid { grid-template-columns: 1fr; }
-          .motion-header { grid-template-columns: 1fr; gap: 28px; margin-bottom: 40px; }
-          .motion-grid { grid-template-columns: 1fr; }
-          .flow-body { grid-template-columns: 1fr; }
-          .flow-left { border-right: none; border-bottom: 1px solid rgba(245,240,232,0.06); }
+          .nav { padding: 14px 20px; }
+          .nav-a { display: none; }
+          .sticky-mob { display: block; }
+          .hero { grid-template-columns: 1fr; padding: 100px 20px 120px; min-height: 100svh; gap: 40px; }
+          .hero-right { height: 320px; }
+          .hero-img-float { width: 120px; height: 140px; }
+          .hero-proof { gap: 20px; }
+          .pain { padding: 72px 20px; }
+          .pain-grid { grid-template-columns: 1fr; gap: 40px; }
+          .pain-img { height: 280px; }
+          .transf { padding: 72px 20px; }
+          .transf-grid { grid-template-columns: 1fr; }
+          .transf-col { padding: 28px 24px; }
+          .showcase { padding: 72px 20px; }
+          .ui-body { grid-template-columns: 1fr; }
+          .ui-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+          .realism { padding: 72px 20px; }
+          .realism-layout { grid-template-columns: 1fr; gap: 40px; }
+          .realism-img { height: 280px; }
+          .realism-cards { grid-template-columns: 1fr; }
+          .forwho { padding: 72px 20px; }
           .forwho-grid { grid-template-columns: 1fr 1fr; }
-          .footer { flex-direction: column; align-items: flex-start; }
-          .footer-links { flex-wrap: wrap; }
-          .cta-final { padding: 80px 20px 140px; min-height: auto; }
-          .plat { padding: 60px 20px; }
+          .cta { padding: 80px 20px 140px; }
+          .footer { flex-direction: column; align-items: flex-start; padding: 28px 20px; }
         }
         @media (max-width: 480px) {
           .forwho-grid { grid-template-columns: 1fr; }
+          .hero-ctas { flex-direction: column; }
+          .btn-wine, .btn-outline { text-align: center; }
         }
       `}</style>
 
       {/* NAV */}
       <nav className="nav">
-        <a href="/" className="logo-wrap">
-          <div className="logo-sup"><strong>SUPER</strong>COOL</div>
-          <div className="logo-sub-line">Influencer</div>
-        </a>
+        <a href="/" className="logo dm"><strong>SUPER</strong>COOL Influencer</a>
         <div className="nav-links">
           <a href="/sign-in" className="nav-a">Sign in</a>
           <a href="/pricing" className="nav-a">Pricing</a>
@@ -246,130 +255,96 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* STICKY MOBILE CTA */}
-      <div className="sticky-mobile">
-        <a href="/generate" className="sticky-mobile-btn">⚡ Generate Free — No Card</a>
+      {/* STICKY MOBILE */}
+      <div className="sticky-mob">
+        <a href="/generate">⚡ Generate Free — No Card</a>
       </div>
 
-      {/* HERO */}
+      {/* ── HERO ── */}
       <section className="hero">
-        <div className="hero-bg" />
-        <div className="hero-grid" />
-        <div className="hero-content">
-          <div className="hero-eyebrow inter">The AI Cinematic Creator OS</div>
-          <h1 className="hero-h1 cg">
-            <strong>Your content.</strong>
+        <div className="hero-left">
+          <div className="hero-kicker dm">The AI Cinematic Creator OS</div>
+          <h1 className="hero-h1 pf">
+            Your content.
             <em>Cinematically</em>
             real.
           </h1>
-          <p className="hero-sub inter">
-            From idea to <strong>campaign-ready content</strong> in under 60 seconds.
-            Briefings. Image prompts. Reel direction. Captions. All of it.
-            Built on human realism — not generic AI.
+          <p className="hero-sub dm">
+            Type one idea. Get a <strong>full cinematic campaign</strong> in 60 seconds —
+            briefings, image prompts, reel direction, captions, hashtags.
+            Built on human realism. Not generic AI.
           </p>
           <div className="hero-ctas">
-            <Link href="/generate" className="btn-ivory inter">Generate Free Now</Link>
-            <Link href="/pricing" className="btn-ghost inter">View Pricing →</Link>
+            <Link href="/generate" className="btn-wine dm">⚡ Generate Free Now</Link>
+            <Link href="/pricing" className="btn-outline dm">View Pricing →</Link>
+          </div>
+          <div className="hero-proof">
+            {[{n:'60s',l:'Idea to campaign'},{n:'8+',l:'Output formats'},{n:'100%',l:'Human realism'},{n:'Free',l:'3 briefs to start'}].map(p => (
+              <div className="proof-item" key={p.l}>
+                <span className="proof-num pf">{p.n}</span>
+                <span className="proof-lbl dm">{p.l}</span>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="hero-scroll">
-          <div className="hero-scroll-line" />
-          <span className="hero-scroll-label inter">Scroll</span>
+
+        <div className="hero-right">
+          <div className="hero-img-main">
+            <img
+              src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=800&q=85"
+              alt="Creator"
+              onError={(e) => { (e.target as HTMLImageElement).style.background = 'linear-gradient(135deg, #8B5E3C, #D4AF87)'; }}
+            />
+          </div>
+          <div className="hero-img-float">
+            <img
+              src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=85"
+              alt="Beauty creator"
+              onError={(e) => { (e.target as HTMLImageElement).style.background = '#F9CBD6'; }}
+            />
+          </div>
+          <div className="hero-badge dm">⚡ Campaign ready in 60s</div>
         </div>
       </section>
 
       {/* MARQUEE */}
       <div className="marquee">
         <div className="marquee-track">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} style={{ display: 'flex', flexShrink: 0 }}>
-              {['Human Realism Engine™','Motion Psychology™','GTA-Style Behavioral Realism','Cinematic Campaign Briefings','Anti-Generic AI Output','Biological Movement Systems','Identity Lock™','60-Second Campaigns','Creator OS'].map((t, j) => (
-                <span key={j} className="marquee-item cg">{t}<span className="marquee-dot" /></span>
+          {[...Array(2)].map((_,i) => (
+            <div key={i} style={{display:'flex',flexShrink:0}}>
+              {['Human Realism Engine™','Motion Psychology™','GTA-Style Behavioral Realism','Anti-Generic AI','Cinematic Direction','Identity Lock™','60-Second Campaigns','Creator OS'].map((t,j) => (
+                <span key={j} className="marquee-item pf">{t}<span className="marquee-dot" /></span>
               ))}
             </div>
           ))}
         </div>
       </div>
 
-      {/* PAIN */}
-      <section className="sec" style={{ background: 'var(--dark)' }}>
-        <div className="sec-inner">
-          <div className="pain-layout">
+      {/* ── PAIN — DARK ── */}
+      <section className="pain">
+        <div className="pain-inner">
+          <div className="pain-grid">
+            <div className="pain-img">
+              <img
+                src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=700&q=85"
+                alt="Creator frustrated"
+                onError={(e) => { (e.target as HTMLImageElement).style.background = '#2A1218'; }}
+              />
+            </div>
             <div>
-              <div className="sec-tag inter">The reality</div>
-              <h2 className="sec-h2 cg">Your content<br /><em>is suffering.</em></h2>
+              <div className="sec-tag-light dm">Be honest</div>
+              <h2 className="pain-h2 pf">Your AI content<br /><em>isn't converting.</em></h2>
               <div className="pain-list">
                 {[
-                  {t:'Content burnout', d:"You've run out of ideas. The blank page wins every day. Creative paralysis is real — and expensive."},
-                  {t:'Generic AI output', d:'Your AI content looks like everyone else\'s. Robotic faces, stiff motion, dead eyes. Scroll-past energy.'},
-                  {t:'No direction', d:'You know what to post but not how to make it feel cinematic, believable, or emotionally resonant.'},
-                  {t:'Inconsistent identity', d:'Your brand changes every week. No visual signature. No recognisable aesthetic. Just content for the algorithm.'},
-                  {t:'Zero engagement', d:'Posting consistently and getting nothing back. The problem isn\'t frequency — it\'s quality and feeling.'},
-                ].map((p, i) => (
-                  <div className="pain-item" key={p.t}>
-                    <span className="pain-num inter">0{i+1}</span>
-                    <div className="pain-txt inter"><strong>{p.t} — </strong>{p.d}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="pain-right">
-              <div className="pain-quote cg">"Most AI content doesn't fail because of the tool. It fails because there was <em>no direction</em> behind it."</div>
-              <p className="sec-sub inter">SuperCool isn't a prompt generator. It's a creative operating system that thinks like a cinematic director — and builds campaigns that feel emotionally real.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* DIFF */}
-      <section className="sec diff-bg">
-        <div className="sec-inner">
-          <div className="sec-tag inter">The transformation</div>
-          <h2 className="sec-h2 cg">Before.<br /><em>After.</em></h2>
-          <div className="diff-grid">
-            <div className="diff-col diff-before">
-              <div className="diff-lbl inter">Without SuperCool</div>
-              {['Hours spent guessing what to post','Robotic AI humans with dead eyes','Generic prompts, generic output','Content that looks AI-generated','No brand identity or visual signature','Low engagement, no emotional connection','Creative burnout every single week'].map(t => (
-                <div className="diff-row" key={t}><span className="diff-icon">—</span>{t}</div>
-              ))}
-            </div>
-            <div className="diff-div" />
-            <div className="diff-col diff-after">
-              <div className="diff-lbl inter">With SuperCool</div>
-              {['Full campaign ready in 60 seconds','Believable human motion and skin realism','Cinematic direction built into every brief','Content that looks filmed, not generated','Locked creator identity across every post','Emotional storytelling that drives results','Creative confidence — never blank again'].map(t => (
-                <div className="diff-row" key={t}><span className="diff-icon" style={{color:'var(--blush)'}}>↗</span>{t}</div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* REALISM ENGINE */}
-      <section className="sec">
-        <div className="sec-inner">
-          <div className="realism-layout">
-            <div>
-              <div className="sec-tag inter">Human Realism Engine™</div>
-              <h2 className="sec-h2 cg">We engineer<br /><em>believable</em><br />humans.</h2>
-              <p className="sec-sub inter" style={{marginTop:'20px'}}>Every AI character is built on a biological realism system — the same principles that make Rockstar Games characters feel alive. Not avatars. Not templates. Humans.</p>
-            </div>
-            <div className="realism-right">
-              <div className="realism-grid">
-                {[
-                  {icon:'👁️',title:'Eye Behaviour System',desc:'Saccadic movement, lid weight, dilation response. Eyes that actually see.',tag:'Ocular Realism'},
-                  {icon:'🫁',title:'Breathing Architecture',desc:'Chest rise, clavicle shift, subtle shoulder movement. The character breathes.',tag:'Respiratory Motion'},
-                  {icon:'🤝',title:'Asymmetric Movement',desc:'Real humans don\'t move symmetrically. Micro-asymmetry built into every gesture.',tag:'Natural Imperfection'},
-                  {icon:'🎭',title:'Micro-Expression Engine',desc:'Involuntary facial movements — jaw tension, nostril flare, brow microlifts.',tag:'Emotional Leakage'},
-                  {icon:'👗',title:'Fabric Physics',desc:'Clothing moves with the body. Gravity, weight, texture response — real material.',tag:'Procedural Fabric'},
-                  {icon:'⏱️',title:'Behavioural Delay',desc:'Real humans hesitate. Pause. Self-correct. Timing imperfection is the signature.',tag:'Temporal Realism'},
-                  {icon:'🧬',title:'Skin Truth System',desc:'Pore depth, subsurface scattering, oil variation, flush response. Real skin.',tag:'Biological Texture'},
-                  {icon:'🎬',title:'GTA-Style Realism',desc:'Procedural NPC-level movement systems applied to creator characters.',tag:'Motion Capture Logic'},
-                ].map(r => (
-                  <div className="realism-card" key={r.title}>
-                    <span className="realism-icon">{r.icon}</span>
-                    <div className="realism-title inter">{r.title}</div>
-                    <div className="realism-desc inter">{r.desc}</div>
-                    <span className="realism-tag inter">{r.tag}</span>
+                  {t:'It looks AI-generated',d:'Stiff movements, dead eyes, robotic delivery. Viewers scroll past in 0.3 seconds.'},
+                  {t:'Same content, no results',d:'Posting daily but engagement is flat. The algorithm isn\'t broken — your output is.'},
+                  {t:'Hours lost prompting',d:'More time figuring out what to create than actually creating. That ends today.'},
+                  {t:'No creative identity',d:'Your brand changes every week. No visual signature. Just content for the algorithm.'},
+                  {t:'Emotionally empty visuals',d:'Content that looks polished but feels hollow. People scroll past without feeling anything.'},
+                ].map((p,i) => (
+                  <div className="pain-row" key={p.t}>
+                    <span className="pain-n pf">0{i+1}</span>
+                    <div className="pain-t dm"><strong>{p.t} — </strong>{p.d}</div>
                   </div>
                 ))}
               </div>
@@ -378,68 +353,63 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MOTION PSYCHOLOGY */}
-      <section className="sec motion-bg">
-        <div className="sec-inner">
-          <div className="motion-header">
-            <div>
-              <div className="sec-tag inter">Motion Psychology™</div>
-              <h2 className="sec-h2 cg">Movement<br /><em>engineered</em><br />to retain.</h2>
+      {/* ── TRANSFORMATION — LIGHT ── */}
+      <section className="transf">
+        <div className="transf-inner">
+          <div className="sec-tag-dark dm">The transformation</div>
+          <h2 className="transf-h2 pf">Before.<br /><em>After.</em></h2>
+          <div className="transf-grid">
+            <div className="transf-col transf-before">
+              <div className="transf-lbl dm">Without SuperCool</div>
+              {['Hours guessing what to post','Robotic AI humans with dead eyes','Generic prompts, generic output','Content that looks AI-generated','No brand identity or visual signature','Low engagement, no emotional pull','Creative burnout every week'].map(t => (
+                <div className="transf-item dm" key={t}><span style={{flexShrink:0,marginTop:'2px',opacity:0.4}}>—</span>{t}</div>
+              ))}
             </div>
-            <p className="sec-sub inter">Every camera angle, cut timing, and body movement is calculated to hold attention, trigger emotion, and drive action — based on how the human nervous system processes visual motion.</p>
-          </div>
-          <div className="motion-grid">
-            {[
-              {n:'01',title:'Attention Engineering',desc:'The first 0.3 seconds determine everything. SuperCool briefs interrupt the scroll with pattern-breaking visual information.'},
-              {n:'02',title:'Retention Pacing',desc:'Cognitive load, visual novelty cycles, and tension-release pacing — structured to hold watch-through from first frame to CTA.'},
-              {n:'03',title:'Subconscious Realism',desc:'Your brain detects fake humans in milliseconds. Our realism systems neutralise the uncanny valley — so trust is felt, not decided.'},
-              {n:'04',title:'Platform-Native Movement',desc:'TikTok physics, Reels pacing, Shorts rhythm — each brief is calibrated to how movement performs on each specific platform.'},
-              {n:'05',title:'Emotional Camera Behaviour',desc:'Camera distance, angle, lens choice and movement direction are psychological tools. SuperCool assigns each based on the emotional outcome.'},
-              {n:'06',title:'Narrative Escalation',desc:'Desire → friction → release → aspiration. Every campaign follows emotional escalation architecture — same structure as luxury advertising.'},
-            ].map(m => (
-              <div className="motion-card" key={m.n}>
-                <div className="motion-num cg">{m.n}</div>
-                <div className="motion-title inter">{m.title}</div>
-                <div className="motion-desc inter">{m.desc}</div>
-              </div>
-            ))}
+            <div className="transf-col transf-after">
+              <div className="transf-lbl dm">With SuperCool</div>
+              {['Full campaign ready in 60 seconds','Believable human motion and skin realism','Cinematic direction in every brief','Content that looks filmed, not generated','Locked creator identity across every post','Emotional storytelling that drives results','Creative confidence — never blank again'].map(t => (
+                <div className="transf-item dm" key={t}><span style={{flexShrink:0,marginTop:'2px',color:'rgba(255,255,255,0.5)'}}>↗</span>{t}</div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* FLOW */}
-      <section className="sec flow-bg">
-        <div className="sec-inner">
-          <div className="sec-tag inter">The experience</div>
-          <h2 className="sec-h2 cg">One idea.<br /><em>Full campaign.</em><br />60 seconds.</h2>
-          <div className="flow-ui">
-            <div className="flow-bar">
-              <div className="flow-dot" style={{background:'#FF5F57'}} />
-              <div className="flow-dot" style={{background:'#FFBD2E'}} />
-              <div className="flow-dot" style={{background:'#28CA41'}} />
-              <div className="flow-url inter">supercoolinfluencer.com/generate</div>
+      {/* ── PRODUCT SHOWCASE — DARK ── */}
+      <section className="showcase">
+        <div className="showcase-inner">
+          <div className="showcase-header">
+            <div className="sec-tag-light dm" style={{justifyContent:'center'}}>The experience</div>
+            <h2 className="showcase-h2 pf">One idea. <em>Full campaign.</em> 60 seconds.</h2>
+            <p className="showcase-sub dm">Type your idea. SuperCool generates briefings, image prompts, reel direction, captions, hashtags, motion psychology — all of it. Ready to paste into any tool.</p>
+          </div>
+          <div className="ui-mock">
+            <div className="ui-bar">
+              <div className="ui-dot" style={{background:'#FF5F57'}} />
+              <div className="ui-dot" style={{background:'#FFBD2E'}} />
+              <div className="ui-dot" style={{background:'#28CA41'}} />
+              <div className="ui-url dm">supercoolinfluencer.com/generate</div>
             </div>
-            <div className="flow-body">
-              <div className="flow-left">
-                <div><div className="flow-lbl inter">Your Idea</div><div className="flow-field act inter">"Luxury skincare morning routine. Soft natural light. Real skin texture. Confident, unhurried energy."</div></div>
-                <div><div className="flow-lbl inter">Platform</div><div className="flow-field inter">Instagram Reels + TikTok</div></div>
-                <div><div className="flow-lbl inter">Angle</div><div className="flow-field inter">Before vs After — Skin Transformation</div></div>
-                <div><div className="flow-lbl inter">Creator Style</div><div className="flow-field inter">Luxury lifestyle — minimal, cinematic</div></div>
-                <div className="flow-gen inter">⚡ Generate Campaign</div>
+            <div className="ui-body">
+              <div className="ui-left">
+                <div><div className="ui-lbl dm">Your Idea</div><div className="ui-field hi dm">"Luxury skincare morning routine. Soft natural light. Real skin texture."</div></div>
+                <div><div className="ui-lbl dm">Platform</div><div className="ui-field dm">Instagram Reels + TikTok</div></div>
+                <div><div className="ui-lbl dm">Creator Style</div><div className="ui-field dm">Luxury lifestyle — cinematic</div></div>
+                <div className="ui-gen dm">⚡ Generate Campaign</div>
               </div>
-              <div className="flow-right">
+              <div className="ui-right">
                 {[
-                  {icon:'🎬',title:'Campaign Brief',text:'<strong>Concept:</strong> Morning ritual as devotion. Character wakes before the city. Soft amber. Real skin. No performance. Pure presence.'},
-                  {icon:'🖼️',title:'Image Prompt',text:'<strong>Seedance:</strong> "Close ECU, cheekbone to clavicle. Subsurface scattering active. Morning light from left. Skin pore depth 0.4. No symmetry lock."'},
-                  {icon:'🎥',title:'Reel Direction',text:'<strong>Scene 1 [0–3s]:</strong> Macro on eyelid opening. Blink delay 0.3s. Catch light enters iris. No cut. Hold.'},
-                  {icon:'✍️',title:'Caption + Hook',text:'<strong>Hook:</strong> "The AI skin that breaks the uncanny valley." Caption: Scientifically engineered. Emotionally real.'},
-                  {icon:'#',title:'Hashtags + Keywords',text:'#AICreator #SkinRealism #LuxuryContent #CinematicAI #MotionPsychology #ViralReels'},
+                  {i:'🎬',t:'Campaign Brief',c:'<strong>Concept:</strong> Morning ritual as devotion. Soft amber. Real skin. No performance. Pure presence.'},
+                  {i:'🖼️',t:'Image Prompt',c:'<strong>Seedance:</strong> Close ECU, cheekbone to clavicle. Subsurface scattering. Pore depth 0.4. No symmetry lock.'},
+                  {i:'🎥',t:'Reel Direction',c:'<strong>Scene 1 [0–3s]:</strong> Macro on eyelid opening. Blink delay 0.3s. Catch light enters iris.'},
+                  {i:'✍️',t:'Hook + Caption',c:'<strong>Hook:</strong> "The small habit that changed everything." — Emotionally real. Builds trust.'},
+                  {i:'#',t:'Hashtags + Keywords',c:'#SkinRealism #LuxuryContent #CinematicAI #MorningRoutine #GlowingSkin'},
                 ].map(o => (
-                  <div className="flow-card" key={o.title}>
-                    <span className="flow-card-icon">{o.icon}</span>
+                  <div className="ui-card" key={o.t}>
+                    <span style={{fontSize:13,flexShrink:0}}>{o.i}</span>
                     <div>
-                      <div className="flow-card-title inter">{o.title}</div>
-                      <div className="flow-card-text inter" dangerouslySetInnerHTML={{__html: o.text}} />
+                      <div className="ui-card-title dm">{o.t}</div>
+                      <div className="ui-card-text dm" dangerouslySetInnerHTML={{__html:o.c}} />
                     </div>
                   </div>
                 ))}
@@ -449,64 +419,92 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOR WHO */}
-      <section className="sec forwho-bg">
-        <div className="sec-inner">
-          <div className="sec-tag inter">Built for</div>
-          <h2 className="sec-h2 cg">Every creator.<br /><em>Every brand.</em></h2>
+      {/* ── REALISM — OAT ── */}
+      <section className="realism">
+        <div className="realism-inner">
+          <div className="realism-layout">
+            <div>
+              <div className="sec-tag-dark dm">Human Realism Engine™</div>
+              <h2 className="realism-h2 pf">We don't sell prompts.<br /><em>We sell realism.</em></h2>
+              <p className="realism-sub dm">Every brief is engineered for motion, emotion and human behaviour — the exact things that make people stop scrolling and start buying.</p>
+              <div className="realism-img">
+                <img
+                  src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=85"
+                  alt="Cinematic beauty"
+                  onError={(e) => { (e.target as HTMLImageElement).style.background = '#8B5E3C'; }}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="realism-cards">
+                {[
+                  {i:'👁️',t:'Eye Behaviour',d:'Saccadic movement, lid weight, dilation response. Eyes that actually see.',tag:'Ocular Realism'},
+                  {i:'🫁',t:'Breathing Architecture',d:'Chest rise, clavicle shift, shoulder movement. The character breathes.',tag:'Respiratory Motion'},
+                  {i:'🤝',t:'Asymmetric Movement',d:'Real humans don\'t move symmetrically. Micro-asymmetry in every gesture.',tag:'Natural Imperfection'},
+                  {i:'🎭',t:'Micro-Expressions',d:'Involuntary jaw tension, nostril flare, brow microlifts before emotion lands.',tag:'Emotional Leakage'},
+                  {i:'👗',t:'Fabric Physics',d:'Clothing moves with the body. Gravity, weight, texture — real material.',tag:'Procedural Fabric'},
+                  {i:'🧬',t:'Skin Truth System',d:'Pore depth, subsurface scattering, oil variation. Skin that reacts to light.',tag:'Biological Texture'},
+                  {i:'⏱️',t:'Behavioural Delay',d:'Real humans hesitate, pause, self-correct. Timing imperfection is the signature.',tag:'Temporal Realism'},
+                  {i:'🎬',t:'GTA-Style Realism',d:'Procedural NPC-level movement applied to creator characters.',tag:'Motion Capture Logic'},
+                ].map(r => (
+                  <div className="realism-card" key={r.t}>
+                    <div className="realism-icon">{r.i}</div>
+                    <div className="realism-ct dm">{r.t}</div>
+                    <div className="realism-cd dm">{r.d}</div>
+                    <span className="realism-tag dm">{r.tag}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOR WHO — WINE ── */}
+      <section className="forwho">
+        <div className="forwho-inner">
+          <div className="sec-tag-light dm" style={{color:'rgba(255,255,255,0.5)'}}>Built for</div>
+          <h2 className="forwho-h2 pf">Every creator.<br /><em>Every brand.</em></h2>
           <div className="forwho-grid">
             {[
-              {e:'🎬',t:'AI Creators',d:"You create with AI tools and need output that doesn't look AI-generated. Realism is your competitive edge."},
-              {e:'💄',t:'Beauty & Lifestyle',d:'Your niche is visual luxury. You need skin truth, texture, light behaviour. SuperCool was built with you first.'},
-              {e:'👗',t:'Fashion & Aesthetic',d:'Fabric physics, editorial composition, identity lock across every frame. Your aesthetic — consistent, cinematic.'},
-              {e:'🛍️',t:'Brand Owners',d:'Product ads that feel human. No production team. No weeks of creative. Brief → campaign in 60 seconds.'},
-              {e:'📱',t:'Content Agencies',d:'Scale output without scaling headcount. Generate client campaigns in minutes — not days.'},
-              {e:'🌍',t:'Luxury Lifestyle',d:'Your world is elevated. Your content should feel the same. Cinematic direction built into every brief.'},
-              {e:'🧠',t:'Burned-Out Creators',d:'The blank page is over. SuperCool generates the idea, the direction, the prompts, and the copy. You just create.'},
-              {e:'⚡',t:'Fast Movers',d:'Trend moves fast. SuperCool moves faster. Idea to campaign-ready content before the moment passes.'},
+              {e:'🎬',t:'AI Creators',d:"You create with AI and need output that doesn't look AI-generated."},
+              {e:'💄',t:'Beauty & Skincare',d:'Your niche is visual. You need skin truth, texture, light behaviour.'},
+              {e:'👗',t:'Fashion & Lifestyle',d:'Fabric physics, editorial composition, identity lock across every frame.'},
+              {e:'🛍️',t:'Brand Owners',d:'Product ads that feel human. Brief → campaign in 60 seconds.'},
+              {e:'📱',t:'Content Agencies',d:'Scale output without scaling headcount. Client campaigns in minutes.'},
+              {e:'🌍',t:'Luxury Lifestyle',d:'Your world is elevated. Your content should feel the same.'},
+              {e:'🧠',t:'Burned-Out Creators',d:'The blank page is over. SuperCool generates everything. You just create.'},
+              {e:'⚡',t:'Fast Movers',d:'Trend moves fast. SuperCool moves faster.'},
             ].map(f => (
               <div className="forwho-card" key={f.t}>
-                <span className="forwho-emoji">{f.e}</span>
-                <div className="forwho-title inter">{f.t}</div>
-                <div className="forwho-desc inter">{f.d}</div>
+                <span className="forwho-e">{f.e}</span>
+                <div className="forwho-t dm">{f.t}</div>
+                <div className="forwho-d dm">{f.d}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* PLATFORMS */}
-      <div className="plat">
-        <div className="plat-inner">
-          <div className="sec-tag inter">Works with every tool</div>
-          <h2 className="sec-h2 cg" style={{fontSize:'clamp(28px,4vw,48px)',marginBottom:'8px'}}>Your brief.<br /><em>Any platform.</em></h2>
-          <div className="plat-row">
-            {['Seedance 2.0','Kling 1.6','Runway Gen-4','Midjourney','Flux','HeyGen','TikTok','Instagram Reels','YouTube Shorts','Facebook','Nano Banana','Enhancor'].map(p => (
-              <span className="plat-pill inter" key={p}>{p}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* FINAL CTA */}
-      <section className="cta-final">
-        <div className="cta-final-inner">
-          <h2 className="cta-h2 cg">Stop creating.<br /><em>Start directing.</em></h2>
-          <p className="cta-sub inter">3 free campaigns. No credit card. No setup.<br />Just your idea — and 60 seconds.</p>
-          <Link href="/generate" className="btn-ivory inter">Enter SuperCool</Link>
-          <p className="cta-note inter">Human Realism Engine™ · Motion Psychology™ · Creator OS</p>
+      {/* ── FINAL CTA ── */}
+      <section className="cta">
+        <div className="cta-inner">
+          <h2 className="cta-h2 pf">Stop creating.<br /><em>Start directing.</em></h2>
+          <p className="cta-sub dm">3 free campaigns. No credit card. No setup.<br />Just your idea — and 60 seconds.</p>
+          <Link href="/generate" className="btn-wine dm">⚡ Enter SuperCool</Link>
+          <p className="cta-note dm">Human Realism Engine™ · Motion Psychology™ · Creator OS</p>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer className="footer">
-        <div className="footer-logo inter"><strong>SUPER</strong>COOL Influencer</div>
+        <div className="footer-logo dm"><strong>SUPER</strong>COOL Influencer</div>
         <div className="footer-links">
-          <a href="/pricing" className="footer-link inter">Pricing</a>
-          <a href="/generate" className="footer-link inter">Generate</a>
-          <a href="/sign-in" className="footer-link inter">Sign in</a>
+          <a href="/pricing" className="footer-link dm">Pricing</a>
+          <a href="/generate" className="footer-link dm">Generate</a>
+          <a href="/sign-in" className="footer-link dm">Sign in</a>
         </div>
-        <div className="footer-copy inter">© 2026 SuperCool Influencer</div>
+        <div className="footer-copy dm">© 2026 SuperCool Influencer</div>
       </footer>
     </div>
   );
