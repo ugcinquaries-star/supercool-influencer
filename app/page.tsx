@@ -4,239 +4,330 @@ import HomeNav from "./components/HomeNav";
 
 export default function Home() {
   return (
-    <div style={{ background: '#141010', color: '#F5F0E8', overflowX: 'hidden' }}>
+    <div style={{ background: '#0F0B0C', color: '#F5F0E8', overflowX: 'hidden' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-          --bg:#141010; --bg2:#1C1616; --bg3:#231A1A;
-          --wine:#9E182B; --wine-glow:rgba(158,24,43,0.2);
-          --blush:#F2AFBC; --rose:#F9CBD6;
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+          --bg:#0F0B0C; --bg2:#181214; --bg3:#221A1C;
+          --wine:#9E182B; --wine-dim:rgba(158,24,43,0.18);
+          --blush:#F2AFBC; --rose:#F9CBD6; --oat:#F2E0D2;
           --ivory:#F5F0E8; --gold:#D4AF87;
           --border:rgba(245,240,232,0.07);
-          --border-wine:rgba(158,24,43,0.25);
-          --text-dim:rgba(245,240,232,0.42);
-          --text-mid:rgba(245,240,232,0.65);
+          --border-wine:rgba(158,24,43,0.22);
+          --dim:rgba(245,240,232,0.42);
+          --mid:rgba(245,240,232,0.68);
         }
-        html { scroll-behavior:smooth; }
-        .pf { font-family:'Playfair Display',Georgia,serif; }
-        .dm { font-family:'DM Sans',sans-serif; }
+        html{scroll-behavior:smooth}
+        .pf{font-family:'Playfair Display',Georgia,serif}
+        .dm{font-family:'DM Sans',sans-serif}
 
         /* NAV */
-        .nav { position:fixed; top:0; left:0; right:0; z-index:1000; display:flex; justify-content:space-between; align-items:center; padding:16px 48px; background:rgba(20,16,16,0.92); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
-        .logo { font-family:'DM Sans',sans-serif; font-weight:300; font-size:14px; color:var(--ivory); letter-spacing:0.22em; text-transform:uppercase; text-decoration:none; }
-        .logo strong { font-weight:700; }
-        .nav-links { display:flex; gap:28px; align-items:center; }
-        .nav-a { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:400; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim); text-decoration:none; transition:color 0.2s; }
-        .nav-a:hover { color:var(--ivory); }
-        .nav-cta { background:var(--wine); color:white; font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; padding:10px 22px; border-radius:3px; text-decoration:none; }
+        .nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:16px 52px;background:rgba(15,11,12,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+        .logo{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--ivory);letter-spacing:0.22em;text-transform:uppercase;text-decoration:none}
+        .logo strong{font-weight:700}
+        .nav-links{display:flex;gap:28px;align-items:center}
+        .nav-a{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color 0.2s}
+        .nav-a:hover{color:var(--ivory)}
+        .nav-cta{background:var(--wine);color:white;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:10px 22px;border-radius:3px;text-decoration:none;box-shadow:0 0 20px rgba(158,24,43,0.25)}
 
         /* STICKY MOBILE */
-        .sticky-mob { display:none; position:fixed; bottom:20px; left:20px; right:20px; z-index:999; }
-        .sticky-mob a { display:block; text-align:center; background:var(--wine); color:white; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:16px; border-radius:3px; text-decoration:none; box-shadow:0 8px 32px rgba(158,24,43,0.5); }
+        .sticky-mob{display:none;position:fixed;bottom:20px;left:20px;right:20px;z-index:999}
+        .sticky-mob a{display:block;text-align:center;background:var(--wine);color:white;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:16px;border-radius:3px;text-decoration:none;box-shadow:0 8px 32px rgba(158,24,43,0.5)}
 
-        /* ── HERO — HALF SPLIT ── */
-        .hero { min-height:100svh; display:grid; grid-template-columns:1fr 1fr; padding-top:64px; background:var(--bg); position:relative; overflow:hidden; isolation:isolate; }
-        .hero-left { display:flex; flex-direction:column; justify-content:center; padding:80px 56px 80px 56px; position:relative; z-index:2; }
-        .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(158,24,43,0.12); border:1px solid var(--border-wine); color:var(--blush); font-family:'DM Sans',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; padding:5px 14px; border-radius:100px; margin-bottom:24px; width:fit-content; }
-        .hero-dot { width:5px; height:5px; border-radius:50%; background:var(--blush); animation:pulse 2s ease-in-out infinite; }
+        /* HERO */
+        .hero{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;padding-top:64px;background:var(--bg);overflow:hidden;isolation:isolate}
+        .hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px 56px 80px 52px;position:relative;z-index:2}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(158,24,43,0.1);border:1px solid var(--border-wine);color:var(--blush);font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:24px;width:fit-content}
+        .badge-dot{width:5px;height:5px;border-radius:50%;background:var(--blush);animation:pulse 2s ease-in-out infinite}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-        .hero-h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(44px,5.5vw,76px); line-height:1; letter-spacing:-2px; color:var(--ivory); margin-bottom:6px; }
-        .hero-h1 em { font-style:italic; color:var(--wine); display:block; }
-        .hero-sub { font-family:'DM Sans',sans-serif; font-size:15px; font-weight:300; line-height:1.75; color:var(--text-dim); max-width:400px; margin:20px 0 32px; }
-        .hero-sub strong { color:var(--ivory); font-weight:500; }
-        .hero-ctas { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:36px; }
-        .btn-primary { background:var(--wine); color:white; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:15px 32px; border-radius:3px; text-decoration:none; box-shadow:0 4px 24px var(--wine-glow); transition:all 0.2s; display:inline-block; }
-        .btn-primary:hover { background:#7a1221; transform:translateY(-1px); }
-        .btn-ghost { border:1px solid var(--border); color:var(--text-dim); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; padding:15px 28px; border-radius:3px; text-decoration:none; transition:all 0.2s; display:inline-block; }
-        .btn-ghost:hover { border-color:rgba(245,240,232,0.25); color:var(--ivory); }
-        .hero-proof { font-family:'DM Sans',sans-serif; font-size:11px; color:var(--text-dim); margin-bottom:40px; }
-        .hero-proof strong { color:var(--blush); font-weight:600; }
+        .hero-h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(40px,5vw,72px);line-height:0.97;letter-spacing:-2px;color:var(--ivory);margin-bottom:8px}
+        .hero-h1 em{font-style:italic;color:var(--wine);display:block}
+        .hero-sub{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;line-height:1.75;color:var(--dim);max-width:400px;margin:18px 0 30px}
+        .hero-sub strong{color:var(--ivory);font-weight:500}
+        .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+        .btn-wine{background:var(--wine);color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:14px 30px;border-radius:3px;text-decoration:none;box-shadow:0 4px 20px rgba(158,24,43,0.3);transition:all 0.2s;display:inline-block}
+        .btn-wine:hover{background:#7a1221;transform:translateY(-1px)}
+        .btn-ghost{border:1px solid var(--border);color:var(--dim);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:14px 26px;border-radius:3px;text-decoration:none;transition:all 0.2s;display:inline-block}
+        .btn-ghost:hover{border-color:rgba(245,240,232,0.25);color:var(--ivory)}
+        .hero-proof{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--dim);margin-bottom:36px}
+        .hero-proof strong{color:var(--blush);font-weight:600}
+        .hero-stacks{display:flex;flex-direction:column;gap:8px}
+        .hero-stack-row{display:flex;align-items:center;gap:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--mid)}
+        .hero-stack-dot{width:5px;height:5px;border-radius:50%;background:var(--wine);flex-shrink:0}
 
-        /* Feature stacks */
-        .hero-stacks { display:flex; flex-direction:column; gap:8px; }
-        .hero-stack-row { display:flex; align-items:center; gap:10px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:400; color:var(--text-mid); }
-        .hero-stack-dot { width:6px; height:6px; border-radius:50%; background:var(--wine); flex-shrink:0; }
-
-        /* Hero right image */
-        .hero-right { position:relative; overflow:hidden; }
-        .hero-right-grad { position:absolute; inset:0; background:linear-gradient(to right, var(--bg) 0%, transparent 15%); z-index:2; pointer-events:none; }
-        .hero-right-bottom { position:absolute; bottom:0; left:0; right:0; height:120px; background:linear-gradient(to top, var(--bg) 0%, transparent 100%); z-index:2; pointer-events:none; }
-        .hero-badge-float { position:absolute; bottom:36px; left:36px; z-index:3; background:rgba(20,16,16,0.82); backdrop-filter:blur(8px); border:1px solid var(--border-wine); color:var(--ivory); font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500; padding:10px 16px; border-radius:4px; border-left:3px solid var(--wine); }
-        .hero-badge-float strong { display:block; font-size:15px; font-weight:700; color:var(--gold); }
+        /* HERO RIGHT — INTELLIGENCE DASHBOARD */
+        .hero-right{position:relative;display:flex;align-items:center;justify-content:center;padding:90px 32px 60px 24px;overflow:hidden}
+        .hero-right::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(158,24,43,0.12) 0%,transparent 65%);pointer-events:none}
+        .dashboard{width:100%;max-width:460px;display:flex;flex-direction:column;gap:8px;position:relative;z-index:2}
+        /* Top row: 2 cards */
+        .dash-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        .dash-card{background:rgba(30,22,24,0.9);border:1px solid rgba(245,240,232,0.08);border-radius:10px;padding:14px 16px;backdrop-filter:blur(8px)}
+        .dash-card.wine-border{border-color:rgba(158,24,43,0.35)}
+        .dash-card.full{grid-column:1/-1}
+        .dash-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,175,135,0.6);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .dash-dot{width:4px;height:4px;border-radius:50%;background:var(--blush)}
+        .dash-dot-green{width:4px;height:4px;border-radius:50%;background:#4ADE80}
+        .dash-value{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ivory);line-height:1;margin-bottom:4px}
+        .dash-sub{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;color:var(--dim);line-height:1.5}
+        .dash-sub em{color:var(--blush);font-style:normal;font-weight:500}
+        /* Trend bars */
+        .trend-bars{display:flex;gap:3px;align-items:flex-end;height:28px;margin-top:6px}
+        .trend-bar{border-radius:2px 2px 0 0;flex:1;background:rgba(158,24,43,0.3);transition:height 0.3s}
+        .trend-bar.hi{background:var(--wine)}
+        /* Hook card */
+        .hook-line{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;color:var(--mid);line-height:1.6;padding:6px 10px;background:rgba(245,240,232,0.04);border-radius:5px;margin-bottom:4px;border-left:2px solid transparent}
+        .hook-line.active{border-left-color:var(--wine);color:var(--ivory);background:rgba(158,24,43,0.08)}
+        /* Prompt card */
+        .prompt-text{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;color:var(--dim);line-height:1.7;font-style:italic}
+        .prompt-text strong{color:var(--blush);font-style:normal;font-weight:600}
+        /* Score card */
+        .score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+        .score-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--dim)}
+        .score-bar-wrap{flex:1;height:3px;background:rgba(245,240,232,0.08);border-radius:2px;margin:0 8px}
+        .score-fill{height:100%;border-radius:2px;background:linear-gradient(to right,var(--wine),var(--blush))}
+        .score-num{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;color:var(--blush);width:24px;text-align:right}
+        /* Badge live */
+        .live-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);color:#4ADE80;font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:100px}
+        .live-dot{width:4px;height:4px;border-radius:50%;background:#4ADE80;animation:pulse 1.5s ease-in-out infinite}
 
         /* TRUST */
-        .trust { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:14px 48px; display:flex; align-items:center; gap:36px; flex-wrap:wrap; }
-        .trust-label { font-family:'DM Sans',sans-serif; font-size:9px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.18); white-space:nowrap; }
-        .trust-items { display:flex; gap:32px; flex-wrap:wrap; }
-        .trust-item { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:400; color:rgba(245,240,232,0.3); }
+        .trust{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 52px;display:flex;align-items:center;gap:36px;flex-wrap:wrap}
+        .trust-label{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.18);white-space:nowrap}
+        .trust-items{display:flex;gap:32px;flex-wrap:wrap}
+        .trust-item{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:rgba(245,240,232,0.28);letter-spacing:0.04em}
 
         /* MARQUEE */
-        .marquee { background:var(--wine); padding:13px 0; overflow:hidden; }
-        .marquee-track { display:flex; white-space:nowrap; animation:mq 26s linear infinite; }
-        .marquee-item { display:inline-flex; align-items:center; gap:22px; padding:0 22px; font-family:'Playfair Display',serif; font-size:13px; font-style:italic; color:rgba(255,255,255,0.65); flex-shrink:0; }
-        .marquee-dot { width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.3); }
+        .marquee{background:var(--wine);padding:13px 0;overflow:hidden}
+        .marquee-track{display:flex;white-space:nowrap;animation:mq 26s linear infinite}
+        .marquee-item{display:inline-flex;align-items:center;gap:22px;padding:0 22px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:rgba(255,255,255,0.65);flex-shrink:0}
+        .marquee-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,0.3)}
         @keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-        /* FEATURES — 6 cards with correct images */
-        .features { background:var(--bg); padding:100px 48px; }
-        .features-inner { max-width:1100px; margin:0 auto; }
-        .sec-tag { font-family:'DM Sans',sans-serif; font-size:9px; font-weight:600; letter-spacing:0.24em; text-transform:uppercase; color:var(--blush); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
-        .sec-tag::before { content:''; width:18px; height:1px; background:var(--blush); }
-        .features-h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(28px,4vw,52px); line-height:1; letter-spacing:-1.5px; color:var(--ivory); margin-bottom:10px; }
-        .features-h2 em { font-style:italic; color:var(--blush); }
-        .features-sub { font-family:'DM Sans',sans-serif; font-size:14px; font-weight:300; color:var(--text-dim); margin-bottom:48px; }
-        .feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
-        .feat-card { background:var(--bg2); border:1px solid var(--border); border-radius:4px; overflow:hidden; transition:all 0.25s; position:relative; }
-        .feat-card:hover { border-color:var(--border-wine); transform:translateY(-2px); box-shadow:0 16px 40px rgba(0,0,0,0.4); }
-        .feat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(to right,var(--wine),transparent); opacity:0; transition:opacity 0.3s; z-index:1; }
-        .feat-card:hover::before { opacity:1; }
-        .feat-img { height:180px; position:relative; overflow:hidden; }
-        .feat-img img { width:100%; height:100%; object-fit:cover; object-position:center 20%; transition:transform 0.4s; }
-        .feat-card:hover .feat-img img { transform:scale(1.03); }
-        .feat-img-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, transparent 50%, rgba(28,22,22,0.95) 100%); }
-        .feat-body { padding:18px 20px 22px; }
-        .feat-title { font-family:'DM Sans',sans-serif; font-size:15px; font-weight:700; color:var(--ivory); margin-bottom:7px; }
-        .feat-desc { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:300; color:var(--text-dim); line-height:1.65; margin-bottom:12px; }
-        .feat-tags { display:flex; flex-wrap:wrap; gap:4px; }
-        .feat-tag { background:rgba(245,240,232,0.05); border:1px solid var(--border); color:rgba(245,240,232,0.28); font-family:'DM Sans',sans-serif; font-size:9px; padding:2px 8px; border-radius:3px; }
-        .feat-tag.wine { background:rgba(158,24,43,0.08); border-color:var(--border-wine); color:var(--blush); }
-        .feat-footer { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text-dim); text-align:center; margin-top:32px; font-style:italic; }
-
         /* HOW IT WORKS */
-        .how { background:var(--bg2); padding:100px 48px; border-top:1px solid var(--border); }
-        .how-inner { max-width:1100px; margin:0 auto; }
-        .how-h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(28px,4vw,52px); line-height:1; letter-spacing:-1.5px; color:var(--ivory); margin-bottom:56px; }
-        .how-h2 em { font-style:italic; color:var(--blush); }
-        .how-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
-        .how-step { background:var(--bg3); border:1px solid var(--border); border-radius:4px; padding:36px 28px; position:relative; transition:border-color 0.3s; }
-        .how-step:hover { border-color:var(--border-wine); }
-        .how-step-num { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:rgba(158,24,43,0.12); border:1px solid var(--border-wine); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:700; color:var(--blush); margin-bottom:20px; }
-        .how-title { font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700; color:var(--ivory); margin-bottom:10px; }
-        .how-desc { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:300; color:var(--text-dim); line-height:1.75; margin-bottom:18px; }
-        .how-items { display:flex; flex-wrap:wrap; gap:6px; }
-        .how-item { background:rgba(158,24,43,0.08); border:1px solid var(--border-wine); color:var(--blush); font-family:'DM Sans',sans-serif; font-size:10px; font-weight:500; padding:3px 10px; border-radius:100px; }
+        .how{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
+        .how-inner{max-width:1100px;margin:0 auto}
+        .sec-tag{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:var(--blush);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+        .sec-tag::before{content:'';width:18px;height:1px;background:var(--blush)}
+        .sec-h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(28px,4vw,52px);line-height:1;letter-spacing:-1.5px;color:var(--ivory);margin-bottom:48px}
+        .sec-h2 em{font-style:italic;color:var(--blush)}
+        .how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+        .how-step{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:36px 28px;transition:border-color 0.3s}
+        .how-step:hover{border-color:var(--border-wine)}
+        .how-num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(158,24,43,0.1);border:1px solid var(--border-wine);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--blush);margin-bottom:18px}
+        .how-title{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:var(--ivory);margin-bottom:10px}
+        .how-desc{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--dim);line-height:1.75;margin-bottom:16px}
+        .how-chips{display:flex;flex-wrap:wrap;gap:5px}
+        .how-chip{background:rgba(158,24,43,0.08);border:1px solid var(--border-wine);color:var(--blush);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;padding:3px 9px;border-radius:100px}
 
-        /* REALISM — images only, no salesy headline */
-        .realism { background:var(--bg); padding:100px 48px; border-top:1px solid var(--border); }
-        .realism-inner { max-width:1100px; margin:0 auto; }
-        .realism-header { text-align:center; margin-bottom:48px; }
-        .realism-h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(28px,4vw,52px); line-height:1; letter-spacing:-1.5px; color:var(--ivory); margin-bottom:14px; }
-        .realism-h2 em { font-style:italic; color:var(--blush); }
-        .realism-sub { font-family:'DM Sans',sans-serif; font-size:14px; font-weight:300; color:var(--text-dim); max-width:520px; margin:0 auto; line-height:1.75; }
-        .realism-imgs { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:32px; }
-        .realism-img-box { position:relative; border-radius:6px; overflow:hidden; border:1px solid var(--border); }
-        .realism-img-box:first-child,.realism-img-box:last-child { height:420px; }
-        .realism-img-lbl { position:absolute; bottom:14px; left:14px; background:rgba(20,16,16,0.8); backdrop-filter:blur(6px); border:1px solid var(--border-wine); color:var(--blush); font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; padding:5px 10px; border-radius:2px; }
-        .realism-pts { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
-        .realism-pt { background:var(--bg2); border:1px solid var(--border); padding:22px 18px; border-top:2px solid transparent; transition:all 0.2s; }
-        .realism-pt:hover { border-top-color:var(--wine); }
-        .realism-pt-icon { font-size:18px; margin-bottom:10px; }
-        .realism-pt-title { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:var(--ivory); margin-bottom:5px; }
-        .realism-pt-desc { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:300; color:var(--text-dim); line-height:1.65; }
+        /* FEATURES — 6 cards */
+        .feats{background:var(--bg2);padding:100px 52px;border-top:1px solid var(--border)}
+        .feats-inner{max-width:1100px;margin:0 auto}
+        .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:0}
+        .feat-card{background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:all 0.25s;position:relative}
+        .feat-card:hover{border-color:var(--border-wine);transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,0.4)}
+        .feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--wine),transparent);opacity:0;transition:opacity 0.3s}
+        .feat-card:hover::before{opacity:1}
+        .feat-img{height:160px;position:relative;overflow:hidden}
+        .feat-img img{width:100%;height:100%;object-fit:cover;object-position:center 25%;transition:transform 0.4s}
+        .feat-card:hover .feat-img img{transform:scale(1.04)}
+        .feat-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(34,26,28,0.97) 100%)}
+        .feat-body{padding:16px 18px 20px}
+        .feat-title{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--ivory);margin-bottom:6px}
+        .feat-desc{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;color:var(--dim);line-height:1.65;margin-bottom:10px}
+        .feat-tags{display:flex;flex-wrap:wrap;gap:4px}
+        .feat-tag{background:rgba(245,240,232,0.04);border:1px solid var(--border);color:rgba(245,240,232,0.25);font-family:'DM Sans',sans-serif;font-size:9px;padding:2px 7px;border-radius:3px}
+        .feat-tag.w{background:rgba(158,24,43,0.08);border-color:var(--border-wine);color:var(--blush)}
+        .feat-footer{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim);text-align:center;margin-top:28px;font-style:italic}
 
-        /* FINAL CTA — one only */
-        .cta-final { background:var(--bg2); padding:100px 48px; border-top:1px solid var(--border); }
-        .cta-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
-        .cta-left h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(28px,4vw,52px); line-height:1; letter-spacing:-1.5px; color:var(--ivory); margin-bottom:8px; }
-        .cta-left h2 em { font-style:italic; color:var(--blush); }
-        .cta-checks { display:flex; flex-direction:column; gap:10px; margin-top:28px; }
-        .cta-check { display:flex; align-items:center; gap:10px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:300; color:var(--text-mid); }
-        .cta-check-icon { width:18px; height:18px; border-radius:50%; background:rgba(158,24,43,0.15); border:1px solid var(--border-wine); display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--blush); flex-shrink:0; }
-        .cta-right { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:40px 36px; }
-        .cta-right h3 { font-family:'Playfair Display',serif; font-weight:700; font-size:24px; color:var(--ivory); margin-bottom:6px; }
-        .cta-right-sub { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text-dim); margin-bottom:24px; }
-        .cta-right-checks { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
-        .cta-note { font-family:'DM Sans',sans-serif; font-size:11px; color:rgba(245,240,232,0.2); text-align:center; margin-top:14px; }
+        /* PROOF — 55K client */
+        .proof{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
+        .proof-inner{max-width:1100px;margin:0 auto}
+        .proof-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+        .proof-img{position:relative;border-radius:8px;overflow:hidden;height:520px;border:1px solid var(--border)}
+        .proof-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,12,0.7) 0%,transparent 50%)}
+        .proof-number{font-family:'Playfair Display',serif;font-size:clamp(56px,8vw,96px);font-weight:900;color:var(--wine);line-height:1;letter-spacing:-3px;margin-bottom:4px}
+        .proof-unit{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;color:var(--dim);margin-bottom:28px;letter-spacing:0.06em;text-transform:uppercase}
+        .proof-quote{font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,26px);font-weight:300;font-style:italic;color:var(--ivory);line-height:1.45;margin-bottom:20px;letter-spacing:-0.5px}
+        .proof-quote em{color:var(--blush);font-style:italic}
+        .proof-attr{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--dim);letter-spacing:0.06em}
+        .proof-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+        .proof-stat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:16px 18px}
+        .proof-stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--ivory);line-height:1}
+        .proof-stat-lbl{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:400;color:var(--dim);margin-top:4px;letter-spacing:0.06em;text-transform:uppercase}
+
+        /* AFFILIATE */
+        .affiliate{background:var(--bg2);padding:100px 52px;border-top:1px solid var(--border)}
+        .affiliate-inner{max-width:1100px;margin:0 auto}
+        .affiliate-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+        .affiliate-h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(28px,4vw,52px);line-height:1;letter-spacing:-1.5px;color:var(--ivory);margin-bottom:16px}
+        .affiliate-h2 em{font-style:italic;color:var(--blush)}
+        .affiliate-sub{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;color:var(--dim);line-height:1.8;margin-bottom:32px}
+        .affiliate-card{background:var(--bg3);border:1px solid var(--border-wine);border-radius:8px;padding:36px 32px}
+        .aff-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--wine);line-height:1;margin-bottom:4px}
+        .aff-label{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--blush);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px}
+        .aff-desc{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--dim);line-height:1.75;margin-bottom:24px}
+        .aff-items{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+        .aff-item{display:flex;align-items:flex-start;gap:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--mid)}
+        .aff-icon{width:18px;height:18px;border-radius:50%;background:rgba(158,24,43,0.15);border:1px solid var(--border-wine);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--blush);flex-shrink:0;margin-top:1px}
+        .aff-example{background:rgba(158,24,43,0.06);border:1px solid var(--border-wine);border-radius:6px;padding:14px 16px;margin-bottom:24px}
+        .aff-example-label{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;color:var(--blush);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:8px}
+        .aff-calc-row{display:flex;justify-content:space-between;align-items:center;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim);padding:4px 0}
+        .aff-calc-row.total{border-top:1px solid var(--border-wine);margin-top:6px;padding-top:10px;color:var(--ivory);font-weight:600}
+
+        /* FINAL CTA */
+        .cta-final{background:var(--bg);padding:100px 52px;text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--border)}
+        .cta-glow{position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 50% 50%,rgba(158,24,43,0.12) 0%,transparent 65%);pointer-events:none}
+        .cta-inner{position:relative;z-index:2;max-width:600px;margin:0 auto}
+        .cta-h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(36px,6vw,76px);line-height:0.95;letter-spacing:-2px;color:var(--ivory);margin-bottom:22px}
+        .cta-h2 em{font-style:italic;color:var(--blush);display:block}
+        .cta-sub{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;color:var(--dim);margin-bottom:40px;line-height:1.8}
+        .cta-note{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(245,240,232,0.18);text-transform:uppercase;letter-spacing:0.1em;margin-top:18px}
 
         /* FOOTER */
-        .footer { background:var(--bg); border-top:1px solid var(--border); padding:32px 48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
-        .footer-logo { font-family:'DM Sans',sans-serif; font-weight:300; font-size:13px; color:var(--ivory); letter-spacing:0.2em; text-transform:uppercase; }
-        .footer-logo strong { font-weight:700; }
-        .footer-links { display:flex; gap:20px; }
-        .footer-link { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:300; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,232,0.18); text-decoration:none; transition:color 0.2s; }
-        .footer-link:hover { color:var(--ivory); }
-        .footer-copy { font-family:'DM Sans',sans-serif; font-size:10px; color:rgba(245,240,232,0.12); }
+        .footer{background:var(--bg);border-top:1px solid var(--border);padding:32px 52px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+        .footer-logo{font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;color:var(--ivory);letter-spacing:0.2em;text-transform:uppercase}
+        .footer-logo strong{font-weight:700}
+        .footer-links{display:flex;gap:20px}
+        .footer-link{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.18);text-decoration:none;transition:color 0.2s}
+        .footer-link:hover{color:var(--ivory)}
+        .footer-copy{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(245,240,232,0.12)}
 
         /* MOBILE */
-        @media (max-width:900px) {
-          .nav { padding:14px 20px; }
-          .nav-a { display:none; }
-          .sticky-mob { display:block; }
-          .hero { grid-template-columns:1fr; padding-top:64px; min-height:auto; }
-          .hero-left { padding:60px 20px 40px; }
-          .hero-right { height:380px; }
-          .hero-right-grad { background:linear-gradient(to bottom, var(--bg) 0%, transparent 20%); }
-          .hero-h1 { letter-spacing:-1.5px; }
-          .hero-ctas { flex-direction:column; }
-          .btn-primary,.btn-ghost { text-align:center; }
-          .trust { padding:14px 20px; }
-          .features { padding:72px 20px; }
-          .feat-grid { grid-template-columns:1fr; }
-          .how { padding:72px 20px; }
-          .how-steps { grid-template-columns:1fr; gap:2px; }
-          .realism { padding:72px 20px; }
-          .realism-imgs { grid-template-columns:1fr; }
-          .realism-img-box:first-child,.realism-img-box:last-child { height:260px; }
-          .realism-pts { grid-template-columns:1fr 1fr; }
-          .cta-final { padding:64px 20px 140px; }
-          .cta-inner { grid-template-columns:1fr; gap:36px; }
-          .footer { flex-direction:column; align-items:flex-start; padding:28px 20px; }
+        @media(max-width:900px){
+          .nav{padding:14px 20px}
+          .nav-a{display:none}
+          .sticky-mob{display:block}
+          .hero{grid-template-columns:1fr;padding-top:64px}
+          .hero-left{padding:60px 20px 40px}
+          .hero-right{padding:20px 20px 40px}
+          .dashboard{max-width:100%}
+          .dash-row{grid-template-columns:1fr 1fr}
+          .trust{padding:14px 20px}
+          .how{padding:72px 20px}
+          .how-steps{grid-template-columns:1fr;gap:2px}
+          .feats{padding:72px 20px}
+          .feat-grid{grid-template-columns:1fr}
+          .proof{padding:72px 20px}
+          .proof-layout{grid-template-columns:1fr;gap:40px}
+          .proof-img{height:300px}
+          .affiliate{padding:72px 20px}
+          .affiliate-layout{grid-template-columns:1fr;gap:40px}
+          .cta-final{padding:72px 20px 140px}
+          .footer{flex-direction:column;align-items:flex-start;padding:28px 20px}
         }
-        @media (max-width:480px) {
-          .realism-pts { grid-template-columns:1fr; }
+        @media(max-width:480px){
+          .hero-ctas{flex-direction:column}
+          .btn-wine,.btn-ghost{text-align:center}
+          .dash-row{grid-template-columns:1fr}
+          .proof-stats{grid-template-columns:1fr}
         }
       `}</style>
 
       <HomeNav />
       <div className="sticky-mob"><a href="/generate">⚡ Generate Free — 3 Briefs, No Card</a></div>
 
-      {/* ── HERO — HALF SPLIT (no phone) ── */}
+      {/* ── HERO ── */}
       <section className="hero">
         <div className="hero-left">
-          <div className="hero-badge dm"><div className="hero-dot" />Your AI Content Director · 60s</div>
+          <div className="hero-badge dm"><div className="badge-dot" />The Intelligence Layer for AI Creators</div>
           <h1 className="hero-h1 pf">
-            No ideas.<br />No team.<br />
-            <em>No problem.</em>
+            Engineer viral<br />AI content
+            <em>in 60 seconds.</em>
           </h1>
-          <p className="hero-sub dm">
-            SuperCool creates full AI UGC ads and cinematic reels with <strong>hyper-realistic visuals</strong>, captions, keywords and hashtags — in just 60 seconds.
-          </p>
+          <p className="hero-sub dm">No ideas. No team. <strong>No problem.</strong><br />SuperCool generates cinematic prompts, motion scripts, hooks, captions, keywords and hashtags — ready for Higgsfield in under a minute.</p>
           <div className="hero-ctas">
-            <Link href="/generate" className="btn-primary dm">⚡ Start Free — 3 Briefs</Link>
+            <Link href="/generate" className="btn-wine dm">⚡ Start Free — 3 Briefs</Link>
             <Link href="/pricing" className="btn-ghost dm">View Pricing →</Link>
           </div>
           <p className="hero-proof dm"><strong>3 free briefs</strong> · No credit card required</p>
           <div className="hero-stacks">
-            {[
-              '🎬  AI UGC Ads that convert',
-              '🎥  Cinematic Reels with real human motion',
-              '🖼️  Hyper-realistic images',
-              '✍️  Captions, Keywords & Hashtags',
-              '⚡  All generated in 60 seconds',
-            ].map(s => (
-              <div className="hero-stack-row dm" key={s}>
-                <div className="hero-stack-dot" />
-                <span>{s}</span>
-              </div>
+            {['🎬  Cinematic motion scripts + Seedance briefs','🖼️  Hyper-realistic image prompts','✍️  Viral hooks, captions + first comments','#  Keywords + hashtag intelligence','⚡  Full creator workflow in 60 seconds'].map(s => (
+              <div className="hero-stack-row dm" key={s}><div className="hero-stack-dot" /><span>{s}</span></div>
             ))}
           </div>
         </div>
 
+        {/* INTELLIGENCE DASHBOARD */}
         <div className="hero-right">
-          <Image src="/hero.png" alt="AI Creator Content" fill style={{objectFit:'cover',objectPosition:'center top'}} priority />
-          <div className="hero-right-grad" />
-          <div className="hero-right-bottom" />
-          <div className="hero-badge-float dm">
-            <strong>Campaign Ready</strong>
-            in 60 seconds
+          <div className="dashboard">
+            {/* Row 1: Trend intel + Viral score */}
+            <div className="dash-row">
+              <div className="dash-card">
+                <div className="dash-label dm"><div className="dash-dot" />Trend Intel <span className="live-badge dm"><div className="live-dot" />Live</span></div>
+                <div className="dash-value pf">2.4M</div>
+                <div className="dash-sub dm">views on <em>#skincareroutine</em> this week</div>
+                <div className="trend-bars">
+                  {[30,45,35,60,40,75,55,90,70,100,85,95].map((h,i) => (
+                    <div key={i} className={`trend-bar${h>70?' hi':''}`} style={{height:h+'%'}} />
+                  ))}
+                </div>
+              </div>
+              <div className="dash-card wine-border">
+                <div className="dash-label dm"><div className="dash-dot" />Realism Score</div>
+                <div className="dash-value pf">94<span style={{fontSize:14,fontWeight:400,color:'var(--dim)'}}>/100</span></div>
+                <div className="dash-sub dm"><em>Human Realism Engine™</em> active</div>
+                <div style={{marginTop:8}}>
+                  {[{l:'Skin Truth',v:97},{l:'Eye Behavior',v:94},{l:'Motion',v:91}].map(r => (
+                    <div className="score-row" key={r.l}>
+                      <span className="score-label dm">{r.l}</span>
+                      <div className="score-bar-wrap"><div className="score-fill" style={{width:r.v+'%'}} /></div>
+                      <span className="score-num dm">{r.v}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Row 2: Viral hooks */}
+            <div className="dash-card">
+              <div className="dash-label dm"><div className="dash-dot" />Viral Hook Extraction — Top 3 for this niche</div>
+              {[
+                {t:'—girl my knuckles been clear for 3 weeks straight, look—',a:true},
+                {t:'I spent $47 testing every brightening serum. Only one worked.',a:false},
+                {t:'The reason your skincare isn\'t working (it\'s not the product)',a:false},
+              ].map((h,i) => (
+                <div key={i} className={`hook-line dm${h.a?' active':''}`}>{h.t}</div>
+              ))}
+            </div>
+
+            {/* Row 3: Prompt preview + Keywords */}
+            <div className="dash-row">
+              <div className="dash-card">
+                <div className="dash-label dm"><div className="dash-dot" />Seedance 2.0 Prompt</div>
+                <div className="prompt-text dm">
+                  <strong>SCENE [0–3s]:</strong> Elena reclined on cream lounge, golden hour. iPad FaceTime active. <strong>FACE LOCK:</strong> warm Fitzpatrick III, coily updo, asymmetric blink at 0.4s. <strong>VOICEOVER:</strong> "—girl I'm tellin' you, look—"
+                </div>
+              </div>
+              <div className="dash-card">
+                <div className="dash-label dm"><div className="dash-dot" />Keyword Intelligence</div>
+                {['knuckle brightening serum 2026','how to even skin tone fast','best serum for dark knuckles','is dina bright worth it'].map((k,i) => (
+                  <div key={i} style={{fontFamily:"'DM Sans',sans-serif",fontSize:10,fontWeight:300,color:i===0?'var(--ivory)':'var(--dim)',lineHeight:1.8,padding:'2px 0',borderBottom:'1px solid rgba(245,240,232,0.04)'}}>
+                    {i===0 && <span style={{color:'var(--blush)',marginRight:4}}>↑</span>}{k}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Row 4: Caption output */}
+            <div className="dash-card">
+              <div className="dash-label dm"><div className="dash-dot" />Generated Caption — TikTok</div>
+              <div className="prompt-text dm" style={{lineHeight:1.85}}>
+                three weeks ago my knuckles looked completely different and I genuinely thought nothing would work | I started this routine and the change hit me mid-FaceTime when my friend pointed it out before I even mentioned it | the serum first, every knuckle, five minutes, then the cream — that's the whole thing | what's wild is it's not doing the most, it's just actually working | save this if your knuckles have been on your mind 🤍
+              </div>
+              <div style={{display:'flex',gap:12,marginTop:8}}>
+                {['#skincareroutine','#knucklecare','#glowup','#realresults','#ugccreator'].map(t => (
+                  <span key={t} className="feat-tag w">{t}</span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* TRUST */}
       <div className="trust">
-        <span className="trust-label dm">Works with</span>
+        <span className="trust-label dm">Outputs ready for</span>
         <div className="trust-items">
           {['Seedance 2.0','Kling 1.6','Runway Gen-4','Midjourney','Flux','HeyGen','Nano Banana'].map(t => (
             <span className="trust-item dm" key={t}>{t}</span>
@@ -257,56 +348,43 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── FEATURES — correct images per card ── */}
-      <section className="features">
-        <div className="features-inner">
-          <div className="sec-tag dm">Everything You Need</div>
-          <h2 className="features-h2 pf">Generated in <em>60 seconds.</em></h2>
-          <p className="features-sub dm">Supercool gives you a full content package — ready to post.</p>
+      {/* HOW IT WORKS */}
+      <section className="how">
+        <div className="how-inner">
+          <div className="sec-tag dm">How it works</div>
+          <h2 className="sec-h2 pf">3 steps.<br /><em>Full campaign.</em></h2>
+          <div className="how-steps">
+            {[
+              {n:'1',t:'Research',d:'AI analyses TikTok, Reels and Shorts — extracting viral trends, hooks, keywords and audience psychology for your exact niche right now.',chips:['Trend intel','Hook extraction','Keyword gaps','Audience psychology']},
+              {n:'2',t:'Generate',d:'SuperCool builds your complete content package — cinematic Seedance briefs, motion scripts, image prompts, hooks, captions, hashtags and first comments.',chips:['Seedance brief','Motion script','Image prompts','Captions + hooks']},
+              {n:'3',t:'Create & Publish',d:'Paste prompts into Higgsfield, Kling or Midjourney. Generate your content. Post daily without burnout.',chips:['Higgsfield','Kling','Midjourney','Runway']},
+            ].map(s => (
+              <div className="how-step" key={s.n}>
+                <div className="how-num dm">{s.n}</div>
+                <div className="how-title dm">{s.t}</div>
+                <div className="how-desc dm">{s.d}</div>
+                <div className="how-chips">
+                  {s.chips.map(c => <span className="how-chip dm" key={c}>{c}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES — 6 cards */}
+      <section className="feats">
+        <div className="feats-inner">
+          <div className="sec-tag dm">Everything you get</div>
+          <h2 className="sec-h2 pf">Generated in <em>60 seconds.</em></h2>
           <div className="feat-grid">
             {[
-              {
-                img:'/ugc-grid.png', pos:'center center',
-                title:'AI UGC Ads',
-                desc:'Authentic, realistic ads with believable human motion that actually convert.',
-                tags:[{t:'AI UGC',w:true},{t:'Ads',w:false},{t:'Converts',w:false}],
-                preview:'"This serum changed my skin game ✨"',
-              },
-              {
-                img:'/feat2.png', pos:'center top',
-                title:'Cinematic Reels',
-                desc:'Movie-level storytelling with realistic motion and emotional camera direction.',
-                tags:[{t:'Cinematic',w:true},{t:'Reels',w:false},{t:'Motion',w:false}],
-                preview:null,
-              },
-              {
-                img:'/realism-eye.png', pos:'center center',
-                title:'Hyper-Realistic Images',
-                desc:'Studio-quality visuals that look filmed, not AI-generated. Skin truth. Real light.',
-                tags:[{t:'Editorial',w:false},{t:'Luxury',w:false},{t:'Real Skin',w:true}],
-                preview:null,
-              },
-              {
-                img:'/feat3.png', pos:'center top',
-                title:'Captions That Hook',
-                desc:'Viral captions, hooks and CTAs written for your exact platform and audience.',
-                tags:[{t:'Caption',w:true},{t:'Hook',w:false},{t:'CTA',w:false}],
-                preview:'"The glow-up is real." ♥ 10K',
-              },
-              {
-                img:'/feat5.png', pos:'center top',
-                title:'SEO Keywords',
-                desc:'SEO-optimized keywords for reach, discovery and algorithm boost.',
-                tags:[{t:'skincare',w:false},{t:'glow',w:false},{t:'routine',w:false},{t:'radiant',w:false}],
-                preview:null,
-              },
-              {
-                img:'/feat1.png', pos:'center top',
-                title:'Viral Hashtags',
-                desc:'Viral hashtag sets tailored to your niche and posting goals.',
-                tags:[{t:'#skincare',w:true},{t:'#glowingskin',w:false},{t:'#ugc',w:false},{t:'#fyp',w:false}],
-                preview:null,
-              },
+              {img:'/ugc-grid.png',pos:'center center',title:'AI UGC Ads',desc:'Authentic, realistic ads built on human behavior systems — believable motion that converts.',tags:[{t:'AI UGC',w:true},{t:'Ads',w:false},{t:'Converts',w:false}]},
+              {img:'/feat2.png',pos:'center top',title:'Cinematic Reel Briefs',desc:'Full Seedance 2.0 production documents — scene breakdowns, timestamped scripts, blink schedules.',tags:[{t:'Seedance',w:true},{t:'Motion',w:false},{t:'Scripts',w:false}]},
+              {img:'/realism-eye.png',pos:'center center',title:'Hyper-Realistic Prompts',desc:'Skin truth, eye behavior, fabric physics. Image prompts that look filmed not generated.',tags:[{t:'Realism',w:true},{t:'Nano Banana',w:false},{t:'Midjourney',w:false}]},
+              {img:'/feat3.png',pos:'center top',title:'Viral Hooks + Captions',desc:'Platform-native captions 5-7 sentences minimum. Zero generic. Zero one-liners. Real creator energy.',tags:[{t:'TikTok',w:true},{t:'Instagram',w:false},{t:'Hooks',w:false}]},
+              {img:'/feat5.png',pos:'center top',title:'SEO Keyword Intelligence',desc:'Long-tail keywords people actually search. Not just "skincare" — the exact phrases driving discovery.',tags:[{t:'SEO',w:false},{t:'Discovery',w:false},{t:'Search',w:true}]},
+              {img:'/feat1.png',pos:'center top',title:'Hashtag + First Comment',desc:'8-hashtag strategy (mega/mid/micro mix) plus a pinnable first comment engineered for saves.',tags:[{t:'Hashtags',w:true},{t:'First comment',w:false},{t:'Saves',w:false}]},
             ].map(f => (
               <div className="feat-card" key={f.title}>
                 <div className="feat-img">
@@ -316,9 +394,8 @@ export default function Home() {
                 <div className="feat-body">
                   <div className="feat-title dm">{f.title}</div>
                   <div className="feat-desc dm">{f.desc}</div>
-                  {f.preview && <div style={{fontFamily:"'DM Sans',sans-serif",fontSize:11,color:'rgba(245,240,232,0.3)',fontStyle:'italic',marginBottom:10}}>{f.preview}</div>}
                   <div className="feat-tags">
-                    {f.tags.map(tag => <span className={`feat-tag dm${tag.w?' wine':''}`} key={tag.t}>{tag.t}</span>)}
+                    {f.tags.map(tag => <span className={`feat-tag dm${tag.w?' w':''}`} key={tag.t}>{tag.t}</span>)}
                   </div>
                 </div>
               </div>
@@ -328,91 +405,83 @@ export default function Home() {
         </div>
       </section>
 
-      {/* HOW IT WORKS — readable numbered circles */}
-      <section className="how">
-        <div className="how-inner">
-          <div className="sec-tag dm">How SuperCool Works</div>
-          <h2 className="how-h2 pf">3 steps.<br /><em>Full campaign.</em></h2>
-          <div className="how-steps">
-            {[
-              {n:'1',t:'Enter Your Idea',d:'Type your product, niche, or simple concept. Takes 10 seconds.',items:['Your product','Your niche','Any concept']},
-              {n:'2',t:'SuperCool Creates Everything',d:'In 60 seconds, we generate your complete content package — ready to paste into any tool.',items:['AI UGC Ads','Cinematic Reels','Captions','Keywords','Hashtags','Images']},
-              {n:'3',t:'Copy, Export & Post',d:'Paste prompts into Seedance, Kling, Runway or Midjourney. Generate your content. Post and grow.',items:['Seedance','Kling','Runway','Midjourney']},
-            ].map(s => (
-              <div className="how-step" key={s.n}>
-                <div className="how-step-num dm">{s.n}</div>
-                <div className="how-title dm">{s.t}</div>
-                <div className="how-desc dm">{s.d}</div>
-                <div className="how-items">
-                  {s.items.map(i => <span className="how-item dm" key={i}>{i}</span>)}
+      {/* PROOF — 55K client */}
+      <section className="proof">
+        <div className="proof-inner">
+          <div className="sec-tag dm">Real results</div>
+          <div className="proof-layout">
+            <div>
+              <div className="proof-number pf">55K</div>
+              <div className="proof-unit dm">Views on first reel</div>
+              <div className="proof-quote pf">"I went from <em>blank page every morning</em> to posting daily. The briefs are so specific I just paste and go. First reel hit 55K views."</div>
+              <div className="proof-attr dm">Beauty creator · SuperCool client · 5 reels generated</div>
+              <div className="proof-stats">
+                {[{n:'5',l:'Reels generated'},{n:'55K',l:'Views on reel #1'},{n:'60s',l:'Avg. brief time'},{n:'0',l:'Generic outputs'}].map(s => (
+                  <div className="proof-stat" key={s.l}>
+                    <div className="proof-stat-num pf">{s.n}</div>
+                    <div className="proof-stat-lbl dm">{s.l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="proof-img">
+              <Image src="/lifestyle.png" alt="Creator results" fill style={{objectFit:'cover',objectPosition:'center top'}} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AFFILIATE */}
+      <section className="affiliate">
+        <div className="affiliate-inner">
+          <div className="affiliate-layout">
+            <div>
+              <div className="sec-tag dm">Affiliate program</div>
+              <h2 className="affiliate-h2 pf">Earn while you<br /><em>create.</em></h2>
+              <p className="affiliate-sub dm">Share SuperCool with your audience and earn recurring commission on every paying user you refer. No cap. No expiry. As long as they stay subscribed, you earn.</p>
+              <div style={{display:'flex',gap:12,flexWrap:'wrap' as const}}>
+                <Link href="/generate" className="btn-wine dm">Apply to Affiliate →</Link>
+              </div>
+              <div style={{marginTop:20,fontFamily:"'DM Sans',sans-serif",fontSize:11,color:'var(--dim)'}}>Paid monthly · Instant approval for creators · Dedicated dashboard</div>
+            </div>
+            <div>
+              <div className="affiliate-card">
+                <div className="aff-num pf">40%</div>
+                <div className="aff-label dm">Recurring Commission</div>
+                <div className="aff-desc dm">You earn 40% of every payment your referrals make — monthly, for as long as they subscribe. This is recurring income, not one-time.</div>
+                <div className="aff-example">
+                  <div className="aff-example-label dm">Example earnings</div>
+                  {[{l:'10 Creator subscribers ($29/mo)',v:'$116/mo'},{l:'10 Agency subscribers ($79/mo)',v:'$316/mo'},{l:'25 mixed subscribers',v:'$580+/mo'}].map(r => (
+                    <div className="aff-calc-row" key={r.l}>
+                      <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:11,color:'var(--dim)'}}>{r.l}</span>
+                      <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:11,fontWeight:600,color:'var(--blush)'}}>{r.v}</span>
+                    </div>
+                  ))}
+                  <div className="aff-calc-row total">
+                    <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:12}}>100 subscribers</span>
+                    <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:12,color:'var(--blush)'}}>~$2,320/mo</span>
+                  </div>
                 </div>
+                <div className="aff-items">
+                  {['40% recurring on all plans','Paid monthly via PayPal or bank transfer','Real-time affiliate dashboard','Custom referral link + promo assets','No minimum threshold to withdraw'].map(item => (
+                    <div className="aff-item dm" key={item}><div className="aff-icon">✓</div>{item}</div>
+                  ))}
+                </div>
+                <Link href="/generate" className="btn-wine dm" style={{width:'100%',textAlign:'center' as const,display:'block'}}>Join the Affiliate Program →</Link>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* REALISM — images with simple headline, no "sell" language */}
-      <section className="realism">
-        <div className="realism-inner">
-          <div className="realism-header">
-            <div className="sec-tag dm" style={{justifyContent:'center'}}>Human Realism Engine™</div>
-            <h2 className="realism-h2 pf">Built for<br /><em>biological realism.</em></h2>
-            <p className="realism-sub dm">Every brief is engineered so your AI content feels filmed — not generated. Real skin. Real motion. Real emotion.</p>
-          </div>
-          <div className="realism-imgs">
-            <div className="realism-img-box">
-              <Image src="/realism-eye.png" alt="Eye realism" fill style={{objectFit:'cover',objectPosition:'center'}} />
-              <div className="realism-img-lbl dm">Ocular Realism System</div>
-            </div>
-            <div className="realism-img-box">
-              <Image src="/realism-skin.png" alt="Skin realism" fill style={{objectFit:'cover',objectPosition:'center'}} />
-              <div className="realism-img-lbl dm">Skin Truth System</div>
-            </div>
-          </div>
-          <div className="realism-pts">
-            {[
-              {i:'👁️',t:'Eye Behaviour',d:'Saccadic movement, lid weight. Eyes that actually see.'},
-              {i:'🧬',t:'Skin Truth',d:'Pore depth, subsurface scattering, oil variation.'},
-              {i:'⏱️',t:'Behavioural Delay',d:'Real humans hesitate. Timing imperfection is authenticity.'},
-              {i:'🎭',t:'Micro-Expressions',d:'Jaw tension, nostril flare. Before emotion lands.'},
-              {i:'🫁',t:'Breathing',d:'Chest rise, clavicle shift. The character breathes.'},
-              {i:'🤝',t:'Asymmetric Motion',d:'Real humans don\'t move symmetrically.'},
-              {i:'👗',t:'Fabric Physics',d:'Clothing moves with the body. Real material.'},
-              {i:'🎬',t:'GTA-Style Realism',d:'Procedural NPC-level movement for AI creators.'},
-            ].map(r => (
-              <div className="realism-pt" key={r.t}>
-                <div className="realism-pt-icon">{r.i}</div>
-                <div className="realism-pt-title dm">{r.t}</div>
-                <div className="realism-pt-desc dm">{r.d}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SINGLE CTA — "Create. Post. Grow." ── */}
+      {/* FINAL CTA */}
       <section className="cta-final">
+        <div className="cta-glow" />
         <div className="cta-inner">
-          <div className="cta-left">
-            <h2 className="pf">Create. Post. Grow.<br /><em>All in 60 Seconds.</em></h2>
-            <div className="cta-checks">
-              {['Full AI content creation','No editing skills needed','No brainstorming','No expensive tools','Cancel anytime'].map(c => (
-                <div className="cta-check dm" key={c}><div className="cta-check-icon">✓</div>{c}</div>
-              ))}
-            </div>
-          </div>
-          <div className="cta-right">
-            <h3 className="pf">Start Your Free Briefs</h3>
-            <p className="cta-right-sub dm">Try SuperCool free — 3 briefs on us.</p>
-            <div className="cta-right-checks">
-              {['Full access to all features','Generate complete campaigns','No credit card required'].map(c => (
-                <div className="cta-check dm" key={c}><div className="cta-check-icon">✓</div>{c}</div>
-              ))}
-            </div>
-            <Link href="/generate" className="btn-primary dm" style={{width:'100%',textAlign:'center',display:'block'}}>⚡ Start Free — 3 Briefs →</Link>
-            <p className="cta-note dm">No credit card · Cancel anytime</p>
-          </div>
+          <h2 className="cta-h2 pf">Stop creating.<br /><em>Start directing.</em></h2>
+          <p className="cta-sub dm">3 free briefs. No credit card. No setup.<br />Just your idea — and 60 seconds.</p>
+          <Link href="/generate" className="btn-wine dm">⚡ Generate Free Now</Link>
+          <p className="cta-note dm">Human Realism Engine™ · Motion Psychology™ · Creator OS</p>
         </div>
       </section>
 
@@ -423,6 +492,7 @@ export default function Home() {
           <a href="/pricing" className="footer-link dm">Pricing</a>
           <a href="/generate" className="footer-link dm">Generate</a>
           <a href="/sign-in" className="footer-link dm">Sign in</a>
+          <a href="/affiliate" className="footer-link dm">Affiliate</a>
         </div>
         <div className="footer-copy dm">© 2026 SuperCool Influencer</div>
       </footer>
