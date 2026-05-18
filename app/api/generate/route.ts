@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     const credits = await getUserCredits(userId);
 if (credits <= 0) {
       return NextResponse.json({ error: 'NO_CREDITS', message: 'You have no credits remaining. Please upgrade your plan.' }, { status: 402 });
-    }    const { mode, niche, platform, adAngle, targetAudience, influencerVibe, aesthetic, gender, characterArchetype, ethnicity, ageRange, bodyType, hairstyle, hairColor, outfit, sceneLocation, cameraAngle, lightingType, realismMode, ugcStyle, productDescription, reelDuration, videoTopic } = body;
+    }    const { mode, niche, platform, adAngle, targetAudience, influencerVibe, aesthetic, gender, characterArchetype, ethnicity, ageRange, bodyType, hairstyle, hairColor, outfit, sceneLocation, cameraAngle, lightingType, realismMode, ugcStyle, productDescription, reelDuration, videoTopic, customScene } = body;
     const DURATION = reelDuration || '10';
     const TOPIC = videoTopic || '';
     const { beardOption, tattooOption, accessories } = body;
@@ -102,7 +102,7 @@ if (credits <= 0) {
       'VIBE: ' + influencerVibe,
       'AESTHETIC: ' + aesthetic,
       'CHARACTER: ' + CHARACTER,
-      'SCENE SETTING: ' + (SCENES[sceneLocation] || SCENES['bathroom']),
+      'SCENE SETTING: ' + (customScene ? customScene : (SCENES[sceneLocation] || SCENES['bathroom'])),
       'CAMERA: ' + cameraAngle,
       'LIGHTING: ' + lightingType,
       REALISM[realismMode] || REALISM['alive'],
