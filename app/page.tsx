@@ -440,7 +440,7 @@ export default function Home() {
               <h2 className="affiliate-h2 pf">Earn while you<br /><em>create.</em></h2>
               <p className="affiliate-sub dm">Share SuperCool with your audience and earn recurring commission on every paying user you refer. No cap. No expiry. As long as they stay subscribed, you earn.</p>
               <div style={{display:'flex',gap:12,flexWrap:'wrap' as const}}>
-                <Link href="/generate" className="btn-wine dm">Apply to Affiliate →</Link>
+                <Link href="/affiliate" className="btn-wine dm">Apply to Affiliate →</Link>
               </div>
               <div style={{marginTop:20,fontFamily:"'DM Sans',sans-serif",fontSize:11,color:'var(--dim)'}}>Paid monthly · Instant approval for creators · Dedicated dashboard</div>
             </div>
@@ -467,7 +467,7 @@ export default function Home() {
                     <div className="aff-item dm" key={item}><div className="aff-icon">✓</div>{item}</div>
                   ))}
                 </div>
-                <Link href="/generate" className="btn-wine dm" style={{width:'100%',textAlign:'center' as const,display:'block'}}>Join the Affiliate Program →</Link>
+                <Link href="/affiliate" className="btn-wine dm" style={{width:'100%',textAlign:'center' as const,display:'block'}}>Join the Affiliate Program →</Link>
               </div>
             </div>
           </div>
