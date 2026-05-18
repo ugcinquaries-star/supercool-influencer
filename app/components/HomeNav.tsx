@@ -7,7 +7,10 @@ export default function HomeNav() {
 
   return (
     <nav className="nav">
-      <a href="/" className="logo dm"><strong>SUPER</strong>COOL Influencer</a>
+      <a href="/" className="logo dm" style={{display:'flex',flexDirection:'column' as const,gap:0,textDecoration:'none'}}>
+        <span style={{fontFamily:"'DM Sans',sans-serif",fontWeight:300,fontSize:'14px',color:'#F5F0E8',letterSpacing:'0.22em',textTransform:'uppercase' as const}}><strong style={{fontWeight:700}}>SUPER</strong>COOL Influencer</span>
+        <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:'9px',fontWeight:300,letterSpacing:'0.22em',textTransform:'uppercase' as const,color:'rgba(245,240,232,0.3)',marginTop:'2px'}}>Your AI Content Director</span>
+      </a>
       <div className="nav-links">
         {isLoaded && isSignedIn ? (
           <>
