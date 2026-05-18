@@ -160,7 +160,12 @@ export default function GeneratePage() {
         <div style={{height:'100%',width:((step/5)*100)+'%',background:'linear-gradient(90deg, #9E182B, #D4AF87)',transition:'width 0.4s'}} />
       </div>
       <nav style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'18px 48px',borderBottom:'1px solid rgba(255,255,255,0.07)'}}>
-        <a href="/dashboard" style={{fontWeight:800,fontSize:'18px',textDecoration:'none',color:'white'}}>super<span style={{color:'#D4AF87'}}>cool</span> influencer</a>
+        <a href="/dashboard" style={{textDecoration:'none',display:'flex',flexDirection:'column' as const,gap:0}}>
+            <span style={{fontFamily:"'DM Sans',sans-serif",fontWeight:300,fontSize:'14px',color:'#F5F0E8',letterSpacing:'0.22em',textTransform:'uppercase' as const}}>
+              <strong style={{fontWeight:700}}>SUPER</strong>COOL Influencer
+            </span>
+            <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:'9px',fontWeight:300,letterSpacing:'0.22em',textTransform:'uppercase' as const,color:'rgba(245,240,232,0.3)',marginTop:'2px'}}>Your AI Content Director</span>
+          </a>
         <div style={{fontSize:'13px',color:'rgba(255,255,255,0.4)'}}>Step {step} of 5</div>
       </nav>
 
