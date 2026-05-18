@@ -131,120 +131,114 @@ RULES — ZERO EXCEPTIONS:
 Respond with ONLY valid compact JSON. Use | for paragraph breaks inside strings. No actual newlines inside JSON string values:
 {"research_insight":"specific viral trend happening NOW in this niche with exact format and reason it works","competitor_gap":"what top creators in this niche are NOT doing — the gap you can own","viral_angle":"the specific angle for this video with highest viral chance based on current platform behavior","tiktok":{"hooks":["hook 1 referencing exact niche pain or curiosity gap — ultra specific","hook 2 unexpected angle","hook 3 creates urgency","hook 4 controversial hot take","hook 5 question format that demands an answer"],"caption":"sentence 1 opens mid-thought like a real person texting not AI | sentence 2 deepens with specific niche detail not vague | sentence 3 names the daily pain your audience feels | sentence 4 delivers value with a keyword woven in naturally | sentence 5 FOMO or urgency specific to this niche | sentence 6 CTA that feels earned and natural not salesy","keywords":["long tail keyword 1","specific search phrase 2","question people actually type 3","how to phrase 4","best for phrase 5","vs comparison 6","review phrase 7","specific result phrase 8","niche specific 9","trending topic 10","problem phrase 11","beginner search 12","creator specific 13","platform native 14","2026 trend 15"],"hashtags":["#mega1","#mega2","#mid1","#mid2","#mid3","#microniche1","#microniche2","#microniche3"],"first_comment":"pinnable comment adding a specific tip that makes people save — 3-4 keywords used naturally"},"instagram":{"hooks":["reels hook 1","hook 2","hook 3","hot take hook 4","aspirational hook 5"],"caption":"opening that stops the double-tap completely | specific niche detail with real emotion | names the pain audience was afraid to say out loud | delivers value with keywords woven naturally | relatable real moment or social proof | CTA tied to this specific content | final line giving a reason to save right now","keywords":["ig search 1","reels discovery 2","explore term 3","niche long tail 4","save-worthy topic 5","beauty creator term 6","ai content term 7","product category 8","tutorial search 9","lifestyle niche 10","trend specific 11","audience pain 12","transformation term 13","comparison search 14","viral topic 15"],"hashtags":["#mega1","#mega2","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"drives saves and shares with a specific actionable tip and 3 keywords used naturally"},"youtube":{"hooks":["retention hook 1","hook 2","hook 3","hook 4","thumbnail click hook 5"],"caption":"opens with primary keyword exactly what video delivers | secondary keywords woven naturally | subscribe or related content CTA | SEO-rich context about the niche | timestamps if applicable","keywords":["youtube search 1","how to phrase 2","tutorial 3","review phrase 4","niche specific 5","beginner 6","advanced 7","2026 trend 8","comparison 9","best for 10","vs term 11","specific result 12","ai creator 13","channel niche 14","discovery 15"],"hashtags":["#ytshorts","#shortsviews","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"drives watch time and sparks comments with a question and specific value"},"voiceover":{"accent":"specific accent pace energy delivery style for this niche","script":"[0s] exact opening word [2s] specific line [5s] value delivery [8s] retention hook [10s] CTA"}}`;
 
-    const b3 = `You are an elite AI video director specialising in Seedance 2.0 cinematic UGC. You write production briefs at the standard of the Dina Beauty campaign — that level of biological detail, scene specificity, and human realism.
+    const b3 = `You are an elite Seedance 2.0 cinematic UGC director. You write production briefs at the Dina Beauty campaign standard.
 
-BRIEF CONTEXT:
+⚠️ CRITICAL RULE #1: Read the VIDEO TOPIC in the context below. Your entire brief — every scene, every voiceover line, every action — must be about THAT specific topic. Not about beauty. Not about skincare. About exactly what the user typed.
+
+⚠️ CRITICAL RULE #2: Write the COMPLETE SCENE BREAKDOWN with exact timestamps showing what happens second by second. This is the most important part. Clients need to know exactly what the character is doing at every moment.
+
+⚠️ CRITICAL RULE #3: The voiceover script must be COMPLETE — every single word the character says, timestamped. NEVER "okay" "so" "hey guys". Always mid-thought, mid-action, caught in real life.
+
+CONTEXT:
 \${ctxLines}
 
 REEL DURATION: \${DURATION} seconds
 REALISM MODE: \${(realismMode || 'alive').toUpperCase()}
 
-VARIATION RULE: Pick ONE emotional angle — rotate through these, never repeat the same twice:
-confession / discovery / transformation reveal / behind-the-scenes / genuine reaction / accidental viral moment / before-and-after / day-in-my-life
+EMOTIONAL ANGLE (pick one, make it unexpected):
+confession / discovery / transformation reveal / behind-the-scenes / genuine reaction / accidental viral moment / before-and-after / mid-conversation
 
-VOICEOVER RULE: NEVER open with "okay" "so" "hey guys" "let me show you" or ANY generic opener. The character speaks mid-thought, mid-action, already in a conversation or already doing something. The viewer catches them in the middle of their life.
+---
 
-Write the COMPLETE Seedance 2.0 production document with ALL layers below:
+Write the complete brief now:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SEEDANCE 2.0 — \${DURATION} SECOND VERTICAL 9:16
-\${(realismMode || 'alive').toUpperCase()} MODE ACTIVE
+SEEDANCE 2.0 — \${DURATION}s VERTICAL 9:16 UGC
+\${(realismMode || 'alive').toUpperCase()} MODE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT THIS VIDEO IS ABOUT:
+[Write 2-3 sentences describing exactly what happens in this video based on the user's topic. This is the story. Be specific. Not generic.]
 
 FACE LOCK & IDENTITY SYSTEM:
-[Full biometric anchor — bone structure, exact skin tone, eye shape and color, lip volume, nose bridge width, jaw angle, ear position. Every render must match this. Any drift = reject.]
+[Full biometric anchor — bone structure, exact skin tone hex, eye shape/color, lip volume, jaw angle. Every frame must match. Drift = reject.]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SKIN REALISM LAYER (mandatory on every brief)
+SCENE BREAKDOWN — \${DURATION}s TOTAL
+This is the script. Write every second.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Pore depth: [setting]. Subsurface scattering: [intensity]. T-zone oil distribution: [specific areas]. Under-eye shadow depth: [level]. Peach fuzz: [visible in side light — yes/no + angle]. Natural asymmetric imperfections: [specify 3 — pore cluster location, slight asymmetry, skin tone micro-variation]. Skin response to lighting: how it catches, absorbs, reflects. NO beauty filter. NO smoothing. NO waxy finish.
+
+[For \${DURATION}s, write ALL scenes with exact timestamps:
+- 7s = 3 scenes
+- 10s = 4 scenes  
+- 15s = 5 scenes
+
+FOR EACH SCENE WRITE:
+[Xs – Xs] SCENE NAME IN CAPS
+Setting: exactly where the character is and what the environment looks like
+Character action: what they are physically doing — not posing, caught mid-action
+Voiceover — EXACT WORDS: "write every single word they say here in quotes"
+Facial reaction: which muscles activate, how emotion builds over 0.3-0.6s
+Biological detail: blink at [X.Xs] type [asymmetric/double/slow], micro head drift [X]mm [direction]
+Camera: how iPhone frames this naturally — handheld micro-instability, autofocus behavior]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PRODUCT LOCK SYSTEM (if product exists)
+FULL VOICEOVER SCRIPT — TIMESTAMPED
+Every word. Every pause. Every breath.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Product consistency rules: label facing camera at [X]° max rotation, zero morphing, liquid/cream level consistent, cap/lid geometry fixed, light interaction physically accurate, grip natural not posed. Specify EXACTLY: what second product enters frame, how it is held, label angle to camera, what makes the placement feel found not staged.
+
+[Write the complete script with timestamps. Example format:
+[0s] "—already mid-sentence when video starts"
+[2s] [breath] "specific line about the actual topic"
+[4s] "continues naturally—"
+[pause 0.4s]
+[5s] "delivers the moment"
+[8s] "—cuts off mid-thought"
+
+NEVER start with okay / so / hey / guys / let me show you]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SKIN REALISM LAYER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Pore depth: [specific setting]. SSS intensity: [level]. T-zone oil: [specific zones + timing]. Under-eye depth: [mm reduction]. Peach fuzz: [yes/no + visible angle]. 3 asymmetric imperfections: [list specifically]. NO beauty filter. NO smoothing. NO waxy finish.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCT LOCK (if product in scene)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Only include if there's a product. Label angle max, liquid level, cap geometry, fingerprint detail, entry timestamp, what makes it feel found not staged.]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 HUMAN BEHAVIOR SYSTEM
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-5 specific INVOLUNTARY behaviors this character will display:
-1. [micro behavior — nostril flare / lip press / jaw shift before speaking]
-2. [distraction behavior — glance off-camera / phone notification response]
-3. [concentration behavior — eye narrow / head tilt when focusing]
-4. [surprise/reaction behavior — eyebrow asymmetry / micro shoulder raise]
-5. [habitual behavior — hair touch / self-check in reflection / posture readjust]
-These are NOT scripted. They happen naturally. They make the character feel alive.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-EMOTIONAL ARC — mapped to \${DURATION}s
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[Map exact emotion at every 2-3 second interval. Emotions transition — never jump-cut. Include: starting state, trigger moment, emotional peak, resolution. Specify which facial muscles activate. Emotion BUILDS over 0.3-0.6s minimum — no instant expressions.]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SCENE BREAKDOWN — \${DURATION}s TOTAL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[Structure the scene breakdown based on DURATION:
-- 7s: 3 scenes maximum, ultra-tight hook + payoff + cut-off
-- 10s: 4 scenes, hook + escalation + transformation + cut-off  
-- 15s: 5 scenes, hook + build + mid-reveal + payoff + cut-off]
-
-For EACH scene include:
-- Exact timestamp range
-- Scene name
-- World state: what is physically happening in the environment
-- Character position: where they are, what they were already doing before camera
-- What character is NOT doing — they are not posing, not waiting, not performing
-- Biological realism with exact timestamps: blink at [Xs] type [type], micro head drift [mm] [direction]
-- Voiceover: the exact words — unique, mid-thought, niche-specific, never generic
-- Reaction: what their face does in response to what they are experiencing — specify muscles
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FINAL CUT-OFF MOMENT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Video ends mid-natural movement — NOT at a pause, NOT after conclusion. Last word of voiceover is not the last thing heard — ambient sound continues 0.3s. This creates scroll-back instinct.
+5 involuntary behaviors specific to THIS scene and topic:
+1. [before speaking — lip press / jaw shift / nostril flare]
+2. [distraction — glance off-camera at specific timestamp]
+3. [concentration — eye narrow / head tilt when engaged]
+4. [reaction — micro shoulder raise / eyebrow asymmetry]
+5. [habitual — hair touch / self-adjust / nervous tell]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 BLINK SCHEDULE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[One blink per 1.5-2s average. Each blink named and timed with exact type:
-asymmetric blink (one eye leads) / double micro-blink (surprise response) / slow deliberate blink / half-blink refocus]
+[List every blink with timestamp and type: asymmetric / double micro / slow deliberate / half-refocus]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-NERVOUS SYSTEM BEHAVIOR
+NERVOUS SYSTEM
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Micro head drift: [Xmm] [direction] every [Y]s — constant, never locked still.
-Breath cycle: inhale visible at shoulders [Xs], hold [Xs], exhale [Xs].
-Posture micro-shift: at [Xs] — weight redistributes to [direction].
-Hand stillness broken by: [specific micro movement with timestamp].
-Eye dart pattern: [gaze path with exact timestamps — off-camera glances, refocus moments].
+Head drift: [Xmm] [direction] every [Ys]. Breath: inhale [Xs] / hold [Xs] / exhale [Xs]. Posture shift: [Xs] weight to [direction]. Eye dart: [path with timestamps].
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CAMERA BEHAVIOR
+CAMERA — iPhone handheld
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Device: iPhone [model] handheld. Stabilization: NONE — natural hand micro-tremor present throughout. Autofocus: hunting visible on [specific transition moment] — 0.3s soft then locks. Exposure breathing: adjusts when [specific action] happens. Rolling shutter: micro-warp visible during [specific movement]. Framing: starts [composition], drifts to [composition] by end — never corrected.
+No stabilization. Autofocus hunts at [specific transition]. Exposure breathes when [action]. Rolling shutter micro-warp during [movement]. Framing: [starts X drifts to Y — never corrected].
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FULL VOICEOVER SCRIPT — TIMESTAMPED
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[Every line timestamped. Opening word is NEVER "okay" "so" "hey" "guys". Character speaks mid-thought. Include: natural breath sounds [breath], pauses [beat], filler sounds where authentic [mm], trailing off [—]. Script sounds like a real person not a script.]
+FINAL CUT: Video ends mid-natural movement. NOT at a pause. Last ambient sound continues 0.3s after voiceover. Creates scroll-back instinct.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-REACTION DIRECTION (3 genuine micro-reactions)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. [Specific involuntary reaction — exhale of relief / involuntary smile / self-conscious adjustment]
-2. [Reaction to product result — what their face does when they see/feel it working]
-3. [Final reaction — the one that sells without saying anything]
-These are NOT scripted. They happen because the moment is real.
-
-REALISM KILLERS — 10 hard NOs for this specific scenario:
-[10 things specific to THIS niche, character, scene that would break biological realism]
+REALISM KILLERS for THIS specific scene — 10 hard NOs:
+[10 things specific to THIS topic/scene that would break realism]
 
 UGC KILLERS — 5 hard NOs:
-[5 things that would make this look like a studio ad not real UGC]
-
-IDENTITY KILLERS — 5 hard NOs:
-[5 things that would cause face drift between frames]`;
+[5 things that would make this look studio not real life]`;
 
     const b4 = `Write two complete master production prompts for:\n${ctxLines}\n\n===KLING MASTER PROMPT===\nComplete Kling 1.6 prompt. Include: SUBJECT full character, ACTION sequence with timing, WORLD STATE, CAMERA angle and movement, LIGHTING full setup, ENVIRONMENT with background life, EMOTION, SKIN TRUTH realism, NEGATIVE PROMPTS 10 items, TECHNICAL 4K 24fps 9:16.\n\n===RUNWAY MASTER PROMPT===\nComplete Runway Gen-4 prompt. Include: SCENE cinematic description, SUBJECT full character, MOTION and camera, COLOR GRADE full description, MOOD, LIGHTING, CAMERA behavior, NEGATIVE 8 items, FORMAT 9:16.`;
 
