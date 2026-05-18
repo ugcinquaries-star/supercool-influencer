@@ -90,7 +90,7 @@ export default function GeneratePage() {
     beardOption:'', tattooOption:'', accessories:'', outfit:'',
     sceneLocation:'bathroom', cameraAngle:'', lightingType:'',
     realismMode:'alive', ugcStyle:'', productDescription:'',
-    reelDuration:'10',
+    reelDuration:'10', videoTopic:'',
   });
 
   const set = (f: string, v: string) => setForm(p => ({...p, [f]: v}));
@@ -193,6 +193,17 @@ export default function GeneratePage() {
               </div>
             )}
             <ChipGroup label="Niche" field="niche" options={NICHES} color="#D4AF87" />
+            <div style={{marginBottom:'24px'}}>
+              <span style={s.label}>🎯 What is your video about? <span style={{color:'#F2AFBC',fontSize:'11px',fontWeight:400}}>(be specific — scene, topic, mood, message)</span></span>
+              <textarea
+                placeholder="e.g. Sitting at therapist office having an emotional discussion about anxiety and self-worth&#10;e.g. Morning skincare routine in hotel bathroom before a big meeting&#10;e.g. Reacting to my knuckles clearing up after using this serum for 2 weeks"
+                value={form.videoTopic}
+                onChange={e => set('videoTopic', e.target.value)}
+                rows={3}
+                style={{...s.textarea, borderColor: form.videoTopic ? 'rgba(158,24,43,0.5)' : 'rgba(255,255,255,0.1)'}}
+              />
+              <div style={{fontSize:'11px',color:'rgba(255,255,255,0.25)',marginTop:'6px'}}>This is your creative brief. The more specific you are, the better your output.</div>
+            </div>
             <div style={{marginBottom:'24px'}}>
               <span style={s.label}>Platform</span>
               <div style={{display:'flex',gap:'8px',flexWrap:'wrap' as const}}>
