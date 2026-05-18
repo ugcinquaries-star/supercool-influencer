@@ -244,10 +244,10 @@ Minimum 300 words. Every word must reinforce biological accuracy and photographi
       ask(b1, 800),
       ask(b2, 1200),
       ask(b3, 1200),
-      ask(b4, 2000),
+      ask(b4, 3000),
       ask(b5_mj, 600),
       ask(b5_flux, 600),
-      ask(b5_nano, 800),
+      ask(b5_nano, 1000),
     ]);
 
     const briefData = safeJSON(r1, {
