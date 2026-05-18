@@ -55,8 +55,9 @@ export async function POST(req: NextRequest) {
     const credits = await getUserCredits(userId);
 if (credits <= 0) {
       return NextResponse.json({ error: 'NO_CREDITS', message: 'You have no credits remaining. Please upgrade your plan.' }, { status: 402 });
-    }    const { mode, niche, platform, adAngle, targetAudience, influencerVibe, aesthetic, gender, characterArchetype, ethnicity, ageRange, bodyType, hairstyle, hairColor, outfit, sceneLocation, cameraAngle, lightingType, realismMode, ugcStyle, productDescription, reelDuration } = body;
+    }    const { mode, niche, platform, adAngle, targetAudience, influencerVibe, aesthetic, gender, characterArchetype, ethnicity, ageRange, bodyType, hairstyle, hairColor, outfit, sceneLocation, cameraAngle, lightingType, realismMode, ugcStyle, productDescription, reelDuration, videoTopic } = body;
     const DURATION = reelDuration || '10';
+    const TOPIC = videoTopic || '';
     const { beardOption, tattooOption, accessories } = body;
     const CHARACTER = `${gender} | ${characterArchetype} | ${ethnicity} | Age ${ageRange} | Body: ${bodyType} | Hair: ${hairstyle} in ${hairColor}${beardOption ? ' | Beard: ' + beardOption : ''}${tattooOption ? ' | Tattoos: ' + tattooOption : ''} | Outfit: ${outfit}${accessories ? ' | Accessories: ' + accessories : ''}`;
 
@@ -87,6 +88,10 @@ if (credits <= 0) {
     };
 
     const ctxLines = [
+      '=== PRIMARY CREATIVE BRIEF (MUST FOLLOW EXACTLY) ===',
+      TOPIC ? 'VIDEO TOPIC & SCENE: ' + TOPIC : null,
+      TOPIC ? '⚠️ CRITICAL: Every output — seedance, image prompts, captions, hooks — MUST be about this exact topic and scene. Do NOT default to generic beauty or skincare. Do NOT invent a different topic. The topic above is the ONLY topic.' : null,
+      '=== SUPPORTING CONTEXT ===',
       'MODE: ' + (mode === 'ugc_ads' ? 'UGC ADS' : 'Content Creator'),
       'NICHE: ' + niche,
       'PLATFORM: ' + platform,
@@ -97,13 +102,13 @@ if (credits <= 0) {
       'VIBE: ' + influencerVibe,
       'AESTHETIC: ' + aesthetic,
       'CHARACTER: ' + CHARACTER,
-      'SCENE: ' + (SCENES[sceneLocation] || SCENES['bathroom']),
+      'SCENE SETTING: ' + (SCENES[sceneLocation] || SCENES['bathroom']),
       'CAMERA: ' + cameraAngle,
       'LIGHTING: ' + lightingType,
       REALISM[realismMode] || REALISM['alive'],
     ].filter(Boolean).join('\n');
 
-    const b1 = `You are an elite AI UGC creative director. Generate a production brief for:\n${ctxLines}\n\nRespond with ONLY this JSON structure. Keep ALL string values under 80 characters. No line breaks inside strings:\n{"brief":{"title":"short title","concept":"short concept","emotional_arc":"short arc","hook":"short hook"},"calendar":[{"day":1,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":2,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":3,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":4,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":5,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":6,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":7,"concept":"concept","hook":"hook","format":"format","goal":"goal"}]}`;
+    const b1 = `You are an elite AI UGC creative director. Generate a production brief STRICTLY based on the VIDEO TOPIC provided. If the topic is about a therapist office, generate content about a therapist office. If it is about morning skincare, generate that. NEVER default to a generic topic. The VIDEO TOPIC is the only topic.\n\nCONTEXT:\n${ctxLines}\n\nRules:\n- title must reflect the exact VIDEO TOPIC\n- concept must be built around the exact scene and topic described\n- hook must stop scroll for THIS specific topic\n- calendar must have 7 different angles on THIS topic\n- ALL values under 80 chars, no line breaks inside strings\n\nRespond with ONLY valid JSON:\n{\"brief\":{\"title\":\"specific title matching the video topic\",\"concept\":\"concept built around the exact scene described\",\"emotional_arc\":\"emotional journey specific to this topic\",\"hook\":\"scroll-stopping hook for this exact topic\"},\"calendar\":[{\"day\":1,\"concept\":\"angle on the topic\",\"hook\":\"hook\",\"format\":\"format\",\"goal\":\"goal\"},{\"day\":2,\"concept\":\"different angle\",\"hook\":\"hook\",\"format\":\"format\",\"goal\":\"goal\"},{\"day\":3,\"concept\":\"concept\",\"hook\":\"hook\",\"format\":\"format\",\"goal\":\"goal\"},{\"day\":4,\"concept\":\"concept\",\"hook\":\"hook\",\"format\":\"format\",\"goal\":\"goal\"},{\"day\":5,\"concept\":\"concept\",\"hook\":\"hook\",\"format\":\"format\",\"goal\":\"goal\"},{\"day\":6,\"concept\":\"concept\",\"hook\":\"hook\",\"format\":\"format\",\"goal\":\"goal\"},{\"day\":7,\"concept\":\"concept\",\"hook\":\"hook\",\"format\":\"format\",\"goal\":\"goal\"}]}`;
 
     const b2 = `You are a viral content strategist and platform algorithm expert in 2026. Your job: analyse what is CURRENTLY driving views on TikTok, Instagram Reels and YouTube Shorts for this niche, then generate platform-native content with the highest viral potential.
 
