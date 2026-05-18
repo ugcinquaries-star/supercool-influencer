@@ -90,6 +90,7 @@ export default function GeneratePage() {
     beardOption:'', tattooOption:'', accessories:'', outfit:'',
     sceneLocation:'bathroom', cameraAngle:'', lightingType:'',
     realismMode:'alive', ugcStyle:'', productDescription:'',
+    reelDuration:'10',
   });
 
   const set = (f: string, v: string) => setForm(p => ({...p, [f]: v}));
@@ -321,6 +322,18 @@ export default function GeneratePage() {
                   <div style={{fontSize:'13px',color:'rgba(255,255,255,0.4)'}}>{m.desc}</div>
                 </button>
               ))}
+            </div>
+            {/* Reel Duration */}
+            <div style={{marginBottom:'32px'}}>
+              <div style={{fontSize:'11px',fontWeight:700,color:'rgba(255,255,255,0.3)',letterSpacing:'0.1em',textTransform:'uppercase' as const,marginBottom:'14px'}}>⏱ Reel Duration</div>
+              <div style={{display:'flex',gap:'10px'}}>
+                {[{v:'7',label:'7 seconds',desc:'Ultra-hook'},{ v:'10',label:'10 seconds',desc:'Standard'},{ v:'15',label:'15 seconds',desc:'Story arc'}].map(d => (
+                  <button key={d.v} onClick={() => set('reelDuration', d.v)} style={{flex:1,padding:'14px 10px',borderRadius:'10px',border:'1px solid '+(form.reelDuration===d.v ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.08)'),background:form.reelDuration===d.v ? 'rgba(158,24,43,0.12)' : 'rgba(255,255,255,0.03)',cursor:'pointer',textAlign:'center' as const}}>
+                    <div style={{fontSize:'18px',fontWeight:800,color:form.reelDuration===d.v ? '#F2E0D2' : 'white',marginBottom:'2px'}}>{d.label}</div>
+                    <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>{d.desc}</div>
+                  </button>
+                ))}
+              </div>
             </div>
             <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:'12px',padding:'20px'}}>
               <div style={{fontSize:'11px',fontWeight:700,color:'rgba(255,255,255,0.3)',letterSpacing:'0.1em',textTransform:'uppercase' as const,marginBottom:'14px'}}>Summary</div>
