@@ -167,9 +167,11 @@ export default function OutputPage() {
 
             {/* Research Insight */}
             {data.brand_identity.research_insight && (
-              <div style={{ background: 'rgba(158,24,43,0.1)', border: '1px solid rgba(158,24,43,0.3)', borderRadius: '12px', padding: '16px 20px' }}>
-                <div style={{ fontSize: '11px', fontWeight: 700, color: '#D4AF87', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '8px' }}>🔍 What's Working Right Now</div>
-                <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6 }}>{data.brand_identity.research_insight}</div>
+              <div style={{ background: 'rgba(158,24,43,0.1)', border: '1px solid rgba(158,24,43,0.3)', borderRadius: '12px', padding: '16px 20px', marginBottom: '16px' }}>
+                <div style={{ fontSize: '11px', fontWeight: 700, color: '#D4AF87', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '12px' }}>📊 Platform Research</div>
+                <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.65, marginBottom: '10px' }}><span style={{color:'#F2AFBC',fontWeight:600}}>Trend: </span>{data.brand_identity.research_insight}</div>
+                {data.brand_identity.competitor_gap && <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.65, marginBottom: '10px' }}><span style={{color:'#F2AFBC',fontWeight:600}}>Gap to own: </span>{data.brand_identity.competitor_gap}</div>}
+                {data.brand_identity.viral_angle && <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.65 }}><span style={{color:'#F2AFBC',fontWeight:600}}>Your angle: </span>{data.brand_identity.viral_angle}</div>}
               </div>
             )}
 
@@ -204,8 +206,12 @@ export default function OutputPage() {
                     <div>
                       <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '10px' }}>✍️ Caption</div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', padding: '12px 14px' }}>
-                        <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6 }}>{pd.caption}</div>
-                        <CopyBtn text={pd.caption} id={`${p}-caption`} />
+                        <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.8, flex: 1 }}>
+                          {pd.caption?.split('|').map((line: string, i: number) => (
+                            <span key={i}>{line.trim()}{i < pd.caption.split('|').length - 1 ? <><br/><br/></> : null}</span>
+                          ))}
+                        </div>
+                        <CopyBtn text={pd.caption?.replace(/\|/g, '\n\n')} id={`${p}-caption`} />
                       </div>
                     </div>
 
@@ -236,8 +242,12 @@ export default function OutputPage() {
                     <div>
                       <div style={{ fontSize: '10px', fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: '10px' }}>💬 First Comment (post immediately)</div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', padding: '12px 14px' }}>
-                        <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6 }}>{pd.first_comment}</div>
-                        <CopyBtn text={pd.first_comment} id={`${p}-comment`} />
+                        <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.8, flex: 1 }}>
+                          {pd.first_comment?.split('|').map((line: string, i: number) => (
+                            <span key={i}>{line.trim()}{i < pd.first_comment.split('|').length - 1 ? <br/> : null}</span>
+                          ))}
+                        </div>
+                        <CopyBtn text={pd.first_comment?.replace(/\|/g, '\n')} id={`${p}-comment`} />
                       </div>
                     </div>
 
