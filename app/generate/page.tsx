@@ -90,7 +90,7 @@ export default function GeneratePage() {
     beardOption:'', tattooOption:'', accessories:'', outfit:'',
     sceneLocation:'bathroom', cameraAngle:'', lightingType:'',
     realismMode:'alive', ugcStyle:'', productDescription:'',
-    reelDuration:'10', videoTopic:'',
+    reelDuration:'10', videoTopic:'', customScene:'',
   });
 
   const set = (f: string, v: string) => setForm(p => ({...p, [f]: v}));
@@ -309,11 +309,21 @@ export default function GeneratePage() {
               <span style={s.label}>Scene Location</span>
               <div style={{display:'flex',flexDirection:'column' as const,gap:'8px'}}>
                 {SCENE_LOCATIONS.map(scene => (
-                  <button key={scene.id} onClick={() => set('sceneLocation',scene.id)} style={{padding:'14px 16px',borderRadius:'10px',border:'1px solid '+(form.sceneLocation===scene.id ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.08)'),background:form.sceneLocation===scene.id ? 'rgba(158,24,43,0.1)' : 'rgba(255,255,255,0.03)',cursor:'pointer',textAlign:'left' as const}}>
-                    <div style={{fontSize:'13px',fontWeight:600,color:form.sceneLocation===scene.id ? '#F2E0D2' : 'white'}}>{scene.label}</div>
+                  <button key={scene.id} onClick={() => { set('sceneLocation',scene.id); set('customScene',''); }} style={{padding:'14px 16px',borderRadius:'10px',border:'1px solid '+(form.sceneLocation===scene.id && !form.customScene ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.08)'),background:form.sceneLocation===scene.id && !form.customScene ? 'rgba(158,24,43,0.1)' : 'rgba(255,255,255,0.03)',cursor:'pointer',textAlign:'left' as const}}>
+                    <div style={{fontSize:'13px',fontWeight:600,color:form.sceneLocation===scene.id && !form.customScene ? '#F2E0D2' : 'white'}}>{scene.label}</div>
                     <div style={{fontSize:'12px',color:'rgba(255,255,255,0.4)',marginTop:'2px'}}>{scene.desc}</div>
                   </button>
                 ))}
+                <div style={{borderRadius:'10px',border:'1px solid '+(form.customScene ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.08)'),background:form.customScene ? 'rgba(158,24,43,0.08)' : 'rgba(255,255,255,0.03)',padding:'14px 16px'}}>
+                  <div style={{fontSize:'13px',fontWeight:600,color:form.customScene ? '#F2E0D2' : 'rgba(255,255,255,0.5)',marginBottom:'8px'}}>✏️ Custom Scene — type your own</div>
+                  <input
+                    type="text"
+                    placeholder="e.g. Car dealership test driving a Porsche · Therapy office · Rooftop bar Dubai · Private jet..."
+                    value={form.customScene || ''}
+                    onChange={e => { set('customScene', e.target.value); if(e.target.value) set('sceneLocation','custom'); }}
+                    style={{width:'100%',background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'8px',padding:'10px 12px',color:'white',fontSize:'13px',outline:'none',fontFamily:'sans-serif',boxSizing:'border-box' as const}}
+                  />
+                </div>
               </div>
             </div>
             <Drop label="Camera Angle" field="cameraAngle" options={CAMERA_ANGLES} />
@@ -360,7 +370,7 @@ export default function GeneratePage() {
                   {label:'Tattoos', value:form.tattooOption},
                   {label:'Outfit', value:form.outfit},
                   {label:'Accessories', value:form.accessories},
-                  {label:'Scene', value:SCENE_LOCATIONS.find(sc => sc.id===form.sceneLocation)?.label||''},
+                  {label:'Scene', value:form.customScene || SCENE_LOCATIONS.find(sc => sc.id===form.sceneLocation)?.label||''},
                   {label:'Realism', value:REALISM_MODES.find(m => m.id===form.realismMode)?.label||''},
                 ].filter(i => i.value).map(item => (
                   <div key={item.label} style={{display:'flex',gap:'8px',fontSize:'13px'}}>
