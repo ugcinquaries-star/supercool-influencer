@@ -263,17 +263,18 @@ export default function Home() {
         .sb-section{background:var(--bg);border-top:1px solid var(--border);padding:100px 52px}
         .sb-inner{max-width:1100px;margin:0 auto}
         .sb-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-        .sb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-        .sb-frame{position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;border:1px solid var(--border);cursor:default;transition:border-color 0.25s}
+        .sb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+        .sb-frame{position:relative;aspect-ratio:2/3;border-radius:4px;overflow:hidden;border:1px solid var(--border);cursor:default;transition:border-color 0.25s}
         .sb-frame:hover{border-color:var(--border-wine)}
         .sb-frame:hover img{transform:scale(1.04)}
         .sb-frame-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,12,0.8) 0%,transparent 55%);pointer-events:none}
         .sb-frame-num{position:absolute;top:7px;left:8px;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;color:rgba(245,240,232,0.45);letter-spacing:0.06em}
         .sb-frame-label{position:absolute;bottom:7px;left:8px;font-family:'DM Sans',sans-serif;font-size:7px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.5)}
-        .sb-brief{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;position:sticky;top:80px}
+        .sb-brief{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
         .sb-brief-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
         .sb-brief-title{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blush)}
         .sb-brief-badge{font-family:'DM Sans',sans-serif;font-size:7px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine);border:1px solid var(--border-wine);background:rgba(158,24,43,0.06);padding:3px 8px;border-radius:2px}
+        .sb-cta-wrap{padding:20px;border-top:1px solid var(--border);background:rgba(158,24,43,0.03)}
         .sb-brief-body{padding:18px 20px;display:flex;flex-direction:column;gap:14px}
         .sb-field-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,232,0.25);margin-bottom:4px}
         .sb-field-val{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--mid);line-height:1.6}
@@ -493,6 +494,10 @@ export default function Home() {
                     <span className="sb-rstat-label dm">{s.l}</span>
                   </div>
                 ))}
+              </div>
+              <div className="sb-cta-wrap">
+                <Link href="/generate" className="btn-wine dm" style={{display:'block',textAlign:'center' as const,width:'100%'}}>⚡ Generate Your Brief Free Now</Link>
+                <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:8,letterSpacing:'0.06em'}}>3 free briefs · No credit card required</p>
               </div>
             </div>
 
