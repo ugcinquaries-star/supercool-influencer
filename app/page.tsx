@@ -258,6 +258,36 @@ export default function Home() {
           .proof-result-metrics{grid-template-columns:1fr 1fr}
           .proof-result-metrics .proof-rm:nth-child(2){border-right:none}
         }
+
+        /* STORYBOARD */
+        .sb-section{background:var(--bg);border-top:1px solid var(--border);padding:100px 52px}
+        .sb-inner{max-width:1100px;margin:0 auto}
+        .sb-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+        .sb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+        .sb-frame{position:relative;aspect-ratio:4/5;border-radius:3px;overflow:hidden;border:1px solid var(--border);cursor:default;transition:border-color 0.25s}
+        .sb-frame:hover{border-color:var(--border-wine)}
+        .sb-frame:hover img{transform:scale(1.04)}
+        .sb-frame-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,12,0.8) 0%,transparent 55%);pointer-events:none}
+        .sb-frame-num{position:absolute;top:7px;left:8px;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;color:rgba(245,240,232,0.45);letter-spacing:0.06em}
+        .sb-frame-label{position:absolute;bottom:7px;left:8px;font-family:'DM Sans',sans-serif;font-size:7px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.5)}
+        .sb-brief{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;position:sticky;top:80px}
+        .sb-brief-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+        .sb-brief-title{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blush)}
+        .sb-brief-badge{font-family:'DM Sans',sans-serif;font-size:7px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine);border:1px solid var(--border-wine);background:rgba(158,24,43,0.06);padding:3px 8px;border-radius:2px}
+        .sb-brief-body{padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+        .sb-field-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,232,0.25);margin-bottom:4px}
+        .sb-field-val{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--mid);line-height:1.6}
+        .sb-field-val.highlight{color:var(--ivory);font-weight:600;font-size:13px}
+        .sb-scene-block{background:rgba(158,24,43,0.05);border:1px solid var(--border-wine);border-radius:3px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:11px;line-height:1.7;color:var(--dim)}
+        .sb-scene-block strong{color:var(--blush);font-weight:600}
+        .sb-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+        .sb-tag{font-family:'DM Sans',sans-serif;font-size:8px;padding:3px 8px;border:1px solid var(--border);color:rgba(245,240,232,0.25);border-radius:2px}
+        .sb-hook{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;font-weight:400;color:var(--wine);line-height:1.5;padding:10px 12px;border-left:2px solid var(--wine);background:rgba(158,24,43,0.04)}
+        .sb-result-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border)}
+        .sb-rstat{padding:12px;text-align:center;border-right:1px solid var(--border)}
+        .sb-rstat:last-child{border-right:none}
+        .sb-rstat-num{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--wine);display:block;line-height:1;margin-bottom:2px}
+        .sb-rstat-label{font-family:'DM Sans',sans-serif;font-size:7px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,240,232,0.22)}
       `}</style>
 
       <HomeNav />
@@ -379,6 +409,96 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+
+      {/* ── STORYBOARD — Brief → Output ── */}
+      <section className="sb-section">
+        <div className="sb-inner">
+          <div className="sec-tag dm">Brief → Output</div>
+          <h2 className="sec-h2 pf" style={{marginBottom:40}}>
+            One SuperCool brief.<br /><em>Eight shots. Higgsfield-ready.</em>
+          </h2>
+          <div className="sb-layout">
+
+            {/* LEFT — 4x2 storyboard grid */}
+            <div className="sb-grid">
+              {[
+                {img:'/sb-1.png',n:'1.',label:'Entrance Walk'},
+                {img:'/sb-2.png',n:'2.',label:'Covered Reveal'},
+                {img:'/sb-3.png',n:'3.',label:'Contract Sign'},
+                {img:'/sb-4.png',n:'4.',label:'G-Wagon Reveal'},
+                {img:'/sb-5.png',n:'5.',label:'Interior'},
+                {img:'/sb-6.png',n:'6.',label:'Keys + Roses'},
+                {img:'/sb-7.png',n:'7.',label:'Aerial Drive'},
+                {img:'/sb-8.png',n:'8.',label:'G-Wagon Pose'},
+              ].map(f => (
+                <div className="sb-frame" key={f.n}>
+                  <Image src={f.img} alt={f.label} fill style={{objectFit:'cover',objectPosition:'center',transition:'transform 0.4s'}} />
+                  <div className="sb-frame-overlay" />
+                  <div className="sb-frame-num dm">{f.n}</div>
+                  <div className="sb-frame-label dm">{f.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* RIGHT — Brief card */}
+            <div className="sb-brief">
+              <div className="sb-brief-header">
+                <span className="sb-brief-title dm">● SuperCool Brief</span>
+                <span className="sb-brief-badge dm">Generated in 60s</span>
+              </div>
+              <div className="sb-brief-body">
+                <div>
+                  <div className="sb-field-label dm">Client</div>
+                  <div className="sb-field-val highlight dm">Luxury Reel — Mercedes G-Wagon Delivery</div>
+                </div>
+                <div>
+                  <div className="sb-field-label dm">Concept</div>
+                  <div className="sb-field-val dm">Editorial cinematic reel. Woman purchasing her dream car. Dark luxury. No voiceover. Let the visuals do the work.</div>
+                </div>
+                <div>
+                  <div className="sb-field-label dm">Scene Structure</div>
+                  <div className="sb-scene-block dm">
+                    <strong>Shot 1:</strong> Exterior walk-in. Back-facing, power walk, designer bag.<br />
+                    <strong>Shot 2:</strong> Covered car reveal. Black balloons. Dramatic pause.<br />
+                    <strong>Shot 3:</strong> Contract signing. Closeup, sunglasses on.<br />
+                    <strong>Shot 4:</strong> G-Wagon uncovered. She touches the hood.<br />
+                    <strong>Shot 5:</strong> Interior. Hands on wheel. Golden hour.<br />
+                    <strong>Shot 6:</strong> Keys + roses outside the dealership.<br />
+                    <strong>Shot 7:</strong> Aerial — G-Wagon on highway. Motion blur.<br />
+                    <strong>Shot 8:</strong> Champagne toast. Celebration.
+                  </div>
+                </div>
+                <div>
+                  <div className="sb-field-label dm">Motion Direction</div>
+                  <div className="sb-field-val dm">Slow push-ins. Rack focus on details. Handheld for signing. Aerial drone for highway.</div>
+                </div>
+                <div>
+                  <div className="sb-field-label dm">Platform</div>
+                  <div className="sb-tags">
+                    {['TikTok','Instagram Reels','9:16 format','Higgsfield'].map(t => (
+                      <span className="sb-tag dm" key={t}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="sb-field-label dm">Viral Hook</div>
+                  <div className="sb-hook pf">"She didn't announce it. She just pulled up."</div>
+                </div>
+              </div>
+              <div className="sb-result-strip">
+                {[{n:'60s',l:'Brief Time'},{n:'8',l:'Shots'},{n:'96',l:'Realism'},{n:'Viral',l:'Outcome'}].map(s => (
+                  <div className="sb-rstat" key={s.l}>
+                    <span className="sb-rstat-num pf">{s.n}</span>
+                    <span className="sb-rstat-label dm">{s.l}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       {/* HOW IT WORKS */}
       <section className="how">
