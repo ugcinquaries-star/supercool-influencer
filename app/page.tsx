@@ -60,7 +60,6 @@ export default function Home() {
         .hero-right{position:relative;display:flex;align-items:center;justify-content:center;padding:90px 32px 60px 24px;overflow:hidden}
         .hero-right::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(158,24,43,0.12) 0%,transparent 65%);pointer-events:none}
         .dashboard{width:100%;max-width:460px;display:flex;flex-direction:column;gap:8px;position:relative;z-index:2}
-        /* Top row: 2 cards */
         .dash-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
         .dash-card{background:rgba(30,22,24,0.9);border:1px solid rgba(245,240,232,0.08);border-radius:10px;padding:14px 16px;backdrop-filter:blur(8px)}
         .dash-card.wine-border{border-color:rgba(158,24,43,0.35)}
@@ -71,23 +70,18 @@ export default function Home() {
         .dash-value{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ivory);line-height:1;margin-bottom:4px}
         .dash-sub{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;color:var(--dim);line-height:1.5}
         .dash-sub em{color:var(--blush);font-style:normal;font-weight:500}
-        /* Trend bars */
         .trend-bars{display:flex;gap:3px;align-items:flex-end;height:28px;margin-top:6px}
         .trend-bar{border-radius:2px 2px 0 0;flex:1;background:rgba(158,24,43,0.3);transition:height 0.3s}
         .trend-bar.hi{background:var(--wine)}
-        /* Hook card */
         .hook-line{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;color:var(--mid);line-height:1.6;padding:6px 10px;background:rgba(245,240,232,0.04);border-radius:5px;margin-bottom:4px;border-left:2px solid transparent}
         .hook-line.active{border-left-color:var(--wine);color:var(--ivory);background:rgba(158,24,43,0.08)}
-        /* Prompt card */
         .prompt-text{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;color:var(--dim);line-height:1.7;font-style:italic}
         .prompt-text strong{color:var(--blush);font-style:normal;font-weight:600}
-        /* Score card */
         .score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
         .score-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--dim)}
         .score-bar-wrap{flex:1;height:3px;background:rgba(245,240,232,0.08);border-radius:2px;margin:0 8px}
         .score-fill{height:100%;border-radius:2px;background:linear-gradient(to right,var(--wine),var(--blush))}
         .score-num{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;color:var(--blush);width:24px;text-align:right}
-        /* Badge live */
         .live-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);color:#4ADE80;font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:100px}
         .live-dot{width:4px;height:4px;border-radius:50%;background:#4ADE80;animation:pulse 1.5s ease-in-out infinite}
 
@@ -120,7 +114,7 @@ export default function Home() {
         .how-chips{display:flex;flex-wrap:wrap;gap:5px}
         .how-chip{background:rgba(158,24,43,0.08);border:1px solid var(--border-wine);color:var(--blush);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;padding:3px 9px;border-radius:100px}
 
-        /* FEATURES — 6 cards */
+        /* FEATURES */
         .feats{background:var(--bg2);padding:100px 52px;border-top:1px solid var(--border)}
         .feats-inner{max-width:1100px;margin:0 auto}
         .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:0}
@@ -140,21 +134,62 @@ export default function Home() {
         .feat-tag.w{background:rgba(158,24,43,0.08);border-color:var(--border-wine);color:var(--blush)}
         .feat-footer{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim);text-align:center;margin-top:28px;font-style:italic}
 
-        /* PROOF — 55K client */
+        /* ─── PROOF — DINA (UPDATED) ─── */
         .proof{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
         .proof-inner{max-width:1100px;margin:0 auto}
-        .proof-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-        .proof-img{position:relative;border-radius:8px;overflow:hidden;height:520px;border:1px solid var(--border)}
-        .proof-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,12,0.7) 0%,transparent 50%)}
-        .proof-number{font-family:'Playfair Display',serif;font-size:clamp(56px,8vw,96px);font-weight:900;color:var(--wine);line-height:1;letter-spacing:-3px;margin-bottom:4px}
-        .proof-unit{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;color:var(--dim);margin-bottom:28px;letter-spacing:0.06em;text-transform:uppercase}
-        .proof-quote{font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,26px);font-weight:300;font-style:italic;color:var(--ivory);line-height:1.45;margin-bottom:20px;letter-spacing:-0.5px}
-        .proof-quote em{color:var(--blush);font-style:italic}
-        .proof-attr{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--dim);letter-spacing:0.06em}
-        .proof-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
-        .proof-stat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:16px 18px}
-        .proof-stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--ivory);line-height:1}
-        .proof-stat-lbl{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:400;color:var(--dim);margin-top:4px;letter-spacing:0.06em;text-transform:uppercase}
+
+        /* Two-column: quote left, stats card right */
+        .proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+
+        /* Quote card */
+        .proof-quote-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:36px;display:flex;flex-direction:column;justify-content:space-between}
+        .proof-quote-mark{font-family:'Playfair Display',serif;font-size:72px;color:var(--wine);line-height:0.6;margin-bottom:20px;opacity:0.35}
+        .proof-quote-text{font-family:'Playfair Display',serif;font-size:clamp(16px,1.8vw,20px);font-weight:300;font-style:italic;color:var(--ivory);line-height:1.6;margin-bottom:24px;letter-spacing:-0.3px}
+        .proof-quote-text strong{font-style:normal;font-weight:700;color:var(--blush)}
+        .proof-attr-row{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid var(--border)}
+        .proof-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--wine);flex-shrink:0;position:relative}
+        .proof-attr-name{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--ivory)}
+        .proof-attr-handle{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--dim);margin-top:1px}
+        .proof-platform-tag{margin-left:auto;font-family:'DM Sans',sans-serif;font-size:8px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--wine);border:1px solid var(--border-wine);background:rgba(158,24,43,0.06);padding:3px 10px;border-radius:3px;white-space:nowrap}
+
+        /* TikTok stats card */
+        .proof-stats-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
+        .proof-tiktok-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+        .proof-tiktok-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--border-wine);flex-shrink:0;position:relative}
+        .proof-tiktok-name{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--ivory)}
+        .proof-tiktok-handle{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--dim);font-family:'DM Sans',monospace}
+        .proof-tiktok-bio{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(245,240,232,0.4);margin-top:2px;line-height:1.4}
+        .proof-verified{margin-left:auto;font-family:'DM Sans',sans-serif;font-size:7px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine);border:1px solid var(--border-wine);background:rgba(158,24,43,0.08);padding:3px 8px;border-radius:2px;white-space:nowrap;flex-shrink:0}
+
+        .proof-account-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border)}
+        .proof-astat{padding:14px;text-align:center;border-right:1px solid var(--border)}
+        .proof-astat:last-child{border-right:none}
+        .proof-astat-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ivory);display:block;line-height:1;margin-bottom:3px}
+        .proof-astat-num.wine{color:var(--wine)}
+        .proof-astat-num.green{color:#4ADE80}
+        .proof-astat-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:500;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase}
+
+        .proof-vid-section{padding:14px 18px;border-bottom:1px solid var(--border)}
+        .proof-vid-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+        .proof-vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+        .proof-vid-thumb{aspect-ratio:9/16;border-radius:4px;border:1px solid var(--border);position:relative;overflow:hidden}
+        .proof-vid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,12,0.85) 0%,transparent 55%)}
+        .proof-vid-pin{position:absolute;top:5px;left:5px;font-family:'DM Sans',sans-serif;font-size:7px;font-weight:700;background:var(--wine);color:white;padding:2px 5px;border-radius:2px;z-index:2;letter-spacing:0.06em}
+        .proof-vid-views{position:absolute;bottom:6px;left:6px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;color:white;z-index:2}
+
+        .proof-result-metrics{display:grid;grid-template-columns:repeat(3,1fr)}
+        .proof-rm{padding:13px;text-align:center;border-right:1px solid var(--border)}
+        .proof-rm:last-child{border-right:none}
+        .proof-rm-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;display:block;line-height:1;margin-bottom:3px}
+        .proof-rm-num.wine{color:var(--wine)}
+        .proof-rm-num.green{color:#4ADE80}
+        .proof-rm-num.ivory{color:var(--ivory)}
+        .proof-rm-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:500;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase}
+
+        .proof-powered{padding:10px 18px;background:rgba(158,24,43,0.03);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+        .proof-powered-text{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.2)}
+        .proof-powered-badge{display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--wine)}
+        .proof-powered-dot{width:5px;height:5px;border-radius:50%;background:var(--wine);animation:pulse 2s ease-in-out infinite}
 
         /* AFFILIATE */
         .affiliate{background:var(--bg2);padding:100px 52px;border-top:1px solid var(--border)}
@@ -209,8 +244,7 @@ export default function Home() {
           .feats{padding:72px 20px}
           .feat-grid{grid-template-columns:1fr}
           .proof{padding:72px 20px}
-          .proof-layout{grid-template-columns:1fr;gap:40px}
-          .proof-img{height:300px}
+          .proof-grid{grid-template-columns:1fr;gap:16px}
           .affiliate{padding:72px 20px}
           .affiliate-layout{grid-template-columns:1fr;gap:40px}
           .cta-final{padding:72px 20px 140px}
@@ -220,7 +254,9 @@ export default function Home() {
           .hero-ctas{flex-direction:column}
           .btn-wine,.btn-ghost{text-align:center}
           .dash-row{grid-template-columns:1fr}
-          .proof-stats{grid-template-columns:1fr}
+          .proof-account-stats{grid-template-columns:1fr 1fr}
+          .proof-result-metrics{grid-template-columns:1fr 1fr}
+          .proof-result-metrics .proof-rm:nth-child(2){border-right:none}
         }
       `}</style>
 
@@ -251,7 +287,6 @@ export default function Home() {
         {/* INTELLIGENCE DASHBOARD */}
         <div className="hero-right">
           <div className="dashboard">
-            {/* Row 1: Trend intel + Viral score */}
             <div className="dash-row">
               <div className="dash-card">
                 <div className="dash-label dm"><div className="dash-dot" />Trend Intel <span className="live-badge dm"><div className="live-dot" />Live</span></div>
@@ -279,7 +314,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Row 2: Viral hooks */}
             <div className="dash-card">
               <div className="dash-label dm"><div className="dash-dot" />Viral Hook Extraction — Top 3 for this niche</div>
               {[
@@ -291,7 +325,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Row 3: Prompt preview + Keywords */}
             <div className="dash-row">
               <div className="dash-card">
                 <div className="dash-label dm"><div className="dash-dot" />Seedance 2.0 Prompt</div>
@@ -309,7 +342,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Row 4: Caption output */}
             <div className="dash-card">
               <div className="dash-label dm"><div className="dash-dot" />Generated Caption — TikTok</div>
               <div className="prompt-text dm" style={{lineHeight:1.85}}>
@@ -372,7 +404,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURES — 6 cards */}
+      {/* FEATURES */}
       <section className="feats">
         <div className="feats-inner">
           <div className="sec-tag dm">Everything you get</div>
@@ -405,27 +437,129 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PROOF — 55K client */}
+      {/* ── PROOF — DINA (REAL CLIENT) ── */}
       <section className="proof">
         <div className="proof-inner">
           <div className="sec-tag dm">Real results</div>
-          <div className="proof-layout">
-            <div>
-              <div className="proof-number pf">55K</div>
-              <div className="proof-unit dm">Views on first reel</div>
-              <div className="proof-quote pf">"I went from <em>blank page every morning</em> to posting daily. The briefs are so specific I just paste and go. First reel hit 55K views."</div>
-              <div className="proof-attr dm">Beauty creator · SuperCool client · 5 reels generated</div>
-              <div className="proof-stats">
-                {[{n:'5',l:'Reels generated'},{n:'55K',l:'Views on reel #1'},{n:'60s',l:'Avg. brief time'},{n:'0',l:'Generic outputs'}].map(s => (
-                  <div className="proof-stat" key={s.l}>
-                    <div className="proof-stat-num pf">{s.n}</div>
-                    <div className="proof-stat-lbl dm">{s.l}</div>
-                  </div>
-                ))}
+          <h2 className="sec-h2 pf" style={{marginBottom:32}}>
+            This is what our briefs<br /><em>actually produce.</em>
+          </h2>
+
+          <div className="proof-grid">
+
+            {/* LEFT — Quote */}
+            <div className="proof-quote-card">
+              <div>
+                <div className="proof-quote-mark pf">"</div>
+                <p className="proof-quote-text pf">
+                  SuperCool changed my content game. My retention went from 20% to 79%. The briefs are so specific — it's like having a{' '}
+                  <strong>creative team telling me exactly what to film, how to film it, and why it'll go viral.</strong>{' '}
+                  First reel hit 64.9K views. I just paste and go.
+                </p>
+              </div>
+              <div className="proof-attr-row">
+                <div className="proof-avatar">
+                  <Image
+                    src="/dina-profile.jpg"
+                    alt="Dinabrightsbeauty"
+                    fill
+                    style={{objectFit:'cover',objectPosition:'center top'}}
+                  />
+                </div>
+                <div>
+                  <div className="proof-attr-name dm">Dinabrightsbeauty</div>
+                  <div className="proof-attr-handle dm">@cardinacssaul · Luxury Skincare Creator</div>
+                </div>
+                <div className="proof-platform-tag dm">TikTok</div>
               </div>
             </div>
-            <div className="proof-img">
-              <Image src="/lifestyle.png" alt="Creator results" fill style={{objectFit:'cover',objectPosition:'center top'}} />
+
+            {/* RIGHT — TikTok stats card */}
+            <div className="proof-stats-card">
+
+              {/* Profile header */}
+              <div className="proof-tiktok-header">
+                <div className="proof-tiktok-avatar">
+                  <Image
+                    src="/dina-profile.jpg"
+                    alt="Dinabrightsbeauty"
+                    fill
+                    style={{objectFit:'cover',objectPosition:'center top'}}
+                  />
+                </div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div className="proof-tiktok-name dm">Dinabrightsbeauty</div>
+                  <div className="proof-tiktok-handle">@cardinacssaul</div>
+                  <div className="proof-tiktok-bio dm">✨ Glass Skin Starts Here · Luxury Glow Skincare</div>
+                </div>
+                <div className="proof-verified dm">✓ SuperCool Client</div>
+              </div>
+
+              {/* Account stats */}
+              <div className="proof-account-stats">
+                <div className="proof-astat">
+                  <span className="proof-astat-num pf">18.9K</span>
+                  <span className="proof-astat-label dm">Followers</span>
+                </div>
+                <div className="proof-astat">
+                  <span className="proof-astat-num wine pf">35.9K</span>
+                  <span className="proof-astat-label dm">Likes</span>
+                </div>
+                <div className="proof-astat">
+                  <span className="proof-astat-num green pf">3 Days</span>
+                  <span className="proof-astat-label dm">To Viral</span>
+                </div>
+              </div>
+
+              {/* Pinned video thumbnails */}
+              <div className="proof-vid-section">
+                <div className="proof-vid-label dm">Pinned videos — SuperCool briefs</div>
+                <div className="proof-vid-grid">
+                  <div className="proof-vid-thumb">
+                    <Image src="/dina-cream.jpg" alt="Radiant Glow Cream" fill style={{objectFit:'cover',objectPosition:'center 30%'}} />
+                    <div className="proof-vid-overlay" />
+                    <div className="proof-vid-pin dm">Pinned</div>
+                    <div className="proof-vid-views dm">▶ 64.9K</div>
+                  </div>
+                  <div className="proof-vid-thumb">
+                    <Image src="/dina-ulta.jpg" alt="Ulta car scene" fill style={{objectFit:'cover',objectPosition:'center 20%'}} />
+                    <div className="proof-vid-overlay" />
+                    <div className="proof-vid-pin dm">Pinned</div>
+                    <div className="proof-vid-views dm">▶ 11.6K</div>
+                  </div>
+                  <div className="proof-vid-thumb">
+                    <Image src="/dina-glow.jpg" alt="Glowing skin" fill style={{objectFit:'cover',objectPosition:'center 15%'}} />
+                    <div className="proof-vid-overlay" />
+                    <div className="proof-vid-pin dm">Pinned</div>
+                    <div className="proof-vid-views dm">▶ 12.4K</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Result metrics */}
+              <div className="proof-result-metrics">
+                <div className="proof-rm">
+                  <span className="proof-rm-num wine pf">79%</span>
+                  <span className="proof-rm-label dm">Avg Retention</span>
+                </div>
+                <div className="proof-rm">
+                  <span className="proof-rm-num ivory pf">64.9K</span>
+                  <span className="proof-rm-label dm">Top Video</span>
+                </div>
+                <div className="proof-rm">
+                  <span className="proof-rm-num green pf">+247%</span>
+                  <span className="proof-rm-label dm">Engagement</span>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="proof-powered">
+                <span className="proof-powered-text dm">Brief by SuperCool · Executed in Higgsfield</span>
+                <span className="proof-powered-badge dm">
+                  <span className="proof-powered-dot" />Verified Results
+                </span>
+              </div>
+
             </div>
           </div>
         </div>
