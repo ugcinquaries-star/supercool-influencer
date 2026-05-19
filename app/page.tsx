@@ -263,8 +263,8 @@ export default function Home() {
         .sb-section{background:var(--bg);border-top:1px solid var(--border);padding:100px 52px}
         .sb-inner{max-width:1100px;margin:0 auto}
         .sb-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-        .sb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
-        .sb-frame{position:relative;aspect-ratio:4/5;border-radius:3px;overflow:hidden;border:1px solid var(--border);cursor:default;transition:border-color 0.25s}
+        .sb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+        .sb-frame{position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;border:1px solid var(--border);cursor:default;transition:border-color 0.25s}
         .sb-frame:hover{border-color:var(--border-wine)}
         .sb-frame:hover img{transform:scale(1.04)}
         .sb-frame-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,12,0.8) 0%,transparent 55%);pointer-events:none}
