@@ -540,12 +540,12 @@ export default function Home() {
           <h2 className="sec-h2 pf">Generated in <em>60 seconds.</em></h2>
           <div className="feat-grid">
             {[
-              {img:'/ugc-grid.png',pos:'center center',title:'AI UGC Ads',desc:'Authentic, realistic ads built on human behavior systems — believable motion that converts.',tags:[{t:'AI UGC',w:true},{t:'Ads',w:false},{t:'Converts',w:false}]},
-              {img:'/feat2.png',pos:'center top',title:'Cinematic Reel Briefs',desc:'Full Seedance 2.0 production documents — scene breakdowns, timestamped scripts, blink schedules.',tags:[{t:'Seedance',w:true},{t:'Motion',w:false},{t:'Scripts',w:false}]},
-              {img:'/realism-eye.png',pos:'center center',title:'Hyper-Realistic Prompts',desc:'Skin truth, eye behavior, fabric physics. Image prompts that look filmed not generated.',tags:[{t:'Realism',w:true},{t:'Nano Banana',w:false},{t:'Midjourney',w:false}]},
-              {img:'/feat3.png',pos:'center top',title:'Viral Hooks + Captions',desc:'Platform-native captions 5-7 sentences minimum. Zero generic. Zero one-liners. Real creator energy.',tags:[{t:'TikTok',w:true},{t:'Instagram',w:false},{t:'Hooks',w:false}]},
-              {img:'/feat5.png',pos:'center top',title:'SEO Keyword Intelligence',desc:'Long-tail keywords people actually search. Not just "skincare" — the exact phrases driving discovery.',tags:[{t:'SEO',w:false},{t:'Discovery',w:false},{t:'Search',w:true}]},
-              {img:'/feat1.png',pos:'center top',title:'Hashtag + First Comment',desc:'8-hashtag strategy (mega/mid/micro mix) plus a pinnable first comment engineered for saves.',tags:[{t:'Hashtags',w:true},{t:'First comment',w:false},{t:'Saves',w:false}]},
+              {img:'/ugc-grid.png',pos:'center center',title:'AI UGC Ads',desc:"Authentic, realistic ads built on human behavior systems — believable motion that converts.",tags:[{t:'AI UGC',w:true},{t:'Ads',w:false},{t:'Converts',w:false}]},
+              {img:'/feat2.png',pos:'center top',title:'Cinematic Reel Briefs',desc:"Full Seedance 2.0 production documents — scene breakdowns, timestamped scripts, blink schedules.",tags:[{t:'Seedance',w:true},{t:'Motion',w:false},{t:'Scripts',w:false}]},
+              {img:'/realism-eye.png',pos:'center center',title:'Hyper-Realistic Prompts',desc:"Skin truth, eye behavior, fabric physics. Image prompts that look filmed not generated.",tags:[{t:'Realism',w:true},{t:'Nano Banana',w:false},{t:'Midjourney',w:false}]},
+              {img:'/feat3.png',pos:'center top',title:'Viral Hooks + Captions',desc:"Platform-native captions 5-7 sentences minimum. Zero generic. Zero one-liners. Real creator energy.",tags:[{t:'TikTok',w:true},{t:'Instagram',w:false},{t:'Hooks',w:false}]},
+              {img:'/feat5.png',pos:'center top',title:'SEO Keyword Intelligence',desc:"Long-tail keywords people actually search. Not just "skincare" — the exact phrases driving discovery.",tags:[{t:'SEO',w:false},{t:'Discovery',w:false},{t:'Search',w:true}]},
+              {img:'/feat1.png',pos:'center top',title:'Hashtag + First Comment',desc:"8-hashtag strategy (mega/mid/micro mix) plus a pinnable first comment engineered for saves.",tags:[{t:'Hashtags',w:true},{t:'First comment',w:false},{t:'Saves',w:false}]},
             ].map(f => (
               <div className="feat-card" key={f.title}>
                 <div className="feat-img">
@@ -567,11 +567,11 @@ export default function Home() {
           {/* PILLARS STRIP */}
           <div className="pillars-strip">
             {[
-              {n:'01',tag:'↗ Real-time',title:'Trend Analysis',desc:'Surface what's spiking before it peaks. Platform signals decoded daily.'},
-              {n:'02',tag:'⊞ Architecture',title:'Retention Structures',desc:'Pattern interrupts, loop points, payoff architecture. Every frame earns the next.'},
-              {n:'03',tag:'◎ Psychology',title:'Motion Psychology',desc:'Camera movement as emotional language. Dolly, drift, rack focus.'},
-              {n:'04',tag:'◈ Precision',title:'Realism Engineering',desc:'Skin texture, lighting physics, material response. Built to fool the eye.'},
-              {n:'05',tag:'⌖ Systems',title:'Creator Strategy',desc:'Content OS, monetization loops, positioning for long-term dominance.'},
+              {n:'01',tag:'↗ Real-time',title:'Trend Analysis',desc:"Surface what's spiking before it peaks. Platform signals decoded daily."},
+              {n:'02',tag:'⊞ Architecture',title:'Retention Structures',desc:"Pattern interrupts, loop points, payoff architecture. Every frame earns the next."},
+              {n:'03',tag:'◎ Psychology',title:'Motion Psychology',desc:"Camera movement as emotional language. Dolly, drift, rack focus."},
+              {n:'04',tag:'◈ Precision',title:'Realism Engineering',desc:"Skin texture, lighting physics, material response. Built to fool the eye."},
+              {n:'05',tag:'⌖ Systems',title:'Creator Strategy',desc:"Content OS, monetization loops, positioning for long-term dominance."},
             ].map(p => (
               <div className="pillar-card" key={p.n}>
                 <div className="pillar-num pf">{p.n}</div>
