@@ -443,10 +443,10 @@ export default function Home() {
             {/* RIGHT — Headline + brief card + CTA */}
             <div className="sb-right">
               <div className="sec-tag dm" style={{marginBottom:16}}>Brief → Output</div>
-              <h2 className="sec-h2 pf" style={{marginBottom:40}}>
+              <h2 className="sec-h2 pf" style={{marginBottom:80}}>
                 One SuperCool brief.<br /><em>Eight shots. Higgsfield-ready.</em>
               </h2>
-              <p className="sb-right-sub dm" style={{marginBottom:40}}>A real SuperCool brief. The client took this straight into Higgsfield. Zero guesswork — every scene, motion, and hook pre-engineered for virality.</p>
+              <p className="sb-right-sub dm" style={{marginBottom:80}}>A real SuperCool brief. The client took this straight into Higgsfield. Zero guesswork — every scene, motion, and hook pre-engineered for virality.</p>
 
               <div className="sb-brief">
                 <div className="sb-brief-header">
