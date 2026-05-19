@@ -135,14 +135,14 @@ export default function Home() {
         .feat-footer{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim);text-align:center;margin-top:28px;font-style:italic}
 
         /* PILLARS STRIP */
-        .pillars-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:40px;border:1px solid var(--border);border-radius:4px;overflow:hidden}
-        .pillar-card{padding:28px 20px;border-right:1px solid var(--border);transition:background 0.2s;position:relative}
+        .pillars-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;border:1px solid var(--border-wine);border-radius:4px;overflow:hidden;background:var(--bg3)}
+        .pillar-card{padding:28px 20px;border-right:1px solid rgba(158,24,43,0.15);transition:background 0.2s;position:relative}
         .pillar-card:last-child{border-right:none}
-        .pillar-card:hover{background:rgba(158,24,43,0.05)}
-        .pillar-num{font-size:36px;font-weight:700;color:rgba(158,24,43,0.12);line-height:1;margin-bottom:10px}
-        .pillar-tag{font-size:8px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--wine);margin-bottom:8px}
-        .pillar-title{font-size:13px;font-weight:700;color:var(--ivory);margin-bottom:8px;letter-spacing:-0.01em}
-        .pillar-desc{font-size:11px;font-weight:300;color:var(--dim);line-height:1.65}
+        .pillar-card:hover{background:rgba(158,24,43,0.08)}
+        .pillar-num{font-size:40px;font-weight:700;color:rgba(158,24,43,0.18);line-height:1;margin-bottom:10px;font-family:'Playfair Display',serif}
+        .pillar-tag{font-size:8px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--wine);margin-bottom:8px;display:block}
+        .pillar-title{font-size:14px;font-weight:700;color:var(--ivory);margin-bottom:8px;letter-spacing:-0.01em;display:block}
+        .pillar-desc{font-size:11px;font-weight:300;color:var(--dim);line-height:1.65;margin:0}
 
         /* ─── PROOF — DINA (UPDATED) ─── */
         .proof{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
@@ -544,7 +544,7 @@ export default function Home() {
               {img:'/feat2.png',pos:'center top',title:'Cinematic Reel Briefs',desc:"Full Seedance 2.0 production documents — scene breakdowns, timestamped scripts, blink schedules.",tags:[{t:'Seedance',w:true},{t:'Motion',w:false},{t:'Scripts',w:false}]},
               {img:'/realism-eye.png',pos:'center center',title:'Hyper-Realistic Prompts',desc:"Skin truth, eye behavior, fabric physics. Image prompts that look filmed not generated.",tags:[{t:'Realism',w:true},{t:'Nano Banana',w:false},{t:'Midjourney',w:false}]},
               {img:'/feat3.png',pos:'center top',title:'Viral Hooks + Captions',desc:"Platform-native captions 5-7 sentences minimum. Zero generic. Zero one-liners. Real creator energy.",tags:[{t:'TikTok',w:true},{t:'Instagram',w:false},{t:'Hooks',w:false}]},
-              {img:'/feat5.png',pos:'center top',title:'SEO Keyword Intelligence',desc:"Long-tail keywords people actually search. Not just "skincare" — the exact phrases driving discovery.",tags:[{t:'SEO',w:false},{t:'Discovery',w:false},{t:'Search',w:true}]},
+              {img:'/feat5.png',pos:'center top',title:'SEO Keyword Intelligence',desc:'Long-tail keywords people actually search. Not just skincare — the exact phrases driving discovery.',tags:[{t:'SEO',w:false},{t:'Discovery',w:false},{t:'Search',w:true}]},
               {img:'/feat1.png',pos:'center top',title:'Hashtag + First Comment',desc:"8-hashtag strategy (mega/mid/micro mix) plus a pinnable first comment engineered for saves.",tags:[{t:'Hashtags',w:true},{t:'First comment',w:false},{t:'Saves',w:false}]},
             ].map(f => (
               <div className="feat-card" key={f.title}>
