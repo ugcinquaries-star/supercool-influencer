@@ -262,8 +262,11 @@ export default function Home() {
         /* STORYBOARD */
         .sb-section{background:var(--bg);border-top:1px solid var(--border);padding:100px 52px}
         .sb-inner{max-width:1100px;margin:0 auto}
-        .sb-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-        .sb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+        .sb-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch}
+        .sb-left-col{display:flex;flex-direction:column;gap:0}
+        .sb-grid{flex:1}
+        .sb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;height:100%}
+        .sb-frame{height:100%}
         .sb-frame{position:relative;aspect-ratio:2/3;border-radius:4px;overflow:hidden;border:1px solid var(--border);cursor:default;transition:border-color 0.25s}
         .sb-frame:hover{border-color:var(--border-wine)}
         .sb-frame:hover img{transform:scale(1.04)}
@@ -422,6 +425,7 @@ export default function Home() {
           <div className="sb-layout">
 
             {/* LEFT — 4x2 storyboard grid */}
+            <div className="sb-left-col">
             <div className="sb-grid">
               {[
                 {img:'/sb-1.png',n:'1.',label:'Entrance Walk'},
@@ -440,6 +444,7 @@ export default function Home() {
                   <div className="sb-frame-label dm">{f.label}</div>
                 </div>
               ))}
+            </div>
             </div>
 
             {/* RIGHT — Brief card */}
