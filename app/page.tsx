@@ -134,6 +134,16 @@ export default function Home() {
         .feat-tag.w{background:rgba(158,24,43,0.08);border-color:var(--border-wine);color:var(--blush)}
         .feat-footer{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim);text-align:center;margin-top:28px;font-style:italic}
 
+        /* PILLARS STRIP */
+        .pillars-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:40px;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+        .pillar-card{padding:28px 20px;border-right:1px solid var(--border);transition:background 0.2s;position:relative}
+        .pillar-card:last-child{border-right:none}
+        .pillar-card:hover{background:rgba(158,24,43,0.05)}
+        .pillar-num{font-size:36px;font-weight:700;color:rgba(158,24,43,0.12);line-height:1;margin-bottom:10px}
+        .pillar-tag{font-size:8px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--wine);margin-bottom:8px}
+        .pillar-title{font-size:13px;font-weight:700;color:var(--ivory);margin-bottom:8px;letter-spacing:-0.01em}
+        .pillar-desc{font-size:11px;font-weight:300;color:var(--dim);line-height:1.65}
+
         /* ─── PROOF — DINA (UPDATED) ─── */
         .proof{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
         .proof-inner{max-width:1100px;margin:0 auto}
@@ -553,6 +563,25 @@ export default function Home() {
             ))}
           </div>
           <p className="feat-footer dm">Like having a full creative team — in your pocket.</p>
+
+          {/* PILLARS STRIP */}
+          <div className="pillars-strip">
+            {[
+              {n:'01',tag:'↗ Real-time',title:'Trend Analysis',desc:'Surface what's spiking before it peaks. Platform signals decoded daily.'},
+              {n:'02',tag:'⊞ Architecture',title:'Retention Structures',desc:'Pattern interrupts, loop points, payoff architecture. Every frame earns the next.'},
+              {n:'03',tag:'◎ Psychology',title:'Motion Psychology',desc:'Camera movement as emotional language. Dolly, drift, rack focus.'},
+              {n:'04',tag:'◈ Precision',title:'Realism Engineering',desc:'Skin texture, lighting physics, material response. Built to fool the eye.'},
+              {n:'05',tag:'⌖ Systems',title:'Creator Strategy',desc:'Content OS, monetization loops, positioning for long-term dominance.'},
+            ].map(p => (
+              <div className="pillar-card" key={p.n}>
+                <div className="pillar-num pf">{p.n}</div>
+                <div className="pillar-tag dm">{p.tag}</div>
+                <div className="pillar-title dm">{p.title}</div>
+                <p className="pillar-desc dm">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
