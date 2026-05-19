@@ -566,20 +566,36 @@ export default function Home() {
 
           {/* PILLARS STRIP */}
           <div className="pillars-strip">
-            {[
-              {n:'01',tag:'↗ Real-time',title:'Trend Analysis',desc:"Surface what's spiking before it peaks. Platform signals decoded daily."},
-              {n:'02',tag:'⊞ Architecture',title:'Retention Structures',desc:"Pattern interrupts, loop points, payoff architecture. Every frame earns the next."},
-              {n:'03',tag:'◎ Psychology',title:'Motion Psychology',desc:"Camera movement as emotional language. Dolly, drift, rack focus."},
-              {n:'04',tag:'◈ Precision',title:'Realism Engineering',desc:"Skin texture, lighting physics, material response. Built to fool the eye."},
-              {n:'05',tag:'⌖ Systems',title:'Creator Strategy',desc:"Content OS, monetization loops, positioning for long-term dominance."},
-            ].map(p => (
-              <div className="pillar-card" key={p.n}>
-                <div className="pillar-num pf">{p.n}</div>
-                <div className="pillar-tag dm">{p.tag}</div>
-                <div className="pillar-title dm">{p.title}</div>
-                <p className="pillar-desc dm">{p.desc}</p>
-              </div>
-            ))}
+            <div className="pillar-card">
+              <div className="pillar-num pf">01</div>
+              <div className="pillar-tag dm">↗ Real-time</div>
+              <div className="pillar-title dm">Trend Analysis</div>
+              <p className="pillar-desc dm">Surface what&apos;s spiking before it peaks. Platform signals decoded daily.</p>
+            </div>
+            <div className="pillar-card">
+              <div className="pillar-num pf">02</div>
+              <div className="pillar-tag dm">⊞ Architecture</div>
+              <div className="pillar-title dm">Retention Structures</div>
+              <p className="pillar-desc dm">Pattern interrupts, loop points, payoff architecture. Every frame earns the next.</p>
+            </div>
+            <div className="pillar-card">
+              <div className="pillar-num pf">03</div>
+              <div className="pillar-tag dm">◎ Psychology</div>
+              <div className="pillar-title dm">Motion Psychology</div>
+              <p className="pillar-desc dm">Camera movement as emotional language. Dolly, drift, rack focus.</p>
+            </div>
+            <div className="pillar-card">
+              <div className="pillar-num pf">04</div>
+              <div className="pillar-tag dm">◈ Precision</div>
+              <div className="pillar-title dm">Realism Engineering</div>
+              <p className="pillar-desc dm">Skin texture, lighting physics, material response. Built to fool the eye.</p>
+            </div>
+            <div className="pillar-card">
+              <div className="pillar-num pf">05</div>
+              <div className="pillar-tag dm">⌖ Systems</div>
+              <div className="pillar-title dm">Creator Strategy</div>
+              <p className="pillar-desc dm">Content OS, monetization loops, positioning for long-term dominance.</p>
+            </div>
           </div>
 
         </div>
