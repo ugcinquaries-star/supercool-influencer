@@ -301,6 +301,31 @@ export default function Home() {
         .sb-rstat:last-child{border-right:none}
         .sb-rstat-num{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--wine);display:block;line-height:1;margin-bottom:2px}
         .sb-rstat-label{font-family:'DM Sans',sans-serif;font-size:7px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,240,232,0.22)}
+
+        /* PRICING COMPARISON */
+        .pricing-comp{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
+        .pricing-comp-inner{max-width:1100px;margin:0 auto}
+        .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:48px}
+        .pricing-col{border:1px solid var(--border);border-radius:6px;padding:32px;background:var(--bg2)}
+        .pricing-col.highlight{border-color:var(--border-wine);background:rgba(158,24,43,0.04);position:relative}
+        .pricing-col-label{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+        .pricing-col-label.wine{color:var(--wine)}
+        .best-val{font-size:8px;padding:3px 10px;background:rgba(158,24,43,0.12);border:1px solid var(--border-wine);color:var(--wine);border-radius:2px;letter-spacing:0.1em;text-transform:uppercase}
+        .pricing-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border)}
+        .pricing-row:last-of-type{border-bottom:none}
+        .pricing-row-label{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim)}
+        .pricing-row-val{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--muted,rgba(245,240,232,0.3));letter-spacing:0.06em}
+        .pricing-row-val.strike{text-decoration:line-through;opacity:0.4}
+        .pricing-row-val.inc{color:var(--wine)}
+        .pricing-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;border-top:1px solid var(--border);margin-top:8px}
+        .pricing-total-label{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--ivory)}
+        .pricing-total-val{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--dim);text-decoration:line-through;opacity:0.5}
+        .pricing-price{display:flex;align-items:baseline;gap:4px;margin-top:20px;padding-top:20px;border-top:1px solid var(--border-wine)}
+        .pricing-price-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--wine);line-height:1}
+        .pricing-price-unit{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim)}
+        .pricing-savings{margin-top:16px;padding:12px 20px;background:rgba(158,24,43,0.06);border:1px solid var(--border-wine);border-radius:4px;display:flex;align-items:center;justify-content:space-between}
+        .pricing-savings-label{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim)}
+        .pricing-savings-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--wine)}
       `}</style>
 
       <HomeNav />
@@ -725,6 +750,82 @@ export default function Home() {
               </div>
 
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING COMPARISON */}
+      <section className="pricing-comp">
+        <div className="pricing-comp-inner">
+          <div className="sec-tag dm">Pricing Comparison</div>
+          <h2 className="sec-h2 pf">The smartest investment<br /><em>you'll make this year.</em></h2>
+          <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:15,fontWeight:300,color:'var(--dim)',lineHeight:1.8,maxWidth:480,marginBottom:0}}>
+            Stop paying agency rates for content that isn't built for virality. SuperCool gives you the intelligence layer for a fraction of the cost.
+          </p>
+
+          <div className="pricing-grid">
+            {/* WITHOUT */}
+            <div className="pricing-col">
+              <div className="pricing-col-label dm">Without SuperCool</div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">AI UGC Agency</span>
+                <span className="pricing-row-val dm strike">CHF 3,000+ / mo</span>
+              </div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">Freelance Content Creators</span>
+                <span className="pricing-row-val dm strike">CHF 2,500+ / mo</span>
+              </div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">Trend Research Tools</span>
+                <span className="pricing-row-val dm strike">CHF 200 / mo</span>
+              </div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">Strategy + Creative Direction</span>
+                <span className="pricing-row-val dm strike">CHF 1,500+ / mo</span>
+              </div>
+              <div className="pricing-total">
+                <span className="pricing-total-label dm">Estimated Total</span>
+                <span className="pricing-total-val dm">CHF 7,200+ / mo</span>
+              </div>
+            </div>
+
+            {/* WITH SUPERCOOL */}
+            <div className="pricing-col highlight">
+              <div className="pricing-col-label wine dm">SuperCool Influencer <span className="best-val dm">Best Value</span></div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">Trend Analysis + Hook Extraction</span>
+                <span className="pricing-row-val inc dm">✓ Included</span>
+              </div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">Cinematic Prompt Architecture</span>
+                <span className="pricing-row-val inc dm">✓ Included</span>
+              </div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">Director Briefs — Scene, Motion, FACE LOCK</span>
+                <span className="pricing-row-val inc dm">✓ Included</span>
+              </div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">Realism Engineering (94/100)</span>
+                <span className="pricing-row-val inc dm">✓ Included</span>
+              </div>
+              <div className="pricing-row">
+                <span className="pricing-row-label dm">Full Creator Workflow System</span>
+                <span className="pricing-row-val inc dm">✓ Included</span>
+              </div>
+              <div className="pricing-price">
+                <span className="pricing-price-num pf">CHF 29</span>
+                <span className="pricing-price-unit dm">/ month</span>
+              </div>
+              <div style={{marginTop:16}}>
+                <Link href="/generate" className="btn-wine dm" style={{display:'block',textAlign:'center' as const,width:'100%'}}>⚡ Start Free — 3 Briefs</Link>
+                <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:8,letterSpacing:'0.06em'}}>3 free briefs · No credit card required</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="pricing-savings">
+            <span className="pricing-savings-label dm">You save up to</span>
+            <span className="pricing-savings-val pf">CHF 7,171 / month</span>
           </div>
         </div>
       </section>
