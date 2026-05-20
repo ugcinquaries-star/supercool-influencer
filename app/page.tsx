@@ -565,12 +565,12 @@ export default function Home() {
           <h2 className="sec-h2 pf">Generated in <em>60 seconds.</em></h2>
           <div className="feat-grid">
             {[
-              {img:'/ugc-grid.png',pos:'center center',title:'AI UGC Ads',desc:"Authentic, realistic ads built on human behavior systems — believable motion that converts.",tags:[{t:'AI UGC',w:true},{t:'Ads',w:false},{t:'Converts',w:false}]},
-              {img:'/feat2.png',pos:'center top',title:'Cinematic Reel Briefs',desc:"Full Seedance 2.0 production documents — scene breakdowns, timestamped scripts, blink schedules.",tags:[{t:'Seedance',w:true},{t:'Motion',w:false},{t:'Scripts',w:false}]},
-              {img:'/realism-eye.png',pos:'center center',title:'Hyper-Realistic Prompts',desc:"Skin truth, eye behavior, fabric physics. Image prompts that look filmed not generated.",tags:[{t:'Realism',w:true},{t:'Nano Banana',w:false},{t:'Midjourney',w:false}]},
-              {img:'/feat3.png',pos:'center top',title:'Viral Hooks + Captions',desc:"Platform-native captions 5-7 sentences minimum. Zero generic. Zero one-liners. Real creator energy.",tags:[{t:'TikTok',w:true},{t:'Instagram',w:false},{t:'Hooks',w:false}]},
-              {img:'/feat5.png',pos:'center top',title:'SEO Keyword Intelligence',desc:'Long-tail keywords people actually search. Not just skincare — the exact phrases driving discovery.',tags:[{t:'SEO',w:false},{t:'Discovery',w:false},{t:'Search',w:true}]},
-              {img:'/feat1.png',pos:'center top',title:'Hashtag + First Comment',desc:"8-hashtag strategy (mega/mid/micro mix) plus a pinnable first comment engineered for saves.",tags:[{t:'Hashtags',w:true},{t:'First comment',w:false},{t:'Saves',w:false}]},
+              {img:'/feat-ugc.png',pos:'center center',title:'AI UGC Ads',desc:"Authentic, realistic ads built on human behavior systems — believable motion that converts.",tags:[{t:'AI UGC',w:true},{t:'Ads',w:false},{t:'Converts',w:false}]},
+              {img:'/feat-briefs.png',pos:'center center',title:'Cinematic Reel Briefs',desc:"Full Seedance 2.0 production documents — scene breakdowns, timestamped scripts, blink schedules.",tags:[{t:'Higgsfield',w:true},{t:'Motion',w:false},{t:'Scripts',w:false}]},
+              {img:'/feat-realism.png',pos:'center center',title:'Hyper-Realistic Prompts',desc:"Skin truth, eye behavior, fabric physics. Image prompts that look filmed not generated.",tags:[{t:'Realism',w:true},{t:'Nano Banana',w:false},{t:'Midjourney',w:false}]},
+              {img:'/feat-captions.png',pos:'center center',title:'Viral Hooks + Captions',desc:"Platform-native captions 5-7 sentences minimum. Zero generic. Zero one-liners. Real creator energy.",tags:[{t:'TikTok',w:true},{t:'Instagram',w:false},{t:'Hooks',w:false}]},
+              {img:'/feat-seo.png',pos:'center center',title:'SEO Keyword Intelligence',desc:'Long-tail keywords people actually search — the exact phrases driving discovery.',tags:[{t:'SEO',w:false},{t:'Discovery',w:false},{t:'Search',w:true}]},
+              {img:'/feat-hashtag.png',pos:'center center',title:'Hashtag + First Comment',desc:"8-hashtag strategy (mega/mid/micro mix) plus a pinnable first comment engineered for saves.",tags:[{t:'Hashtags',w:true},{t:'First comment',w:false},{t:'Saves',w:false}]},
             ].map(f => (
               <div className="feat-card" key={f.title}>
                 <div className="feat-img">
