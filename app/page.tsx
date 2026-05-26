@@ -7,11 +7,11 @@ export default function Home() {
 
       {/* ─────────────────────────────────────── HERO */}
       <section className="sc-hero">
-        <div className="sc-hero__badge">The Intelligence Layer for AI Creators</div>
+        <div className="sc-hero__badge">● The Intelligence Layer for AI Creators</div>
 
         <h1 className="sc-hero__h1">
           Engineer viral<br />
-          <em>AI content</em><br />
+          AI content<br />
           <em>in 60 seconds.</em>
         </h1>
 
@@ -23,10 +23,10 @@ export default function Home() {
 
         <div className="sc-hero__ctas">
           <Link href="/generate" className="sc-btn sc-btn--primary">
-            ⚡ Start Free — 3 Briefs
+            ⚡ START FREE — 3 BRIEFS
           </Link>
           <Link href="/pricing" className="sc-btn sc-btn--ghost">
-            View Pricing →
+            VIEW PRICING →
           </Link>
         </div>
 
@@ -34,7 +34,7 @@ export default function Home() {
           <strong>3 free briefs</strong> · No credit card required
         </p>
 
-        {/* Feature pill list */}
+        {/* Feature bullet list */}
         <ul className="sc-hero__features">
           {[
             "🎬 Cinematic motion scripts + Seedance briefs",
@@ -43,7 +43,7 @@ export default function Home() {
             "# Keywords + hashtag intelligence",
             "⚡ Full creator workflow in 60 seconds",
           ].map((f) => (
-            <li key={f} className="sc-hero__feature-pill">{f}</li>
+            <li key={f} className="sc-hero__feature-item">{f}</li>
           ))}
         </ul>
 
@@ -595,16 +595,17 @@ export default function Home() {
           align-items: center;
           justify-content: center;
           gap: 8px;
-          padding: 14px 28px;
-          border-radius: var(--radius);
-          font-size: 0.9rem;
+          padding: 14px 24px;
+          border-radius: 8px;
+          font-size: 0.8rem;
           font-weight: 700;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.08em;
           text-decoration: none;
           transition: all 0.2s;
           cursor: pointer;
           border: none;
           white-space: nowrap;
+          text-transform: uppercase;
         }
         .sc-btn--primary {
           background: var(--red);
@@ -640,69 +641,68 @@ export default function Home() {
         }
 
         /* ── HERO ─────────────────────────────────────── */
-        .sc-hero { text-align: center; }
+        .sc-hero { text-align: left; }
         .sc-hero__badge {
           display: inline-block;
-          padding: 6px 14px;
-          border: 1px solid var(--border);
+          padding: 7px 16px;
+          border: 1px solid rgba(158,24,43,0.5);
           border-radius: 100px;
-          font-size: 0.7rem;
-          letter-spacing: 0.12em;
+          background: rgba(158,24,43,0.12);
+          font-size: 0.65rem;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: var(--muted);
+          color: var(--ivory);
           margin-bottom: 1.5rem;
         }
         .sc-hero__h1 {
           font-family: 'Playfair Display', 'Georgia', serif;
-          font-size: clamp(2.5rem, 10vw, 5rem);
-          font-weight: 700;
-          line-height: 1.1;
+          font-size: clamp(3rem, 11vw, 6rem);
+          font-weight: 800;
+          line-height: 1.0;
           letter-spacing: -0.02em;
           color: var(--ivory);
           margin: 0 0 1.5rem;
         }
         .sc-hero__h1 em {
           font-style: italic;
-          color: var(--blush);
+          color: var(--red);
           display: block;
         }
         .sc-hero__sub {
-          font-size: clamp(0.95rem, 3vw, 1.1rem);
+          font-size: clamp(1rem, 3vw, 1.15rem);
           color: #B8A8AC;
-          max-width: 520px;
-          margin: 0 auto 2rem;
+          max-width: 560px;
+          margin: 0 0 2rem;
           line-height: 1.7;
         }
         .sc-hero__ctas {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           gap: 12px;
           align-items: center;
           margin-bottom: 1rem;
+          flex-wrap: wrap;
         }
-        .sc-hero__ctas .sc-btn { width: 100%; max-width: 320px; }
+        .sc-hero__ctas .sc-btn { width: auto; }
         .sc-hero__footnote {
           font-size: 0.78rem;
           color: var(--muted);
           margin-bottom: 2.5rem;
+          text-align: left;
         }
         .sc-hero__features {
-          list-style: none;
-          padding: 0;
+          list-style: disc;
+          padding: 0 0 0 20px;
           margin: 0 0 2.5rem;
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 10px;
         }
-        .sc-hero__feature-pill {
-          display: inline-block;
-          padding: 8px 14px;
-          background: var(--bg2);
-          border: 1px solid var(--border);
-          border-radius: 8px;
-          font-size: 0.82rem;
-          color: var(--ivory);
-          text-align: left;
+        .sc-hero__feature-item {
+          font-size: 0.92rem;
+          color: #B8A8AC;
+          line-height: 1.5;
+          padding-left: 4px;
         }
 
         /* ── DASHBOARD PREVIEW ────────────────────────── */
