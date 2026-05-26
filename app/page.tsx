@@ -1,900 +1,1528 @@
 import Link from "next/link";
 import Image from "next/image";
-import HomeNav from "./components/HomeNav";
 
 export default function Home() {
   return (
-    <div style={{ background: '#0F0B0C', color: '#F5F0E8', overflowX: 'hidden' }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{
-          --bg:#0F0B0C; --bg2:#181214; --bg3:#221A1C;
-          --wine:#9E182B; --wine-dim:rgba(158,24,43,0.18);
-          --blush:#F2AFBC; --rose:#F9CBD6; --oat:#F2E0D2;
-          --ivory:#F5F0E8; --gold:#D4AF87;
-          --border:rgba(245,240,232,0.07);
-          --border-wine:rgba(158,24,43,0.22);
-          --dim:rgba(245,240,232,0.42);
-          --mid:rgba(245,240,232,0.68);
-        }
-        html{scroll-behavior:smooth}
-        .pf{font-family:'Playfair Display',Georgia,serif}
-        .dm{font-family:'DM Sans',sans-serif}
+    <main className="sc-home">
 
-        /* NAV */
-        .nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:16px 52px;background:rgba(15,11,12,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-        .logo{font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;color:var(--ivory);letter-spacing:0.22em;text-transform:uppercase;text-decoration:none}
-        .logo strong{font-weight:700}
-        .nav-links{display:flex;gap:28px;align-items:center}
-        .nav-a{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color 0.2s}
-        .nav-a:hover{color:var(--ivory)}
-        .nav-cta{background:var(--wine);color:white;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:10px 22px;border-radius:3px;text-decoration:none;box-shadow:0 0 20px rgba(158,24,43,0.25)}
+      {/* ─────────────────────────────────────── HERO */}
+      <section className="sc-hero">
+        <div className="sc-hero__badge">The Intelligence Layer for AI Creators</div>
 
-        /* STICKY MOBILE */
-        .sticky-mob{display:none;position:fixed;bottom:20px;left:20px;right:20px;z-index:999}
-        .sticky-mob a{display:block;text-align:center;background:var(--wine);color:white;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:16px;border-radius:3px;text-decoration:none;box-shadow:0 8px 32px rgba(158,24,43,0.5)}
+        <h1 className="sc-hero__h1">
+          Engineer viral<br />
+          <em>AI content</em><br />
+          <em>in 60 seconds.</em>
+        </h1>
 
-        /* HERO */
-        .hero{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;padding-top:64px;background:var(--bg);overflow:hidden;isolation:isolate}
-        .hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px 56px 80px 52px;position:relative;z-index:2}
-        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(158,24,43,0.1);border:1px solid var(--border-wine);color:var(--blush);font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:24px;width:fit-content}
-        .badge-dot{width:5px;height:5px;border-radius:50%;background:var(--blush);animation:pulse 2s ease-in-out infinite}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-        .hero-h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(40px,5vw,72px);line-height:0.97;letter-spacing:-2px;color:var(--ivory);margin-bottom:8px}
-        .hero-h1 em{font-style:italic;color:var(--wine);display:block}
-        .hero-sub{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;line-height:1.75;color:var(--dim);max-width:400px;margin:18px 0 30px}
-        .hero-sub strong{color:var(--ivory);font-weight:500}
-        .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-        .btn-wine{background:var(--wine);color:white;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:14px 30px;border-radius:3px;text-decoration:none;box-shadow:0 4px 20px rgba(158,24,43,0.3);transition:all 0.2s;display:inline-block}
-        .btn-wine:hover{background:#7a1221;transform:translateY(-1px)}
-        .btn-ghost{border:1px solid var(--border);color:var(--dim);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:14px 26px;border-radius:3px;text-decoration:none;transition:all 0.2s;display:inline-block}
-        .btn-ghost:hover{border-color:rgba(245,240,232,0.25);color:var(--ivory)}
-        .hero-proof{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--dim);margin-bottom:36px}
-        .hero-proof strong{color:var(--blush);font-weight:600}
-        .hero-stacks{display:flex;flex-direction:column;gap:8px}
-        .hero-stack-row{display:flex;align-items:center;gap:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--mid)}
-        .hero-stack-dot{width:5px;height:5px;border-radius:50%;background:var(--wine);flex-shrink:0}
+        <p className="sc-hero__sub">
+          No ideas. No team. <strong>No problem.</strong><br />
+          SuperCool generates cinematic prompts, motion scripts, hooks, captions,
+          keywords and hashtags — ready for Higgsfield in under a minute.
+        </p>
 
-        /* HERO RIGHT — INTELLIGENCE DASHBOARD */
-        .hero-right{position:relative;display:flex;align-items:center;justify-content:center;padding:90px 32px 60px 24px;overflow:hidden}
-        .hero-right::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(158,24,43,0.12) 0%,transparent 65%);pointer-events:none}
-        .dashboard{width:100%;max-width:460px;display:flex;flex-direction:column;gap:8px;position:relative;z-index:2}
-        .dash-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-        .dash-card{background:rgba(30,22,24,0.9);border:1px solid rgba(245,240,232,0.08);border-radius:10px;padding:14px 16px;backdrop-filter:blur(8px)}
-        .dash-card.wine-border{border-color:rgba(158,24,43,0.35)}
-        .dash-card.full{grid-column:1/-1}
-        .dash-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(212,175,135,0.6);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-        .dash-dot{width:4px;height:4px;border-radius:50%;background:var(--blush)}
-        .dash-dot-green{width:4px;height:4px;border-radius:50%;background:#4ADE80}
-        .dash-value{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ivory);line-height:1;margin-bottom:4px}
-        .dash-sub{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;color:var(--dim);line-height:1.5}
-        .dash-sub em{color:var(--blush);font-style:normal;font-weight:500}
-        .trend-bars{display:flex;gap:3px;align-items:flex-end;height:28px;margin-top:6px}
-        .trend-bar{border-radius:2px 2px 0 0;flex:1;background:rgba(158,24,43,0.3);transition:height 0.3s}
-        .trend-bar.hi{background:var(--wine)}
-        .hook-line{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;color:var(--mid);line-height:1.6;padding:6px 10px;background:rgba(245,240,232,0.04);border-radius:5px;margin-bottom:4px;border-left:2px solid transparent}
-        .hook-line.active{border-left-color:var(--wine);color:var(--ivory);background:rgba(158,24,43,0.08)}
-        .prompt-text{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;color:var(--dim);line-height:1.7;font-style:italic}
-        .prompt-text strong{color:var(--blush);font-style:normal;font-weight:600}
-        .score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
-        .score-label{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--dim)}
-        .score-bar-wrap{flex:1;height:3px;background:rgba(245,240,232,0.08);border-radius:2px;margin:0 8px}
-        .score-fill{height:100%;border-radius:2px;background:linear-gradient(to right,var(--wine),var(--blush))}
-        .score-num{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;color:var(--blush);width:24px;text-align:right}
-        .live-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);color:#4ADE80;font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:100px}
-        .live-dot{width:4px;height:4px;border-radius:50%;background:#4ADE80;animation:pulse 1.5s ease-in-out infinite}
-
-        /* TRUST */
-        .trust{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 52px;display:flex;align-items:center;gap:36px;flex-wrap:wrap}
-        .trust-label{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.18);white-space:nowrap}
-        .trust-items{display:flex;gap:32px;flex-wrap:wrap}
-        .trust-item{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:rgba(245,240,232,0.28);letter-spacing:0.04em}
-
-        /* MARQUEE */
-        .marquee{background:var(--wine);padding:13px 0;overflow:hidden}
-        .marquee-track{display:flex;white-space:nowrap;animation:mq 26s linear infinite}
-        .marquee-item{display:inline-flex;align-items:center;gap:22px;padding:0 22px;font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:rgba(255,255,255,0.65);flex-shrink:0}
-        .marquee-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,0.3)}
-        @keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-        /* HOW IT WORKS */
-        .how{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
-        .how-inner{max-width:1100px;margin:0 auto}
-        .sec-tag{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:var(--blush);margin-bottom:14px;display:flex;align-items:center;gap:10px}
-        .sec-tag::before{content:'';width:18px;height:1px;background:var(--blush)}
-        .sec-h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(28px,4vw,52px);line-height:1;letter-spacing:-1.5px;color:var(--ivory);margin-bottom:48px}
-        .sec-h2 em{font-style:italic;color:var(--blush)}
-        .how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-        .how-step{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:36px 28px;transition:border-color 0.3s}
-        .how-step:hover{border-color:var(--border-wine)}
-        .how-num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(158,24,43,0.1);border:1px solid var(--border-wine);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--blush);margin-bottom:18px}
-        .how-title{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:var(--ivory);margin-bottom:10px}
-        .how-desc{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--dim);line-height:1.75;margin-bottom:16px}
-        .how-chips{display:flex;flex-wrap:wrap;gap:5px}
-        .how-chip{background:rgba(158,24,43,0.08);border:1px solid var(--border-wine);color:var(--blush);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;padding:3px 9px;border-radius:100px}
-
-        /* FEATURES */
-        .feats{background:var(--bg2);padding:100px 52px;border-top:1px solid var(--border)}
-        .feats-inner{max-width:1100px;margin:0 auto}
-        .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:0}
-        .feat-card{background:var(--bg3);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:all 0.25s;position:relative}
-        .feat-card:hover{border-color:var(--border-wine);transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,0.4)}
-        .feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--wine),transparent);opacity:0;transition:opacity 0.3s}
-        .feat-card:hover::before{opacity:1}
-        .feat-img{height:160px;position:relative;overflow:hidden}
-        .feat-img img{width:100%;height:100%;object-fit:cover;object-position:center 25%;transition:transform 0.4s}
-        .feat-card:hover .feat-img img{transform:scale(1.04)}
-        .feat-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(34,26,28,0.97) 100%)}
-        .feat-body{padding:16px 18px 20px}
-        .feat-title{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--ivory);margin-bottom:6px}
-        .feat-desc{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;color:var(--dim);line-height:1.65;margin-bottom:10px}
-        .feat-tags{display:flex;flex-wrap:wrap;gap:4px}
-        .feat-tag{background:rgba(245,240,232,0.04);border:1px solid var(--border);color:rgba(245,240,232,0.25);font-family:'DM Sans',sans-serif;font-size:9px;padding:2px 7px;border-radius:3px}
-        .feat-tag.w{background:rgba(158,24,43,0.08);border-color:var(--border-wine);color:var(--blush)}
-        .feat-footer{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dim);text-align:center;margin-top:28px;font-style:italic}
-
-        /* PILLARS STRIP */
-        .pillars-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;border:1px solid var(--border-wine);border-radius:4px;overflow:hidden;background:var(--bg3)}
-        .pillar-card{padding:28px 20px;border-right:1px solid rgba(158,24,43,0.15);transition:background 0.2s;position:relative}
-        .pillar-card:last-child{border-right:none}
-        .pillar-card:hover{background:rgba(158,24,43,0.08)}
-        .pillar-num{font-size:40px;font-weight:700;color:rgba(158,24,43,0.18);line-height:1;margin-bottom:10px;font-family:'Playfair Display',serif}
-        .pillar-tag{font-size:8px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--wine);margin-bottom:8px;display:block}
-        .pillar-title{font-size:14px;font-weight:700;color:var(--ivory);margin-bottom:8px;letter-spacing:-0.01em;display:block}
-        .pillar-desc{font-size:11px;font-weight:300;color:var(--dim);line-height:1.65;margin:0}
-
-        /* ─── PROOF — DINA (UPDATED) ─── */
-        .proof{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
-        .proof-inner{max-width:1100px;margin:0 auto}
-
-        /* Two-column: quote left, stats card right */
-        .proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
-
-        /* Quote card */
-        .proof-quote-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:36px;display:flex;flex-direction:column;justify-content:space-between}
-        .proof-quote-mark{font-family:'Playfair Display',serif;font-size:72px;color:var(--wine);line-height:0.6;margin-bottom:20px;opacity:0.35}
-        .proof-quote-text{font-family:'Playfair Display',serif;font-size:clamp(16px,1.8vw,20px);font-weight:300;font-style:italic;color:var(--ivory);line-height:1.6;margin-bottom:24px;letter-spacing:-0.3px}
-        .proof-quote-text strong{font-style:normal;font-weight:700;color:var(--blush)}
-        .proof-attr-row{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid var(--border)}
-        .proof-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--wine);flex-shrink:0;position:relative}
-        .proof-attr-name{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--ivory)}
-        .proof-attr-handle{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--dim);margin-top:1px}
-        .proof-platform-tag{margin-left:auto;font-family:'DM Sans',sans-serif;font-size:8px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--wine);border:1px solid var(--border-wine);background:rgba(158,24,43,0.06);padding:3px 10px;border-radius:3px;white-space:nowrap}
-
-        /* TikTok stats card */
-        .proof-stats-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
-        .proof-tiktok-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-        .proof-tiktok-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--border-wine);flex-shrink:0;position:relative}
-        .proof-tiktok-name{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--ivory)}
-        .proof-tiktok-handle{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--dim);font-family:'DM Sans',monospace}
-        .proof-tiktok-bio{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(245,240,232,0.4);margin-top:2px;line-height:1.4}
-        .proof-verified{margin-left:auto;font-family:'DM Sans',sans-serif;font-size:7px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine);border:1px solid var(--border-wine);background:rgba(158,24,43,0.08);padding:3px 8px;border-radius:2px;white-space:nowrap;flex-shrink:0}
-
-        .proof-account-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border)}
-        .proof-astat{padding:14px;text-align:center;border-right:1px solid var(--border)}
-        .proof-astat:last-child{border-right:none}
-        .proof-astat-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ivory);display:block;line-height:1;margin-bottom:3px}
-        .proof-astat-num.wine{color:var(--wine)}
-        .proof-astat-num.green{color:#4ADE80}
-        .proof-astat-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:500;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase}
-
-        .proof-vid-section{padding:14px 18px;border-bottom:1px solid var(--border)}
-        .proof-vid-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
-        .proof-vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-        .proof-vid-thumb{aspect-ratio:9/16;border-radius:4px;border:1px solid var(--border);position:relative;overflow:hidden}
-        .proof-vid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,12,0.85) 0%,transparent 55%)}
-        .proof-vid-pin{position:absolute;top:5px;left:5px;font-family:'DM Sans',sans-serif;font-size:7px;font-weight:700;background:var(--wine);color:white;padding:2px 5px;border-radius:2px;z-index:2;letter-spacing:0.06em}
-        .proof-vid-views{position:absolute;bottom:6px;left:6px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;color:white;z-index:2}
-
-        .proof-result-metrics{display:grid;grid-template-columns:repeat(3,1fr)}
-        .proof-rm{padding:13px;text-align:center;border-right:1px solid var(--border)}
-        .proof-rm:last-child{border-right:none}
-        .proof-rm-num{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;display:block;line-height:1;margin-bottom:3px}
-        .proof-rm-num.wine{color:var(--wine)}
-        .proof-rm-num.green{color:#4ADE80}
-        .proof-rm-num.ivory{color:var(--ivory)}
-        .proof-rm-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:500;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase}
-
-        .proof-powered{padding:10px 18px;background:rgba(158,24,43,0.03);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-        .proof-powered-text{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.2)}
-        .proof-powered-badge{display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--wine)}
-        .proof-powered-dot{width:5px;height:5px;border-radius:50%;background:var(--wine);animation:pulse 2s ease-in-out infinite}
-
-        /* AFFILIATE */
-        .affiliate{background:var(--bg2);padding:100px 52px;border-top:1px solid var(--border)}
-        .affiliate-inner{max-width:1100px;margin:0 auto}
-        .affiliate-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-        .affiliate-h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(28px,4vw,52px);line-height:1;letter-spacing:-1.5px;color:var(--ivory);margin-bottom:16px}
-        .affiliate-h2 em{font-style:italic;color:var(--blush)}
-        .affiliate-sub{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;color:var(--dim);line-height:1.8;margin-bottom:32px}
-        .affiliate-card{background:var(--bg3);border:1px solid var(--border-wine);border-radius:8px;padding:36px 32px}
-        .aff-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--wine);line-height:1;margin-bottom:4px}
-        .aff-label{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--blush);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px}
-        .aff-desc{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--dim);line-height:1.75;margin-bottom:24px}
-        .aff-items{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-        .aff-item{display:flex;align-items:flex-start;gap:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--mid)}
-        .aff-icon{width:18px;height:18px;border-radius:50%;background:rgba(158,24,43,0.15);border:1px solid var(--border-wine);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--blush);flex-shrink:0;margin-top:1px}
-        .aff-example{background:rgba(158,24,43,0.06);border:1px solid var(--border-wine);border-radius:6px;padding:14px 16px;margin-bottom:24px}
-        .aff-example-label{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;color:var(--blush);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:8px}
-        .aff-calc-row{display:flex;justify-content:space-between;align-items:center;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim);padding:4px 0}
-        .aff-calc-row.total{border-top:1px solid var(--border-wine);margin-top:6px;padding-top:10px;color:var(--ivory);font-weight:600}
-
-        /* FINAL CTA */
-        .cta-final{background:var(--bg);padding:100px 52px;text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--border)}
-        .cta-glow{position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 50% 50%,rgba(158,24,43,0.12) 0%,transparent 65%);pointer-events:none}
-        .cta-inner{position:relative;z-index:2;max-width:600px;margin:0 auto}
-        .cta-h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(36px,6vw,76px);line-height:0.95;letter-spacing:-2px;color:var(--ivory);margin-bottom:22px}
-        .cta-h2 em{font-style:italic;color:var(--blush);display:block}
-        .cta-sub{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;color:var(--dim);margin-bottom:40px;line-height:1.8}
-        .cta-note{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(245,240,232,0.18);text-transform:uppercase;letter-spacing:0.1em;margin-top:18px}
-
-        /* FOOTER */
-        .footer{background:var(--bg);border-top:1px solid var(--border);padding:32px 52px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-        .footer-logo{font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;color:var(--ivory);letter-spacing:0.2em;text-transform:uppercase}
-        .footer-logo strong{font-weight:700}
-        .footer-links{display:flex;gap:20px}
-        .footer-link{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:300;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,240,232,0.18);text-decoration:none;transition:color 0.2s}
-        .footer-link:hover{color:var(--ivory)}
-        .footer-copy{font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(245,240,232,0.12)}
-
-        /* MOBILE */
-        @media(max-width:900px){
-          .nav{padding:14px 20px}
-          .nav-a{display:none}
-          .sticky-mob{display:block}
-          .hero{grid-template-columns:1fr;padding-top:64px}
-          .hero-left{padding:60px 20px 40px}
-          .hero-right{padding:20px 20px 40px}
-          .dashboard{max-width:100%}
-          .dash-row{grid-template-columns:1fr 1fr}
-          .trust{padding:14px 20px}
-          .how{padding:72px 20px}
-          .how-steps{grid-template-columns:1fr;gap:2px}
-          .feats{padding:72px 20px}
-          .feat-grid{grid-template-columns:1fr}
-          .proof{padding:72px 20px}
-          .proof-grid{grid-template-columns:1fr;gap:16px}
-          .affiliate{padding:72px 20px}
-          .affiliate-layout{grid-template-columns:1fr;gap:40px}
-          .cta-final{padding:72px 20px 140px}
-          .footer{flex-direction:column;align-items:flex-start;padding:28px 20px}
-        }
-        @media(max-width:480px){
-          .hero-ctas{flex-direction:column}
-          .btn-wine,.btn-ghost{text-align:center}
-          .dash-row{grid-template-columns:1fr}
-          .proof-account-stats{grid-template-columns:1fr 1fr}
-          .proof-result-metrics{grid-template-columns:1fr 1fr}
-          .proof-result-metrics .proof-rm:nth-child(2){border-right:none}
-        }
-
-        /* STORYBOARD */
-        .sb-section{background:var(--bg);border-top:1px solid var(--border);padding:100px 52px}
-        .sb-inner{max-width:1100px;margin:0 auto}
-        .sb-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-        .sb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-        .sb-right{display:flex;flex-direction:column;gap:24px}
-        .sb-right-sub{font-size:13px;font-weight:300;color:var(--dim);line-height:1.75;margin-bottom:4px}
-        .sb-frame{position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;border:1px solid var(--border);cursor:default;transition:border-color 0.25s}
-        .sb-frame:hover{border-color:var(--border-wine)}
-        .sb-frame:hover img{transform:scale(1.04)}
-        .sb-frame-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,12,0.8) 0%,transparent 55%);pointer-events:none}
-        .sb-frame-num{position:absolute;top:7px;left:8px;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:600;color:rgba(245,240,232,0.45);letter-spacing:0.06em}
-        .sb-frame-label{position:absolute;bottom:7px;left:8px;font-family:'DM Sans',sans-serif;font-size:7px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.5)}
-        .sb-brief{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
-        .sb-brief-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-        .sb-brief-title{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blush)}
-        .sb-brief-badge{font-family:'DM Sans',sans-serif;font-size:7px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine);border:1px solid var(--border-wine);background:rgba(158,24,43,0.06);padding:3px 8px;border-radius:2px}
-        .sb-cta-wrap{padding:20px;border-top:1px solid var(--border);background:rgba(158,24,43,0.03)}
-        .sb-brief-body{padding:18px 20px;display:flex;flex-direction:column;gap:14px}
-        .sb-field-label{font-family:'DM Sans',sans-serif;font-size:8px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(245,240,232,0.25);margin-bottom:4px}
-        .sb-field-val{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--mid);line-height:1.6}
-        .sb-field-val.highlight{color:var(--ivory);font-weight:600;font-size:13px}
-        .sb-scene-block{background:rgba(158,24,43,0.05);border:1px solid var(--border-wine);border-radius:3px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:11px;line-height:1.7;color:var(--dim)}
-        .sb-scene-block strong{color:var(--blush);font-weight:600}
-        .sb-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
-        .sb-tag{font-family:'DM Sans',sans-serif;font-size:8px;padding:3px 8px;border:1px solid var(--border);color:rgba(245,240,232,0.25);border-radius:2px}
-        .sb-hook{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;font-weight:400;color:var(--wine);line-height:1.5;padding:10px 12px;border-left:2px solid var(--wine);background:rgba(158,24,43,0.04)}
-        .sb-result-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border)}
-        .sb-rstat{padding:12px;text-align:center;border-right:1px solid var(--border)}
-        .sb-rstat:last-child{border-right:none}
-        .sb-rstat-num{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--wine);display:block;line-height:1;margin-bottom:2px}
-        .sb-rstat-label{font-family:'DM Sans',sans-serif;font-size:7px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,240,232,0.22)}
-
-        /* PRICING COMPARISON */
-        .pricing-comp{background:var(--bg);padding:100px 52px;border-top:1px solid var(--border)}
-        .pricing-comp-inner{max-width:1100px;margin:0 auto}
-        .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:48px}
-        .pricing-col{border:1px solid var(--border);border-radius:6px;padding:32px;background:var(--bg2)}
-        .pricing-col.highlight{border-color:var(--border-wine);background:rgba(158,24,43,0.04);position:relative}
-        .pricing-col-label{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
-        .pricing-col-label.wine{color:var(--wine)}
-        .best-val{font-size:8px;padding:3px 10px;background:rgba(158,24,43,0.12);border:1px solid var(--border-wine);color:var(--wine);border-radius:2px;letter-spacing:0.1em;text-transform:uppercase}
-        .pricing-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border)}
-        .pricing-row:last-of-type{border-bottom:none}
-        .pricing-row-label{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim)}
-        .pricing-row-val{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--muted,rgba(245,240,232,0.3));letter-spacing:0.06em}
-        .pricing-row-val.strike{text-decoration:line-through;opacity:0.4}
-        .pricing-row-val.inc{color:var(--wine)}
-        .pricing-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;border-top:1px solid var(--border);margin-top:8px}
-        .pricing-total-label{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--ivory)}
-        .pricing-total-val{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--dim);text-decoration:line-through;opacity:0.5}
-        .pricing-price{display:flex;align-items:baseline;gap:4px;margin-top:20px;padding-top:20px;border-top:1px solid var(--border-wine)}
-        .pricing-price-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--wine);line-height:1}
-        .pricing-price-unit{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim)}
-        .pricing-savings{margin-top:16px;padding:12px 20px;background:rgba(158,24,43,0.06);border:1px solid var(--border-wine);border-radius:4px;display:flex;align-items:center;justify-content:space-between}
-        .pricing-savings-label{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dim)}
-        .pricing-savings-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--wine)}
-      `}</style>
-
-      <HomeNav />
-      <div className="sticky-mob"><a href="/generate">⚡ Generate Free — 3 Briefs, No Card</a></div>
-
-      {/* ── HERO ── */}
-      <section className="hero">
-        <div className="hero-left">
-          <div className="hero-badge dm"><div className="badge-dot" />The Intelligence Layer for AI Creators</div>
-          <h1 className="hero-h1 pf">
-            Engineer viral<br />AI content
-            <em>in 60 seconds.</em>
-          </h1>
-          <p className="hero-sub dm">No ideas. No team. <strong>No problem.</strong><br />SuperCool generates cinematic prompts, motion scripts, hooks, captions, keywords and hashtags — ready for Higgsfield in under a minute.</p>
-          <div className="hero-ctas">
-            <Link href="/generate" className="btn-wine dm">⚡ Start Free — 3 Briefs</Link>
-            <Link href="/pricing" className="btn-ghost dm">View Pricing →</Link>
-          </div>
-          <p className="hero-proof dm"><strong>3 free briefs</strong> · No credit card required</p>
-          <div className="hero-stacks">
-            {['🎬  Cinematic motion scripts + Seedance briefs','🖼️  Hyper-realistic image prompts','✍️  Viral hooks, captions + first comments','#  Keywords + hashtag intelligence','⚡  Full creator workflow in 60 seconds'].map(s => (
-              <div className="hero-stack-row dm" key={s}><div className="hero-stack-dot" /><span>{s}</span></div>
-            ))}
-          </div>
+        <div className="sc-hero__ctas">
+          <Link href="/generate" className="sc-btn sc-btn--primary">
+            ⚡ Start Free — 3 Briefs
+          </Link>
+          <Link href="/pricing" className="sc-btn sc-btn--ghost">
+            View Pricing →
+          </Link>
         </div>
 
-        {/* INTELLIGENCE DASHBOARD */}
-        <div className="hero-right">
-          <div className="dashboard">
-            <div className="dash-row">
-              <div className="dash-card">
-                <div className="dash-label dm"><div className="dash-dot" />Trend Intel <span className="live-badge dm"><div className="live-dot" />Live</span></div>
-                <div className="dash-value pf">2.4M</div>
-                <div className="dash-sub dm">views on <em>#skincareroutine</em> this week</div>
-                <div className="trend-bars">
-                  {[30,45,35,60,40,75,55,90,70,100,85,95].map((h,i) => (
-                    <div key={i} className={`trend-bar${h>70?' hi':''}`} style={{height:h+'%'}} />
-                  ))}
-                </div>
-              </div>
-              <div className="dash-card wine-border">
-                <div className="dash-label dm"><div className="dash-dot" />Realism Score</div>
-                <div className="dash-value pf">94<span style={{fontSize:14,fontWeight:400,color:'var(--dim)'}}>/100</span></div>
-                <div className="dash-sub dm"><em>Human Realism Engine™</em> active</div>
-                <div style={{marginTop:8}}>
-                  {[{l:'Skin Truth',v:97},{l:'Eye Behavior',v:94},{l:'Motion',v:91}].map(r => (
-                    <div className="score-row" key={r.l}>
-                      <span className="score-label dm">{r.l}</span>
-                      <div className="score-bar-wrap"><div className="score-fill" style={{width:r.v+'%'}} /></div>
-                      <span className="score-num dm">{r.v}</span>
+        <p className="sc-hero__footnote">
+          <strong>3 free briefs</strong> · No credit card required
+        </p>
+
+        {/* Feature pill list */}
+        <ul className="sc-hero__features">
+          {[
+            "🎬 Cinematic motion scripts + Seedance briefs",
+            "🖼️ Hyper-realistic image prompts",
+            "✍️ Viral hooks, captions + first comments",
+            "# Keywords + hashtag intelligence",
+            "⚡ Full creator workflow in 60 seconds",
+          ].map((f) => (
+            <li key={f} className="sc-hero__feature-pill">{f}</li>
+          ))}
+        </ul>
+
+        {/* Live dashboard preview */}
+        <div className="sc-dashboard-preview">
+          <div className="sc-dp__row">
+            <div className="sc-dp__card sc-dp__card--trend">
+              <span className="sc-dp__label">Trend Intel</span>
+              <span className="sc-dp__badge sc-dp__badge--live">Live</span>
+              <div className="sc-dp__stat">2.4M</div>
+              <p className="sc-dp__caption">views on <em>#skincareroutine</em> this week</p>
+            </div>
+            <div className="sc-dp__card sc-dp__card--realism">
+              <span className="sc-dp__label">Realism Score</span>
+              <div className="sc-dp__stat">94/100</div>
+              <p className="sc-dp__caption"><em>Human Realism Engine™</em> active</p>
+              <div className="sc-dp__bars">
+                {[["Skin Truth", 97], ["Eye Behavior", 94], ["Motion", 91]].map(([l, v]) => (
+                  <div key={l as string} className="sc-dp__bar-row">
+                    <span>{l}</span>
+                    <div className="sc-dp__bar-track">
+                      <div className="sc-dp__bar-fill" style={{ width: `${v}%` }} />
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="dash-card">
-              <div className="dash-label dm"><div className="dash-dot" />Viral Hook Extraction — Top 3 for this niche</div>
-              {[
-                {t:'—girl my knuckles been clear for 3 weeks straight, look—',a:true},
-                {t:'I spent $47 testing every brightening serum. Only one worked.',a:false},
-                {t:'The reason your skincare isn\'t working (it\'s not the product)',a:false},
-              ].map((h,i) => (
-                <div key={i} className={`hook-line dm${h.a?' active':''}`}>{h.t}</div>
-              ))}
-            </div>
-
-            <div className="dash-row">
-              <div className="dash-card">
-                <div className="dash-label dm"><div className="dash-dot" />Seedance 2.0 Prompt</div>
-                <div className="prompt-text dm">
-                  <strong>SCENE [0–3s]:</strong> Elena reclined on cream lounge, golden hour. iPad FaceTime active. <strong>FACE LOCK:</strong> warm Fitzpatrick III, coily updo, asymmetric blink at 0.4s. <strong>VOICEOVER:</strong> "—girl I'm tellin' you, look—"
-                </div>
-              </div>
-              <div className="dash-card">
-                <div className="dash-label dm"><div className="dash-dot" />Keyword Intelligence</div>
-                {['knuckle brightening serum 2026','how to even skin tone fast','best serum for dark knuckles','is dina bright worth it'].map((k,i) => (
-                  <div key={i} style={{fontFamily:"'DM Sans',sans-serif",fontSize:10,fontWeight:300,color:i===0?'var(--ivory)':'var(--dim)',lineHeight:1.8,padding:'2px 0',borderBottom:'1px solid rgba(245,240,232,0.04)'}}>
-                    {i===0 && <span style={{color:'var(--blush)',marginRight:4}}>↑</span>}{k}
+                    <span>{v}</span>
                   </div>
                 ))}
               </div>
             </div>
+          </div>
 
-            <div className="dash-card">
-              <div className="dash-label dm"><div className="dash-dot" />Generated Caption — TikTok</div>
-              <div className="prompt-text dm" style={{lineHeight:1.85}}>
-                three weeks ago my knuckles looked completely different and I genuinely thought nothing would work | I started this routine and the change hit me mid-FaceTime when my friend pointed it out before I even mentioned it | the serum first, every knuckle, five minutes, then the cream — that's the whole thing | what's wild is it's not doing the most, it's just actually working | save this if your knuckles have been on your mind 🤍
-              </div>
-              <div style={{display:'flex',gap:12,marginTop:8}}>
-                {['#skincareroutine','#knucklecare','#glowup','#realresults','#ugccreator'].map(t => (
-                  <span key={t} className="feat-tag w">{t}</span>
-                ))}
-              </div>
+          {/* Hooks */}
+          <div className="sc-dp__card sc-dp__card--hooks">
+            <span className="sc-dp__label">Viral Hook Extraction — Top 3 for this niche</span>
+            {[
+              "—girl my knuckles been clear for 3 weeks straight, look—",
+              "I spent $47 testing every brightening serum. Only one worked.",
+              "The reason your skincare isn't working (it's not the product)",
+            ].map((h) => (
+              <div key={h} className="sc-dp__hook">"{h}"</div>
+            ))}
+          </div>
+
+          {/* Seedance prompt */}
+          <div className="sc-dp__card sc-dp__card--prompt">
+            <span className="sc-dp__label">Seedance 2.0 Prompt</span>
+            <p className="sc-dp__prompt-text">
+              <strong>SCENE [0–3s]:</strong> Elena reclined on cream lounge, golden hour. iPad FaceTime active.{" "}
+              <strong>FACE LOCK:</strong> warm Fitzpatrick III, coily updo, asymmetric blink at 0.4s.{" "}
+              <strong>VOICEOVER:</strong> "—girl I'm tellin' you, look—"
+            </p>
+          </div>
+
+          {/* Caption */}
+          <div className="sc-dp__card sc-dp__card--caption">
+            <span className="sc-dp__label">Generated Caption — TikTok</span>
+            <p className="sc-dp__caption-text">
+              three weeks ago my knuckles looked completely different and I genuinely thought nothing would work | I started this routine and the change hit me mid-FaceTime when my friend pointed it out before I even mentioned it | the serum first, every knuckle, five minutes, then the cream — that's the whole thing | what's wild is it's not doing the most, it's just actually working | save this if your knuckles have been on your mind 🤍
+            </p>
+            <div className="sc-dp__tags">
+              {["#skincareroutine", "#knucklecare", "#glowup", "#realresults", "#ugccreator"].map(t => (
+                <span key={t} className="sc-dp__tag">{t}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Tool badges */}
+          <div className="sc-dp__tools">
+            <span className="sc-dp__label">Outputs ready for</span>
+            <div className="sc-dp__tool-badges">
+              {["Seedance 2.0", "Kling 1.6", "Runway Gen-4", "Midjourney", "Flux", "HeyGen", "Nano Banana"].map(t => (
+                <span key={t} className="sc-dp__tool-badge">{t}</span>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* TRUST */}
-      <div className="trust">
-        <span className="trust-label dm">Outputs ready for</span>
-        <div className="trust-items">
-          {['Seedance 2.0','Kling 1.6','Runway Gen-4','Midjourney','Flux','HeyGen','Nano Banana'].map(t => (
-            <span className="trust-item dm" key={t}>{t}</span>
+      {/* ─────────────────────────────────────── MARQUEE */}
+      <div className="sc-marquee" aria-hidden="true">
+        <div className="sc-marquee__track">
+          {Array(3).fill([
+            "Human Realism Engine™", "Motion Psychology™", "GTA-Style Behavioral Realism",
+            "Anti-Generic AI", "Cinematic Direction", "Identity Lock™",
+            "60-Second Campaigns", "Creator OS",
+          ]).flat().map((t, i) => (
+            <span key={i} className="sc-marquee__item">{t}</span>
           ))}
         </div>
       </div>
 
-      {/* MARQUEE */}
-      <div className="marquee">
-        <div className="marquee-track">
-          {[...Array(2)].map((_,i) => (
-            <div key={i} style={{display:'flex',flexShrink:0}}>
-              {['Human Realism Engine™','Motion Psychology™','GTA-Style Behavioral Realism','Anti-Generic AI','Cinematic Direction','Identity Lock™','60-Second Campaigns','Creator OS'].map((t,j) => (
-                <span key={j} className="marquee-item pf">{t}<span className="marquee-dot" /></span>
-              ))}
+      {/* ─────────────────────────────────────── STORYBOARD */}
+      <section className="sc-storyboard">
+        <div className="sc-storyboard__grid">
+          {[1,2,3,4,5,6,7,8].map(n => (
+            <div key={n} className="sc-sb__frame">
+              <Image
+                src={`/sb-${n}.png`}
+                alt={["Entrance Walk","Covered Reveal","Contract Sign","G-Wagon Reveal","Interior","Keys + Roses","Aerial Drive","G-Wagon Pose"][n-1]}
+                fill
+                className="sc-sb__img"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+              <span className="sc-sb__num">{n}.</span>
+              <span className="sc-sb__caption">{["Entrance Walk","Covered Reveal","Contract Sign","G-Wagon Reveal","Interior","Keys + Roses","Aerial Drive","G-Wagon Pose"][n-1]}</span>
             </div>
           ))}
         </div>
-      </div>
 
-
-      {/* ── STORYBOARD — Brief → Output ── */}
-      <section className="sb-section">
-        <div className="sb-inner">
-          <div className="sb-layout">
-
-            {/* LEFT — 2x4 portrait grid */}
-            <div className="sb-grid">
-              {[
-                {img:'/sb-1.png',n:'1.',label:'Entrance Walk'},
-                {img:'/sb-2.png',n:'2.',label:'Covered Reveal'},
-                {img:'/sb-3.png',n:'3.',label:'Contract Sign'},
-                {img:'/sb-4.png',n:'4.',label:'G-Wagon Reveal'},
-                {img:'/sb-5.png',n:'5.',label:'Interior'},
-                {img:'/sb-6.png',n:'6.',label:'Keys + Roses'},
-                {img:'/sb-7.png',n:'7.',label:'Aerial Drive'},
-                {img:'/sb-8.png',n:'8.',label:'G-Wagon Pose'},
-              ].map(f => (
-                <div className="sb-frame" key={f.n}>
-                  <Image src={f.img} alt={f.label} fill style={{objectFit:'cover',objectPosition:'center',transition:'transform 0.4s'}} />
-                  <div className="sb-frame-overlay" />
-                  <div className="sb-frame-num dm">{f.n}</div>
-                  <div className="sb-frame-label dm">{f.label}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* RIGHT — Headline + brief card + CTA */}
-            <div className="sb-right">
-              <div className="sec-tag dm" style={{marginBottom:16}}>Brief → Output</div>
-              <h2 className="sec-h2 pf" style={{marginBottom:80}}>
-                One SuperCool brief.<br /><em>Eight shots. Higgsfield-ready.</em>
-              </h2>
-              <p className="sb-right-sub dm" style={{marginBottom:80}}>A real SuperCool brief. The client took this straight into Higgsfield. Zero guesswork — every scene, motion, and hook pre-engineered for virality.</p>
-
-              <div className="sb-brief">
-                <div className="sb-brief-header">
-                  <span className="sb-brief-title dm">● SuperCool Brief</span>
-                  <span className="sb-brief-badge dm">Generated in 60s</span>
-                </div>
-                <div className="sb-brief-body">
-                  <div>
-                    <div className="sb-field-label dm">Client</div>
-                    <div className="sb-field-val highlight dm">Luxury Reel — Mercedes G-Wagon Delivery</div>
-                  </div>
-                  <div>
-                    <div className="sb-field-label dm">Concept</div>
-                    <div className="sb-field-val dm">Editorial cinematic reel. Woman purchasing her dream car. Dark luxury. No voiceover. Let the visuals do the work.</div>
-                  </div>
-                  <div>
-                    <div className="sb-field-label dm">Scene Structure</div>
-                    <div className="sb-scene-block dm">
-                      <strong>Shot 1:</strong> Exterior walk-in. Back-facing, power walk, designer bag.<br />
-                      <strong>Shot 2:</strong> Covered car reveal. Black balloons. Dramatic pause.<br />
-                      <strong>Shot 3:</strong> Contract signing. Closeup, sunglasses on.<br />
-                      <strong>Shot 4:</strong> G-Wagon uncovered. She touches the hood.<br />
-                      <strong>Shot 5:</strong> Interior. Hands on wheel. Golden hour.<br />
-                      <strong>Shot 6:</strong> Keys + roses outside the dealership.<br />
-                      <strong>Shot 7:</strong> Aerial — G-Wagon on highway. Motion blur.<br />
-                      <strong>Shot 8:</strong> Champagne toast. Celebration.
-                    </div>
-                  </div>
-                  <div>
-                    <div className="sb-field-label dm">Viral Hook</div>
-                    <div className="sb-hook pf">"She didn't announce it. She just pulled up."</div>
-                  </div>
-                </div>
-                <div className="sb-result-strip">
-                  {[{n:'60s',l:'Brief Time'},{n:'8',l:'Shots'},{n:'96',l:'Realism'},{n:'Viral',l:'Outcome'}].map(s => (
-                    <div className="sb-rstat" key={s.l}>
-                      <span className="sb-rstat-num pf">{s.n}</span>
-                      <span className="sb-rstat-label dm">{s.l}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="sb-cta-wrap">
-                  <Link href="/generate" className="btn-wine dm" style={{display:'block',textAlign:'center' as const,width:'100%'}}>⚡ Generate Your Brief Free Now</Link>
-                  <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:8,letterSpacing:'0.06em'}}>3 free briefs · No credit card required</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="how">
-        <div className="how-inner">
-          <div className="sec-tag dm">How it works</div>
-          <h2 className="sec-h2 pf">3 steps.<br /><em>Full campaign.</em></h2>
-          <div className="how-steps">
-            {[
-              {n:'1',t:'Research',d:'AI analyses TikTok, Reels and Shorts — extracting viral trends, hooks, keywords and audience psychology for your exact niche right now.',chips:['Trend intel','Hook extraction','Keyword gaps','Audience psychology']},
-              {n:'2',t:'Generate',d:'SuperCool builds your complete content package — cinematic Seedance briefs, motion scripts, image prompts, hooks, captions, hashtags and first comments.',chips:['Seedance brief','Motion script','Image prompts','Captions + hooks']},
-              {n:'3',t:'Create & Publish',d:'Paste prompts into Higgsfield, Kling or Midjourney. Generate your content. Post daily without burnout.',chips:['Higgsfield','Kling','Midjourney','Runway']},
-            ].map(s => (
-              <div className="how-step" key={s.n}>
-                <div className="how-num dm">{s.n}</div>
-                <div className="how-title dm">{s.t}</div>
-                <div className="how-desc dm">{s.d}</div>
-                <div className="how-chips">
-                  {s.chips.map(c => <span className="how-chip dm" key={c}>{c}</span>)}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURES */}
-      <section className="feats">
-        <div className="feats-inner">
-          <div className="sec-tag dm">Everything you get</div>
-          <h2 className="sec-h2 pf">Generated in <em>60 seconds.</em></h2>
-          <div className="feat-grid">
-            {[
-              {img:'/feat-ugc.png',pos:'center center',title:'AI UGC Ads',desc:"Authentic, realistic ads built on human behavior systems — believable motion that converts.",tags:[{t:'AI UGC',w:true},{t:'Ads',w:false},{t:'Converts',w:false}]},
-              {img:'/feat-briefs.png',pos:'center center',title:'Cinematic Reel Briefs',desc:"Full Seedance 2.0 production documents — scene breakdowns, timestamped scripts, blink schedules.",tags:[{t:'Higgsfield',w:true},{t:'Motion',w:false},{t:'Scripts',w:false}]},
-              {img:'/feat-realism.png',pos:'center center',title:'Hyper-Realistic Prompts',desc:"Skin truth, eye behavior, fabric physics. Image prompts that look filmed not generated.",tags:[{t:'Realism',w:true},{t:'Nano Banana',w:false},{t:'Midjourney',w:false}]},
-              {img:'/feat-captions.png',pos:'center center',title:'Viral Hooks + Captions',desc:"Platform-native captions 5-7 sentences minimum. Zero generic. Zero one-liners. Real creator energy.",tags:[{t:'TikTok',w:true},{t:'Instagram',w:false},{t:'Hooks',w:false}]},
-              {img:'/feat-seo.png',pos:'center center',title:'SEO Keyword Intelligence',desc:'Long-tail keywords people actually search — the exact phrases driving discovery.',tags:[{t:'SEO',w:false},{t:'Discovery',w:false},{t:'Search',w:true}]},
-              {img:'/feat-hashtag.png',pos:'center center',title:'Hashtag + First Comment',desc:"8-hashtag strategy (mega/mid/micro mix) plus a pinnable first comment engineered for saves.",tags:[{t:'Hashtags',w:true},{t:'First comment',w:false},{t:'Saves',w:false}]},
-            ].map(f => (
-              <div className="feat-card" key={f.title}>
-                <div className="feat-img">
-                  <Image src={f.img} alt={f.title} fill style={{objectFit:'cover',objectPosition:f.pos}} />
-                  <div className="feat-img-overlay" />
-                </div>
-                <div className="feat-body">
-                  <div className="feat-title dm">{f.title}</div>
-                  <div className="feat-desc dm">{f.desc}</div>
-                  <div className="feat-tags">
-                    {f.tags.map(tag => <span className={`feat-tag dm${tag.w?' w':''}`} key={tag.t}>{tag.t}</span>)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="feat-footer dm">Like having a full creative team — in your pocket.</p>
-
-          {/* PILLARS STRIP */}
-          <div className="pillars-strip">
-            <div className="pillar-card">
-              <div className="pillar-num pf">01</div>
-              <div className="pillar-tag dm">↗ Real-time</div>
-              <div className="pillar-title dm">Trend Analysis</div>
-              <p className="pillar-desc dm">Surface what&apos;s spiking before it peaks. Platform signals decoded daily.</p>
-            </div>
-            <div className="pillar-card">
-              <div className="pillar-num pf">02</div>
-              <div className="pillar-tag dm">⊞ Architecture</div>
-              <div className="pillar-title dm">Retention Structures</div>
-              <p className="pillar-desc dm">Pattern interrupts, loop points, payoff architecture. Every frame earns the next.</p>
-            </div>
-            <div className="pillar-card">
-              <div className="pillar-num pf">03</div>
-              <div className="pillar-tag dm">◎ Psychology</div>
-              <div className="pillar-title dm">Motion Psychology</div>
-              <p className="pillar-desc dm">Camera movement as emotional language. Dolly, drift, rack focus.</p>
-            </div>
-            <div className="pillar-card">
-              <div className="pillar-num pf">04</div>
-              <div className="pillar-tag dm">◈ Precision</div>
-              <div className="pillar-title dm">Realism Engineering</div>
-              <p className="pillar-desc dm">Skin texture, lighting physics, material response. Built to fool the eye.</p>
-            </div>
-            <div className="pillar-card">
-              <div className="pillar-num pf">05</div>
-              <div className="pillar-tag dm">⌖ Systems</div>
-              <div className="pillar-title dm">Creator Strategy</div>
-              <p className="pillar-desc dm">Content OS, monetization loops, positioning for long-term dominance.</p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ── PROOF — DINA (REAL CLIENT) ── */}
-      <section className="proof">
-        <div className="proof-inner">
-          <div className="sec-tag dm">Real results</div>
-          <h2 className="sec-h2 pf" style={{marginBottom:32}}>
-            This is what our briefs<br /><em>actually produce.</em>
+        <div className="sc-storyboard__copy">
+          <p className="sc-section-eyebrow">Brief → Output</p>
+          <h2 className="sc-h2">
+            One SuperCool brief.<br />
+            <em>Eight shots. Higgsfield-ready.</em>
           </h2>
-
-          <div className="proof-grid">
-
-            {/* LEFT — Quote */}
-            <div className="proof-quote-card">
-              <div>
-                <div className="proof-quote-mark pf">"</div>
-                <p className="proof-quote-text pf">
-                  SuperCool changed my content game. My retention went from 20% to 79%. The briefs are so specific — it's like having a{' '}
-                  <strong>creative team telling me exactly what to film, how to film it, and why it'll go viral.</strong>{' '}
-                  First reel hit 64.9K views. I just paste and go.
-                </p>
-              </div>
-              <div className="proof-attr-row">
-                <div className="proof-avatar">
-                  <Image
-                    src="/dina-profile.jpg"
-                    alt="Dinabrightsbeauty"
-                    fill
-                    style={{objectFit:'cover',objectPosition:'center top'}}
-                  />
-                </div>
-                <div>
-                  <div className="proof-attr-name dm">Dinabrightsbeauty</div>
-                  <div className="proof-attr-handle dm">@cardinacssaul · Luxury Skincare Creator</div>
-                </div>
-                <div className="proof-platform-tag dm">TikTok</div>
-              </div>
-            </div>
-
-            {/* RIGHT — TikTok stats card */}
-            <div className="proof-stats-card">
-
-              {/* Profile header */}
-              <div className="proof-tiktok-header">
-                <div className="proof-tiktok-avatar">
-                  <Image
-                    src="/dina-profile.jpg"
-                    alt="Dinabrightsbeauty"
-                    fill
-                    style={{objectFit:'cover',objectPosition:'center top'}}
-                  />
-                </div>
-                <div style={{flex:1,minWidth:0}}>
-                  <div className="proof-tiktok-name dm">Dinabrightsbeauty</div>
-                  <div className="proof-tiktok-handle">@cardinacssaul</div>
-                  <div className="proof-tiktok-bio dm">✨ Glass Skin Starts Here · Luxury Glow Skincare</div>
-                </div>
-                <div className="proof-verified dm">✓ SuperCool Client</div>
-              </div>
-
-              {/* Account stats */}
-              <div className="proof-account-stats">
-                <div className="proof-astat">
-                  <span className="proof-astat-num pf">18.9K</span>
-                  <span className="proof-astat-label dm">Followers</span>
-                </div>
-                <div className="proof-astat">
-                  <span className="proof-astat-num wine pf">35.9K</span>
-                  <span className="proof-astat-label dm">Likes</span>
-                </div>
-                <div className="proof-astat">
-                  <span className="proof-astat-num green pf">3 Days</span>
-                  <span className="proof-astat-label dm">To Viral</span>
-                </div>
-              </div>
-
-              {/* Pinned video thumbnails */}
-              <div className="proof-vid-section">
-                <div className="proof-vid-label dm">Pinned videos — SuperCool briefs</div>
-                <div className="proof-vid-grid">
-                  <div className="proof-vid-thumb">
-                    <Image src="/dina-cream.jpg" alt="Radiant Glow Cream" fill style={{objectFit:'cover',objectPosition:'center 30%'}} />
-                    <div className="proof-vid-overlay" />
-                    <div className="proof-vid-pin dm">Pinned</div>
-                    <div className="proof-vid-views dm">▶ 64.9K</div>
-                  </div>
-                  <div className="proof-vid-thumb">
-                    <Image src="/dina-ulta.jpg" alt="Ulta car scene" fill style={{objectFit:'cover',objectPosition:'center 20%'}} />
-                    <div className="proof-vid-overlay" />
-                    <div className="proof-vid-pin dm">Pinned</div>
-                    <div className="proof-vid-views dm">▶ 11.6K</div>
-                  </div>
-                  <div className="proof-vid-thumb">
-                    <Image src="/dina-glow.jpg" alt="Glowing skin" fill style={{objectFit:'cover',objectPosition:'center 15%'}} />
-                    <div className="proof-vid-overlay" />
-                    <div className="proof-vid-pin dm">Pinned</div>
-                    <div className="proof-vid-views dm">▶ 12.4K</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Result metrics */}
-              <div className="proof-result-metrics">
-                <div className="proof-rm">
-                  <span className="proof-rm-num wine pf">79%</span>
-                  <span className="proof-rm-label dm">Avg Retention</span>
-                </div>
-                <div className="proof-rm">
-                  <span className="proof-rm-num ivory pf">64.9K</span>
-                  <span className="proof-rm-label dm">Top Video</span>
-                </div>
-                <div className="proof-rm">
-                  <span className="proof-rm-num green pf">+247%</span>
-                  <span className="proof-rm-label dm">Engagement</span>
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className="proof-powered">
-                <span className="proof-powered-text dm">Brief by SuperCool · Executed in Higgsfield</span>
-                <span className="proof-powered-badge dm">
-                  <span className="proof-powered-dot" />Verified Results
-                </span>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PRICING COMPARISON */}
-      <section className="pricing-comp">
-        <div className="pricing-comp-inner">
-          <div className="sec-tag dm">Pricing Comparison</div>
-          <h2 className="sec-h2 pf">The smartest investment<br /><em>you'll make this year.</em></h2>
-          <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:15,fontWeight:300,color:'var(--dim)',lineHeight:1.8,maxWidth:480,marginBottom:0}}>
-            Stop paying agency rates for content that isn't built for virality. SuperCool gives you the intelligence layer for a fraction of the cost.
+          <p className="sc-body">
+            A real SuperCool brief. The client took this straight into Higgsfield.
+            Zero guesswork — every scene, motion, and hook pre-engineered for virality.
           </p>
 
-          <div className="pricing-grid">
-            {/* WITHOUT */}
-            <div className="pricing-col">
-              <div className="pricing-col-label dm">Without SuperCool</div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">AI UGC Agency</span>
-                <span className="pricing-row-val dm strike">CHF 3,000+ / mo</span>
-              </div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">Freelance Content Creators</span>
-                <span className="pricing-row-val dm strike">CHF 2,500+ / mo</span>
-              </div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">Trend Research Tools</span>
-                <span className="pricing-row-val dm strike">CHF 200 / mo</span>
-              </div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">Strategy + Creative Direction</span>
-                <span className="pricing-row-val dm strike">CHF 1,500+ / mo</span>
-              </div>
-              <div className="pricing-total">
-                <span className="pricing-total-label dm">Estimated Total</span>
-                <span className="pricing-total-val dm">CHF 7,200+ / mo</span>
-              </div>
+          {/* Brief card */}
+          <div className="sc-brief-card">
+            <div className="sc-brief-card__header">
+              <span className="sc-brief-card__dot">● SUPERCOOL BRIEF</span>
+              <span className="sc-brief-card__badge">GENERATED IN 60S</span>
             </div>
-
-            {/* WITH SUPERCOOL */}
-            <div className="pricing-col highlight">
-              <div className="pricing-col-label wine dm">SuperCool Influencer <span className="best-val dm">Best Value</span></div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">Trend Analysis + Hook Extraction</span>
-                <span className="pricing-row-val inc dm">✓ Included</span>
+            <div className="sc-brief-card__body">
+              <div className="sc-brief-card__field">
+                <span className="sc-brief-card__field-label">CLIENT</span>
+                <strong>Luxury Reel — Mercedes G-Wagon Delivery</strong>
               </div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">Cinematic Prompt Architecture</span>
-                <span className="pricing-row-val inc dm">✓ Included</span>
+              <div className="sc-brief-card__field">
+                <span className="sc-brief-card__field-label">CONCEPT</span>
+                <p>Editorial cinematic reel. Woman purchasing her dream car. Dark luxury. No voiceover. Let the visuals do the work.</p>
               </div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">Director Briefs — Scene, Motion, FACE LOCK</span>
-                <span className="pricing-row-val inc dm">✓ Included</span>
-              </div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">Realism Engineering (94/100)</span>
-                <span className="pricing-row-val inc dm">✓ Included</span>
-              </div>
-              <div className="pricing-row">
-                <span className="pricing-row-label dm">Full Creator Workflow System</span>
-                <span className="pricing-row-val inc dm">✓ Included</span>
-              </div>
-              <div className="pricing-price">
-                <span className="pricing-price-num pf">CHF 29</span>
-                <span className="pricing-price-unit dm">/ month</span>
-              </div>
-              <div style={{marginTop:16}}>
-                <Link href="/generate" className="btn-wine dm" style={{display:'block',textAlign:'center' as const,width:'100%'}}>⚡ Start Free — 3 Briefs</Link>
-                <p style={{fontFamily:"'DM Sans',sans-serif",fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:8,letterSpacing:'0.06em'}}>3 free briefs · No credit card required</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="pricing-savings">
-            <span className="pricing-savings-label dm">You save up to</span>
-            <span className="pricing-savings-val pf">CHF 7,171 / month</span>
-          </div>
-        </div>
-      </section>
-
-      {/* AFFILIATE */}
-      <section className="affiliate">
-        <div className="affiliate-inner">
-          <div className="affiliate-layout">
-            <div>
-              <div className="sec-tag dm">Affiliate program</div>
-              <h2 className="affiliate-h2 pf">Earn while you<br /><em>create.</em></h2>
-              <p className="affiliate-sub dm">Share SuperCool with your audience and earn recurring commission on every paying user you refer. No cap. No expiry. As long as they stay subscribed, you earn.</p>
-              <div style={{display:'flex',gap:12,flexWrap:'wrap' as const}}>
-                <Link href="/affiliate" className="btn-wine dm">Apply to Affiliate →</Link>
-              </div>
-              <div style={{marginTop:20,fontFamily:"'DM Sans',sans-serif",fontSize:11,color:'var(--dim)'}}>Paid monthly · Instant approval for creators · Dedicated dashboard</div>
-            </div>
-            <div>
-              <div className="affiliate-card">
-                <div className="aff-num pf">40%</div>
-                <div className="aff-label dm">Recurring Commission</div>
-                <div className="aff-desc dm">You earn 40% of every payment your referrals make — monthly, for as long as they subscribe. This is recurring income, not one-time.</div>
-                <div className="aff-example">
-                  <div className="aff-example-label dm">Example earnings</div>
-                  {[{l:'10 Creator subscribers ($29/mo)',v:'$116/mo'},{l:'10 Agency subscribers ($79/mo)',v:'$316/mo'},{l:'25 mixed subscribers',v:'$580+/mo'}].map(r => (
-                    <div className="aff-calc-row" key={r.l}>
-                      <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:11,color:'var(--dim)'}}>{r.l}</span>
-                      <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:11,fontWeight:600,color:'var(--blush)'}}>{r.v}</span>
-                    </div>
-                  ))}
-                  <div className="aff-calc-row total">
-                    <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:12}}>100 subscribers</span>
-                    <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:12,color:'var(--blush)'}}>~$2,320/mo</span>
-                  </div>
-                </div>
-                <div className="aff-items">
-                  {['40% recurring on all plans','Paid monthly via PayPal or bank transfer','Real-time affiliate dashboard','Custom referral link + promo assets','No minimum threshold to withdraw'].map(item => (
-                    <div className="aff-item dm" key={item}><div className="aff-icon">✓</div>{item}</div>
+              <div className="sc-brief-card__field">
+                <span className="sc-brief-card__field-label">SCENE STRUCTURE</span>
+                <div className="sc-brief-card__shots">
+                  {[
+                    "Exterior walk-in. Back-facing, power walk, designer bag.",
+                    "Covered car reveal. Black balloons. Dramatic pause.",
+                    "Contract signing. Closeup, sunglasses on.",
+                    "G-Wagon uncovered. She touches the hood.",
+                    "Interior. Hands on wheel. Golden hour.",
+                    "Keys + roses outside the dealership.",
+                    "Aerial — G-Wagon on highway. Motion blur.",
+                    "Champagne toast. Celebration.",
+                  ].map((s, i) => (
+                    <p key={i}><strong>Shot {i+1}:</strong> {s}</p>
                   ))}
                 </div>
-                <Link href="/affiliate" className="btn-wine dm" style={{width:'100%',textAlign:'center' as const,display:'block'}}>Join the Affiliate Program →</Link>
+              </div>
+              <div className="sc-brief-card__field">
+                <span className="sc-brief-card__field-label">VIRAL HOOK</span>
+                <p className="sc-brief-card__hook">"She didn't announce it. She just pulled up."</p>
               </div>
             </div>
+          </div>
+
+          {/* Stats row */}
+          <div className="sc-stats">
+            {[["60s","Brief Time"],["8","Shots"],["96","Realism"],["Viral","Outcome"]].map(([v,l]) => (
+              <div key={l} className="sc-stats__item">
+                <span className="sc-stats__val">{v}</span>
+                <span className="sc-stats__label">{l}</span>
+              </div>
+            ))}
+          </div>
+
+          <Link href="/generate" className="sc-btn sc-btn--primary sc-btn--full">
+            ⚡ Generate Your Brief Free Now
+          </Link>
+          <p className="sc-footnote-sm">3 free briefs · No credit card required</p>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────── HOW IT WORKS */}
+      <section className="sc-how">
+        <p className="sc-section-eyebrow">How it works</p>
+        <h2 className="sc-h2">3 steps.<br /><em>Full campaign.</em></h2>
+
+        <div className="sc-how__steps">
+          {[
+            {
+              n: "1",
+              title: "Research",
+              desc: "AI analyses TikTok, Reels and Shorts — extracting viral trends, hooks, keywords and audience psychology for your exact niche right now.",
+              tags: ["Trend intel","Hook extraction","Keyword gaps","Audience psychology"],
+            },
+            {
+              n: "2",
+              title: "Generate",
+              desc: "SuperCool builds your complete content package — cinematic Seedance briefs, motion scripts, image prompts, hooks, captions, hashtags and first comments.",
+              tags: ["Seedance brief","Motion script","Image prompts","Captions + hooks"],
+            },
+            {
+              n: "3",
+              title: "Create & Publish",
+              desc: "Paste prompts into Higgsfield, Kling or Midjourney. Generate your content. Post daily without burnout.",
+              tags: ["Higgsfield","Kling","Midjourney","Runway"],
+            },
+          ].map((s) => (
+            <div key={s.n} className="sc-how__step">
+              <span className="sc-how__num">{s.n}</span>
+              <h3 className="sc-how__title">{s.title}</h3>
+              <p className="sc-how__desc">{s.desc}</p>
+              <div className="sc-how__tags">
+                {s.tags.map(t => <span key={t} className="sc-dp__tag">{t}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────── FEATURES GRID */}
+      <section className="sc-features">
+        <p className="sc-section-eyebrow">Everything you get</p>
+        <h2 className="sc-h2">Generated in <em>60 seconds.</em></h2>
+
+        <div className="sc-features__grid">
+          {[
+            { img: "/feat-ugc.png", title: "AI UGC Ads", tags: ["AI UGC","Ads","Converts"], desc: "Authentic, realistic ads built on human behavior systems — believable motion that converts." },
+            { img: "/feat-briefs.png", title: "Cinematic Reel Briefs", tags: ["Higgsfield","Motion","Scripts"], desc: "Full Seedance 2.0 production documents — scene breakdowns, timestamped scripts, blink schedules." },
+            { img: "/feat-realism.png", title: "Hyper-Realistic Prompts", tags: ["Realism","Nano Banana","Midjourney"], desc: "Skin truth, eye behavior, fabric physics. Image prompts that look filmed not generated." },
+            { img: "/feat-captions.png", title: "Viral Hooks + Captions", tags: ["TikTok","Instagram","Hooks"], desc: "Platform-native captions 5–7 sentences minimum. Zero generic. Zero one-liners. Real creator energy." },
+            { img: "/feat-seo.png", title: "SEO Keyword Intelligence", tags: ["SEO","Discovery","Search"], desc: "Long-tail keywords people actually search — the exact phrases driving discovery." },
+            { img: "/feat-hashtag.png", title: "Hashtag + First Comment", tags: ["Hashtags","First comment","Saves"], desc: "8-hashtag strategy (mega/mid/micro mix) plus a pinnable first comment engineered for saves." },
+          ].map((f) => (
+            <div key={f.title} className="sc-feat__card">
+              <div className="sc-feat__img-wrap">
+                <Image src={f.img} alt={f.title} fill className="sc-feat__img" sizes="(max-width: 768px) 100vw, 50vw" />
+              </div>
+              <div className="sc-feat__body">
+                <h3 className="sc-feat__title">{f.title}</h3>
+                <p className="sc-feat__desc">{f.desc}</p>
+                <div className="sc-feat__tags">
+                  {f.tags.map(t => <span key={t} className="sc-dp__tag">{t}</span>)}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="sc-features__footer">Like having a full creative team — in your pocket.</p>
+      </section>
+
+      {/* ─────────────────────────────────────── INTELLIGENCE CARDS */}
+      <section className="sc-intel">
+        <div className="sc-intel__scroll">
+          {[
+            { n: "01", badge: "↗ Real-time", cat: "TREND ANALYSIS", title: "Trend Analysis", desc: "Surface what's spiking before it peaks. Platform signals decoded daily." },
+            { n: "02", badge: "⊞ Architecture", cat: "ARCHITECTURE", title: "Retention Structures", desc: "Pattern interrupts, loop points, payoff architecture. Every frame earns the next." },
+            { n: "03", badge: "◎ Psychology", cat: "PSYCHOLOGY", title: "Motion Psychology", desc: "Camera movement as emotional language. Dolly, drift, rack focus." },
+            { n: "04", badge: "◈ Precision", cat: "PRECISION", title: "Realism Engineering", desc: "Skin texture, lighting physics, material response. Built to fool the eye." },
+            { n: "05", badge: "⌖ Systems", cat: "SYSTEMS", title: "Creator Strategy", desc: "Content OS, monetization loops, positioning for long-term dominance." },
+          ].map((c) => (
+            <div key={c.n} className="sc-intel__card">
+              <span className="sc-intel__num">{c.n}</span>
+              <span className="sc-intel__badge">{c.badge}</span>
+              <span className="sc-intel__cat">{c.cat}</span>
+              <h3 className="sc-intel__title">{c.title}</h3>
+              <p className="sc-intel__desc">{c.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────── SOCIAL PROOF */}
+      <section className="sc-proof">
+        <p className="sc-section-eyebrow">Real results</p>
+        <h2 className="sc-h2">This is what our briefs<br /><em>actually produce.</em></h2>
+
+        <blockquote className="sc-proof__quote">
+          "SuperCool changed my content game. My retention went from 20% to 79%. The briefs are so specific — it's like having a{" "}
+          <strong>creative team telling me exactly what to film, how to film it, and why it'll go viral.</strong>{" "}
+          First reel hit 64.9K views. I just paste and go."
+        </blockquote>
+
+        <div className="sc-proof__profile">
+          <div className="sc-proof__avatar-wrap">
+            <Image src="/dina-profile.jpg" alt="Dinabrightsbeauty" width={56} height={56} className="sc-proof__avatar" />
+          </div>
+          <div>
+            <strong className="sc-proof__name">Dinabrightsbeauty</strong>
+            <p className="sc-proof__handle">@cardinacssaul · Luxury Skincare Creator</p>
+            <span className="sc-proof__platform">TikTok</span>
+          </div>
+        </div>
+
+        <div className="sc-proof__card">
+          <div className="sc-proof__card-header">
+            <div className="sc-proof__card-avatar-wrap">
+              <Image src="/dina-profile.jpg" alt="Dinabrightsbeauty" width={44} height={44} className="sc-proof__avatar" />
+            </div>
+            <div>
+              <strong>Dinabrightsbeauty</strong>
+              <p className="sc-proof__card-handle">@cardinacssaul</p>
+              <p className="sc-proof__card-bio">✨ Glass Skin Starts Here · Luxury Glow Skincare</p>
+            </div>
+            <span className="sc-proof__verified">✓ SuperCool Client</span>
+          </div>
+
+          <div className="sc-proof__videos">
+            {[
+              { src: "/dina-cream.jpg", views: "64.9K" },
+              { src: "/dina-ulta.jpg", views: "11.6K" },
+              { src: "/dina-glow.jpg", views: "12.4K" },
+            ].map((v) => (
+              <div key={v.src} className="sc-proof__vid">
+                <Image src={v.src} alt="Video thumbnail" fill className="sc-proof__vid-img" sizes="33vw" />
+                <span className="sc-proof__vid-views">▶ {v.views}</span>
+                <span className="sc-proof__vid-pin">Pinned</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="sc-proof__metrics">
+            {[["18.9K","Followers"],["35.9K","Likes"],["3 Days","To Viral"]].map(([v,l]) => (
+              <div key={l} className="sc-proof__metric">
+                <span className="sc-proof__metric-val">{v}</span>
+                <span className="sc-proof__metric-label">{l}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="sc-proof__stat-row">
+            {[["79%","Avg Retention"],["64.9K","Top Video"],["+247%","Engagement"]].map(([v,l]) => (
+              <div key={l} className="sc-proof__big-stat">
+                <span className="sc-proof__big-val">{v}</span>
+                <span className="sc-proof__big-label">{l}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className="sc-proof__attribution">Brief by SuperCool · Executed in Higgsfield · Verified Results</p>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────── PRICING */}
+      <section className="sc-pricing">
+        <p className="sc-section-eyebrow">Pricing Comparison</p>
+        <h2 className="sc-h2">The smartest investment<br /><em>you'll make this year.</em></h2>
+        <p className="sc-body sc-pricing__sub">
+          Stop paying agency rates for content that isn't built for virality. SuperCool gives you the intelligence layer for a fraction of the cost.
+        </p>
+
+        <div className="sc-pricing__compare">
+          {/* Without */}
+          <div className="sc-pricing__col sc-pricing__col--without">
+            <h3 className="sc-pricing__col-title">Without SuperCool</h3>
+            <div className="sc-pricing__rows">
+              {[
+                ["AI UGC Agency", "CHF 3,000+ / mo"],
+                ["Freelance Content Creators", "CHF 2,500+ / mo"],
+                ["Trend Research Tools", "CHF 200 / mo"],
+                ["Strategy + Creative Direction", "CHF 1,500+ / mo"],
+              ].map(([item, price]) => (
+                <div key={item} className="sc-pricing__row">
+                  <span className="sc-pricing__row-item">{item}</span>
+                  <span className="sc-pricing__row-price sc-pricing__row-price--strike">{price}</span>
+                </div>
+              ))}
+              <div className="sc-pricing__row sc-pricing__row--total">
+                <span><strong>Estimated Total</strong></span>
+                <span className="sc-pricing__row-price sc-pricing__row-price--strike sc-pricing__row-price--total"><strong>CHF 7,200+ / mo</strong></span>
+              </div>
+            </div>
+          </div>
+
+          {/* With */}
+          <div className="sc-pricing__col sc-pricing__col--with">
+            <div className="sc-pricing__col-header">
+              <h3 className="sc-pricing__col-title sc-pricing__col-title--red">SuperCool Influencer</h3>
+              <span className="sc-pricing__best-badge">BEST VALUE</span>
+            </div>
+            <div className="sc-pricing__rows">
+              {[
+                "Trend Analysis + Hook Extraction",
+                "Cinematic Prompt Architecture",
+                "Director Briefs — Scene, Motion, FACE LOCK",
+                "Realism Engineering (94/100)",
+                "Full Creator Workflow System",
+              ].map((item) => (
+                <div key={item} className="sc-pricing__row">
+                  <span className="sc-pricing__row-item">{item}</span>
+                  <span className="sc-pricing__included">✓ Included</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="sc-pricing__price-block">
+              <span className="sc-pricing__currency">CHF</span>
+              <span className="sc-pricing__amount">29</span>
+              <span className="sc-pricing__period">/ month</span>
+            </div>
+
+            <Link href="/generate" className="sc-btn sc-btn--primary sc-btn--full">
+              ⚡ Start Free — 3 Briefs
+            </Link>
+            <p className="sc-footnote-sm">3 free briefs · No credit card required</p>
+
+            <p className="sc-pricing__savings">
+              You save up to <strong>CHF 7,171 / month</strong>
+            </p>
           </div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="cta-final">
-        <div className="cta-glow" />
-        <div className="cta-inner">
-          <h2 className="cta-h2 pf">Stop creating.<br /><em>Start directing.</em></h2>
-          <p className="cta-sub dm">3 free briefs. No credit card. No setup.<br />Just your idea — and 60 seconds.</p>
-          <Link href="/generate" className="btn-wine dm">⚡ Generate Free Now</Link>
-          <p className="cta-note dm">Human Realism Engine™ · Motion Psychology™ · Creator OS</p>
+      {/* ─────────────────────────────────────── AFFILIATE */}
+      <section className="sc-affiliate">
+        <p className="sc-section-eyebrow">Affiliate program</p>
+        <h2 className="sc-h2">Earn while you<br /><em>create.</em></h2>
+        <p className="sc-body">
+          Share SuperCool with your audience and earn recurring commission on every paying user you refer. No cap. No expiry.
+        </p>
+
+        <div className="sc-affiliate__badge-row">
+          <span className="sc-dp__tag">Paid monthly</span>
+          <span className="sc-dp__tag">Instant approval for creators</span>
+          <span className="sc-dp__tag">Dedicated dashboard</span>
         </div>
+
+        <div className="sc-affiliate__commission">
+          <span className="sc-affiliate__pct">40%</span>
+          <div>
+            <strong>Recurring Commission</strong>
+            <p>You earn 40% of every payment your referrals make — monthly, for as long as they subscribe. This is recurring income, not one-time.</p>
+          </div>
+        </div>
+
+        <div className="sc-affiliate__examples">
+          <strong>Example earnings</strong>
+          {[
+            ["10 Creator subscribers ($29/mo)", "$116/mo"],
+            ["10 Agency subscribers ($79/mo)", "$316/mo"],
+            ["25 mixed subscribers", "$580+/mo"],
+            ["100 subscribers", "~$2,320/mo"],
+          ].map(([ex, earn]) => (
+            <div key={ex} className="sc-affiliate__ex-row">
+              <span>{ex}</span>
+              <strong>{earn}</strong>
+            </div>
+          ))}
+        </div>
+
+        <ul className="sc-affiliate__perks">
+          {[
+            "40% recurring on all plans",
+            "Paid monthly via PayPal or bank transfer",
+            "Real-time affiliate dashboard",
+            "Custom referral link + promo assets",
+            "No minimum threshold to withdraw",
+          ].map(p => <li key={p}>✓ {p}</li>)}
+        </ul>
+
+        <Link href="/affiliate" className="sc-btn sc-btn--primary sc-btn--full">
+          Join the Affiliate Program →
+        </Link>
       </section>
 
-      {/* FOOTER */}
-      <footer className="footer">
-        <div className="footer-logo dm"><strong>SUPER</strong>COOL Influencer</div>
-        <div className="footer-links">
-          <a href="/pricing" className="footer-link dm">Pricing</a>
-          <a href="/generate" className="footer-link dm">Generate</a>
-          <a href="/sign-in" className="footer-link dm">Sign in</a>
-          <a href="/affiliate" className="footer-link dm">Affiliate</a>
-        </div>
-        <div className="footer-copy dm">© 2026 SuperCool Influencer</div>
-      </footer>
-    </div>
+      {/* ─────────────────────────────────────── FINAL CTA */}
+      <section className="sc-final-cta">
+        <h2 className="sc-h2">Stop creating.<br /><em>Start directing.</em></h2>
+        <p className="sc-body">
+          3 free briefs. No credit card. No setup.<br />
+          Just your idea — and 60 seconds.
+        </p>
+        <Link href="/generate" className="sc-btn sc-btn--primary sc-btn--xl">
+          ⚡ Generate Free Now
+        </Link>
+        <p className="sc-footnote-sm">Human Realism Engine™ · Motion Psychology™ · Creator OS</p>
+      </section>
+
+      {/* ─────────────────────────────────────── STYLES */}
+      <style>{`
+        /* ── TOKENS ───────────────────────────────────── */
+        :root {
+          --bg:        #0A0608;
+          --bg2:       #110D0F;
+          --bg3:       #1A1214;
+          --red:       #9E182B;
+          --red-light: #C41F35;
+          --blush:     #F2AFBC;
+          --ivory:     #F5F0E8;
+          --muted:     #8A7A7E;
+          --border:    rgba(255,255,255,0.08);
+          --radius:    12px;
+          --radius-lg: 20px;
+        }
+
+        /* ── RESET / BASE ─────────────────────────────── */
+        .sc-home * { box-sizing: border-box; }
+        .sc-home {
+          background: var(--bg);
+          color: var(--ivory);
+          font-family: 'DM Sans', 'Inter', sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
+          overflow-x: hidden;
+        }
+
+        /* ── TYPOGRAPHY ───────────────────────────────── */
+        .sc-h2 {
+          font-family: 'Playfair Display', 'Georgia', serif;
+          font-size: clamp(2rem, 7vw, 3.5rem);
+          font-weight: 700;
+          line-height: 1.15;
+          letter-spacing: -0.02em;
+          color: var(--ivory);
+          margin: 0 0 1.25rem;
+        }
+        .sc-h2 em {
+          font-style: italic;
+          color: var(--blush);
+        }
+        .sc-section-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin: 0 0 1rem;
+        }
+        .sc-section-eyebrow::before {
+          content: '';
+          display: block;
+          width: 24px;
+          height: 1px;
+          background: var(--red);
+        }
+        .sc-body {
+          font-size: clamp(0.95rem, 3vw, 1.1rem);
+          color: #B8A8AC;
+          line-height: 1.7;
+          margin: 0 0 1.5rem;
+        }
+        .sc-footnote-sm {
+          font-size: 0.75rem;
+          color: var(--muted);
+          text-align: center;
+          margin: 0.5rem 0 0;
+        }
+
+        /* ── BUTTONS ──────────────────────────────────── */
+        .sc-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 14px 28px;
+          border-radius: var(--radius);
+          font-size: 0.9rem;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-decoration: none;
+          transition: all 0.2s;
+          cursor: pointer;
+          border: none;
+          white-space: nowrap;
+        }
+        .sc-btn--primary {
+          background: var(--red);
+          color: #fff;
+        }
+        .sc-btn--primary:hover { background: var(--red-light); }
+        .sc-btn--ghost {
+          background: transparent;
+          color: var(--ivory);
+          border: 1px solid var(--border);
+        }
+        .sc-btn--ghost:hover { border-color: var(--blush); color: var(--blush); }
+        .sc-btn--full { width: 100%; }
+        .sc-btn--xl {
+          padding: 18px 40px;
+          font-size: 1rem;
+          width: 100%;
+          max-width: 360px;
+        }
+
+        /* ── SECTION PADDING ──────────────────────────── */
+        .sc-hero,
+        .sc-storyboard,
+        .sc-how,
+        .sc-features,
+        .sc-intel,
+        .sc-proof,
+        .sc-pricing,
+        .sc-affiliate,
+        .sc-final-cta {
+          padding: 64px 20px;
+          max-width: 100%;
+        }
+
+        /* ── HERO ─────────────────────────────────────── */
+        .sc-hero { text-align: center; }
+        .sc-hero__badge {
+          display: inline-block;
+          padding: 6px 14px;
+          border: 1px solid var(--border);
+          border-radius: 100px;
+          font-size: 0.7rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin-bottom: 1.5rem;
+        }
+        .sc-hero__h1 {
+          font-family: 'Playfair Display', 'Georgia', serif;
+          font-size: clamp(2.5rem, 10vw, 5rem);
+          font-weight: 700;
+          line-height: 1.1;
+          letter-spacing: -0.02em;
+          color: var(--ivory);
+          margin: 0 0 1.5rem;
+        }
+        .sc-hero__h1 em {
+          font-style: italic;
+          color: var(--blush);
+          display: block;
+        }
+        .sc-hero__sub {
+          font-size: clamp(0.95rem, 3vw, 1.1rem);
+          color: #B8A8AC;
+          max-width: 520px;
+          margin: 0 auto 2rem;
+          line-height: 1.7;
+        }
+        .sc-hero__ctas {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+        .sc-hero__ctas .sc-btn { width: 100%; max-width: 320px; }
+        .sc-hero__footnote {
+          font-size: 0.78rem;
+          color: var(--muted);
+          margin-bottom: 2.5rem;
+        }
+        .sc-hero__features {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 2.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .sc-hero__feature-pill {
+          display: inline-block;
+          padding: 8px 14px;
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          font-size: 0.82rem;
+          color: var(--ivory);
+          text-align: left;
+        }
+
+        /* ── DASHBOARD PREVIEW ────────────────────────── */
+        .sc-dashboard-preview {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          text-align: left;
+          margin-top: 2rem;
+        }
+        .sc-dp__row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+        .sc-dp__card {
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+          padding: 16px;
+        }
+        .sc-dp__label {
+          display: block;
+          font-size: 0.65rem;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin-bottom: 8px;
+        }
+        .sc-dp__badge {
+          display: inline-block;
+          padding: 2px 8px;
+          border-radius: 4px;
+          font-size: 0.6rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+        }
+        .sc-dp__badge--live {
+          background: rgba(158,24,43,0.2);
+          border: 1px solid var(--red);
+          color: var(--blush);
+        }
+        .sc-dp__stat {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(1.5rem, 5vw, 2rem);
+          font-weight: 700;
+          color: var(--blush);
+          margin: 6px 0 4px;
+          line-height: 1;
+        }
+        .sc-dp__caption {
+          font-size: 0.72rem;
+          color: var(--muted);
+          line-height: 1.4;
+        }
+        .sc-dp__caption em { color: var(--blush); }
+        .sc-dp__bars { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+        .sc-dp__bar-row {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.62rem;
+          color: var(--muted);
+        }
+        .sc-dp__bar-row span:first-child { min-width: 60px; }
+        .sc-dp__bar-row span:last-child { min-width: 20px; text-align: right; }
+        .sc-dp__bar-track {
+          flex: 1;
+          height: 3px;
+          background: rgba(255,255,255,0.08);
+          border-radius: 2px;
+        }
+        .sc-dp__bar-fill {
+          height: 100%;
+          background: var(--red);
+          border-radius: 2px;
+        }
+        .sc-dp__hook {
+          font-size: 0.8rem;
+          color: var(--ivory);
+          border-left: 2px solid var(--red);
+          padding-left: 10px;
+          margin: 6px 0;
+          line-height: 1.4;
+        }
+        .sc-dp__prompt-text {
+          font-size: 0.78rem;
+          color: #B8A8AC;
+          line-height: 1.6;
+          margin: 6px 0 0;
+        }
+        .sc-dp__caption-text {
+          font-size: 0.78rem;
+          color: #B8A8AC;
+          line-height: 1.6;
+          margin: 6px 0 8px;
+        }
+        .sc-dp__tags, .sc-feat__tags, .sc-how__tags, .sc-affiliate__badge-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-top: 8px;
+        }
+        .sc-dp__tag {
+          padding: 3px 10px;
+          background: rgba(158,24,43,0.15);
+          border: 1px solid rgba(158,24,43,0.35);
+          border-radius: 100px;
+          font-size: 0.68rem;
+          color: var(--blush);
+          font-weight: 600;
+        }
+        .sc-dp__tools { padding: 16px; }
+        .sc-dp__tool-badges {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-top: 8px;
+        }
+        .sc-dp__tool-badge {
+          padding: 4px 10px;
+          background: var(--bg3);
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          font-size: 0.7rem;
+          color: var(--ivory);
+        }
+
+        /* ── MARQUEE ──────────────────────────────────── */
+        .sc-marquee {
+          overflow: hidden;
+          border-top: 1px solid var(--border);
+          border-bottom: 1px solid var(--border);
+          padding: 14px 0;
+          background: var(--bg2);
+        }
+        .sc-marquee__track {
+          display: flex;
+          gap: 40px;
+          animation: sc-marquee 25s linear infinite;
+          white-space: nowrap;
+          width: max-content;
+        }
+        .sc-marquee__item {
+          font-size: 0.7rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--muted);
+        }
+        @keyframes sc-marquee {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+
+        /* ── STORYBOARD ───────────────────────────────── */
+        .sc-storyboard { padding: 64px 20px; }
+        .sc-storyboard__grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 6px;
+          margin-bottom: 40px;
+          border-radius: var(--radius);
+          overflow: hidden;
+        }
+        .sc-sb__frame {
+          position: relative;
+          aspect-ratio: 9/16;
+          overflow: hidden;
+          background: var(--bg2);
+        }
+        .sc-sb__img { object-fit: cover; }
+        .sc-sb__num {
+          position: absolute;
+          top: 6px;
+          left: 8px;
+          font-size: 0.65rem;
+          font-weight: 700;
+          color: rgba(255,255,255,0.9);
+          z-index: 2;
+        }
+        .sc-sb__caption {
+          position: absolute;
+          bottom: 0;
+          left: 0; right: 0;
+          padding: 8px 6px 6px;
+          background: linear-gradient(transparent, rgba(0,0,0,0.85));
+          font-size: 0.55rem;
+          color: rgba(255,255,255,0.8);
+          z-index: 2;
+        }
+
+        /* ── BRIEF CARD ───────────────────────────────── */
+        .sc-brief-card {
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          margin: 2rem 0;
+        }
+        .sc-brief-card__header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 18px;
+          border-bottom: 1px solid var(--border);
+        }
+        .sc-brief-card__dot {
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          color: var(--muted);
+        }
+        .sc-brief-card__badge {
+          padding: 4px 10px;
+          background: rgba(158,24,43,0.15);
+          border: 1px solid var(--red);
+          border-radius: 6px;
+          font-size: 0.62rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          color: var(--blush);
+        }
+        .sc-brief-card__body { padding: 18px; }
+        .sc-brief-card__field { margin-bottom: 16px; }
+        .sc-brief-card__field-label {
+          display: block;
+          font-size: 0.62rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin-bottom: 5px;
+        }
+        .sc-brief-card__field strong {
+          font-size: 1rem;
+          color: var(--ivory);
+          line-height: 1.4;
+        }
+        .sc-brief-card__field p {
+          font-size: 0.88rem;
+          color: #B8A8AC;
+          line-height: 1.6;
+          margin: 0;
+        }
+        .sc-brief-card__shots {
+          background: var(--bg3);
+          border-radius: var(--radius);
+          padding: 14px 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .sc-brief-card__shots p {
+          font-size: 0.83rem;
+          color: #B8A8AC;
+          line-height: 1.5;
+          margin: 0;
+        }
+        .sc-brief-card__shots strong { color: var(--ivory); }
+        .sc-brief-card__hook {
+          font-style: italic;
+          font-size: 0.95rem;
+          color: var(--blush);
+          border-left: 2px solid var(--red);
+          padding-left: 12px;
+          margin: 0;
+        }
+
+        /* ── STATS ────────────────────────────────────── */
+        .sc-stats {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 8px;
+          margin: 1.5rem 0;
+        }
+        .sc-stats__item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 14px 8px;
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+        }
+        .sc-stats__val {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(1rem, 4vw, 1.6rem);
+          font-weight: 700;
+          color: var(--red);
+          line-height: 1;
+        }
+        .sc-stats__label {
+          font-size: 0.6rem;
+          color: var(--muted);
+          margin-top: 4px;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+
+        /* ── HOW IT WORKS ─────────────────────────────── */
+        .sc-how__steps {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          margin-top: 2rem;
+        }
+        .sc-how__step {
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          padding: 24px 20px;
+          position: relative;
+        }
+        .sc-how__num {
+          display: block;
+          font-family: 'Playfair Display', serif;
+          font-size: 3rem;
+          font-weight: 700;
+          color: rgba(158,24,43,0.2);
+          line-height: 1;
+          margin-bottom: 8px;
+        }
+        .sc-how__title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: var(--ivory);
+          margin: 0 0 8px;
+        }
+        .sc-how__desc {
+          font-size: 0.88rem;
+          color: #B8A8AC;
+          line-height: 1.6;
+          margin: 0;
+        }
+
+        /* ── FEATURES GRID ────────────────────────────── */
+        .sc-features__grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 16px;
+          margin-top: 2rem;
+        }
+        .sc-feat__card {
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+        }
+        .sc-feat__img-wrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16/9;
+          background: var(--bg3);
+        }
+        .sc-feat__img { object-fit: cover; }
+        .sc-feat__body { padding: 18px; }
+        .sc-feat__title {
+          font-size: 1.05rem;
+          font-weight: 700;
+          color: var(--ivory);
+          margin: 0 0 8px;
+        }
+        .sc-feat__desc {
+          font-size: 0.85rem;
+          color: #B8A8AC;
+          line-height: 1.6;
+          margin: 0;
+        }
+        .sc-features__footer {
+          text-align: center;
+          margin-top: 2rem;
+          font-style: italic;
+          color: var(--muted);
+          font-size: 0.9rem;
+        }
+
+        /* ── INTELLIGENCE CARDS ───────────────────────── */
+        .sc-intel { padding: 64px 0; }
+        .sc-intel__scroll {
+          display: flex;
+          gap: 16px;
+          overflow-x: auto;
+          padding: 0 20px 16px;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .sc-intel__scroll::-webkit-scrollbar { display: none; }
+        .sc-intel__card {
+          flex: 0 0 260px;
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          padding: 24px 20px;
+          scroll-snap-align: start;
+          position: relative;
+        }
+        .sc-intel__num {
+          display: block;
+          font-family: 'Playfair Display', serif;
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: rgba(158,24,43,0.2);
+          line-height: 1;
+          margin-bottom: 12px;
+        }
+        .sc-intel__badge {
+          display: inline-block;
+          font-size: 0.65rem;
+          font-weight: 700;
+          color: var(--blush);
+          margin-bottom: 2px;
+        }
+        .sc-intel__cat {
+          display: block;
+          font-size: 0.6rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--red);
+          margin-bottom: 8px;
+          font-weight: 700;
+        }
+        .sc-intel__title {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: var(--ivory);
+          margin: 0 0 8px;
+        }
+        .sc-intel__desc {
+          font-size: 0.82rem;
+          color: #B8A8AC;
+          line-height: 1.6;
+          margin: 0;
+        }
+
+        /* ── SOCIAL PROOF ─────────────────────────────── */
+        .sc-proof__quote {
+          font-size: clamp(1rem, 3.5vw, 1.15rem);
+          color: var(--ivory);
+          line-height: 1.7;
+          border-left: 3px solid var(--red);
+          padding-left: 16px;
+          margin: 0 0 1.5rem;
+          font-style: normal;
+        }
+        .sc-proof__profile {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 2rem;
+        }
+        .sc-proof__avatar-wrap, .sc-proof__card-avatar-wrap {
+          border-radius: 50%;
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+        .sc-proof__avatar-wrap { width: 56px; height: 56px; }
+        .sc-proof__card-avatar-wrap { width: 44px; height: 44px; }
+        .sc-proof__avatar { border-radius: 50%; object-fit: cover; }
+        .sc-proof__name { font-size: 0.95rem; font-weight: 700; color: var(--ivory); }
+        .sc-proof__handle { font-size: 0.78rem; color: var(--muted); margin: 0; }
+        .sc-proof__platform {
+          display: inline-block;
+          padding: 2px 8px;
+          background: rgba(158,24,43,0.15);
+          border: 1px solid var(--red);
+          border-radius: 4px;
+          font-size: 0.62rem;
+          font-weight: 700;
+          color: var(--blush);
+          margin-top: 4px;
+        }
+        .sc-proof__card {
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+        }
+        .sc-proof__card-header {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          padding: 16px;
+          border-bottom: 1px solid var(--border);
+          flex-wrap: wrap;
+        }
+        .sc-proof__card-handle { font-size: 0.75rem; color: var(--muted); margin: 0; }
+        .sc-proof__card-bio { font-size: 0.75rem; color: #B8A8AC; margin: 2px 0 0; }
+        .sc-proof__verified {
+          margin-left: auto;
+          padding: 3px 8px;
+          background: rgba(158,24,43,0.15);
+          border: 1px solid var(--red);
+          border-radius: 4px;
+          font-size: 0.6rem;
+          font-weight: 700;
+          color: var(--blush);
+          white-space: nowrap;
+        }
+        .sc-proof__videos {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0;
+        }
+        .sc-proof__vid {
+          position: relative;
+          aspect-ratio: 9/16;
+          overflow: hidden;
+          background: var(--bg3);
+        }
+        .sc-proof__vid-img { object-fit: cover; }
+        .sc-proof__vid-views {
+          position: absolute;
+          bottom: 6px;
+          left: 6px;
+          font-size: 0.65rem;
+          font-weight: 700;
+          color: #fff;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+          z-index: 2;
+        }
+        .sc-proof__vid-pin {
+          position: absolute;
+          top: 6px;
+          right: 6px;
+          padding: 2px 6px;
+          background: rgba(0,0,0,0.6);
+          border-radius: 4px;
+          font-size: 0.58rem;
+          color: #fff;
+          z-index: 2;
+        }
+        .sc-proof__metrics {
+          display: flex;
+          border-top: 1px solid var(--border);
+          border-bottom: 1px solid var(--border);
+        }
+        .sc-proof__metric {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 12px 8px;
+          border-right: 1px solid var(--border);
+        }
+        .sc-proof__metric:last-child { border-right: none; }
+        .sc-proof__metric-val {
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--ivory);
+          line-height: 1;
+        }
+        .sc-proof__metric-label {
+          font-size: 0.62rem;
+          color: var(--muted);
+          margin-top: 3px;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+        .sc-proof__stat-row {
+          display: flex;
+          padding: 16px;
+          gap: 12px;
+        }
+        .sc-proof__big-stat {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        .sc-proof__big-val {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(1.2rem, 4vw, 1.6rem);
+          font-weight: 700;
+          color: var(--red);
+          line-height: 1;
+        }
+        .sc-proof__big-label {
+          font-size: 0.62rem;
+          color: var(--muted);
+          margin-top: 4px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          text-align: center;
+        }
+        .sc-proof__attribution {
+          padding: 10px 16px;
+          font-size: 0.65rem;
+          color: var(--muted);
+          text-align: center;
+          border-top: 1px solid var(--border);
+        }
+
+        /* ── PRICING ──────────────────────────────────── */
+        .sc-pricing__sub { max-width: 560px; }
+        .sc-pricing__compare {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-top: 2rem;
+        }
+        .sc-pricing__col {
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          padding: 24px 20px;
+        }
+        .sc-pricing__col--with {
+          border-color: var(--red);
+          background: var(--bg3);
+        }
+        .sc-pricing__col-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 1rem;
+        }
+        .sc-pricing__col-title {
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin: 0 0 1rem;
+        }
+        .sc-pricing__col-title--red { color: var(--blush); margin: 0; }
+        .sc-pricing__best-badge {
+          padding: 3px 10px;
+          background: rgba(158,24,43,0.15);
+          border: 1px solid var(--red);
+          border-radius: 4px;
+          font-size: 0.62rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          color: var(--blush);
+        }
+        .sc-pricing__rows { display: flex; flex-direction: column; gap: 0; margin-bottom: 1.5rem; }
+        .sc-pricing__row {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 12px 0;
+          border-bottom: 1px solid var(--border);
+          font-size: 0.85rem;
+        }
+        .sc-pricing__row:last-child { border-bottom: none; }
+        .sc-pricing__row--total { padding-top: 14px; }
+        .sc-pricing__row-item { color: #B8A8AC; flex: 1; line-height: 1.4; }
+        .sc-pricing__row-price {
+          font-size: 0.82rem;
+          color: var(--muted);
+          text-align: right;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+        .sc-pricing__row-price--strike { text-decoration: line-through; }
+        .sc-pricing__row-price--total { font-size: 0.88rem; }
+        .sc-pricing__included {
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--blush);
+          white-space: nowrap;
+        }
+        .sc-pricing__price-block {
+          display: flex;
+          align-items: baseline;
+          gap: 6px;
+          margin: 1.5rem 0 1rem;
+          line-height: 1;
+        }
+        .sc-pricing__currency {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(2rem, 8vw, 3.5rem);
+          font-weight: 700;
+          color: var(--red);
+          line-height: 1;
+        }
+        .sc-pricing__amount {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(3rem, 12vw, 5rem);
+          font-weight: 700;
+          color: var(--red);
+          line-height: 1;
+        }
+        .sc-pricing__period {
+          font-size: 0.9rem;
+          color: var(--muted);
+          align-self: flex-end;
+          margin-bottom: 8px;
+        }
+        .sc-pricing__savings {
+          text-align: center;
+          margin-top: 1rem;
+          font-size: 0.82rem;
+          color: var(--muted);
+        }
+        .sc-pricing__savings strong { color: var(--blush); }
+
+        /* ── AFFILIATE ────────────────────────────────── */
+        .sc-affiliate__commission {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          padding: 20px;
+          margin: 1.5rem 0;
+        }
+        .sc-affiliate__pct {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(2.5rem, 8vw, 4rem);
+          font-weight: 700;
+          color: var(--red);
+          line-height: 1;
+          flex-shrink: 0;
+        }
+        .sc-affiliate__commission strong {
+          display: block;
+          font-size: 1rem;
+          color: var(--ivory);
+          margin-bottom: 6px;
+        }
+        .sc-affiliate__commission p {
+          font-size: 0.82rem;
+          color: #B8A8AC;
+          margin: 0;
+          line-height: 1.6;
+        }
+        .sc-affiliate__examples {
+          background: var(--bg2);
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+          padding: 16px 20px;
+          margin: 1rem 0 1.5rem;
+        }
+        .sc-affiliate__examples strong {
+          display: block;
+          font-size: 0.72rem;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin-bottom: 10px;
+        }
+        .sc-affiliate__ex-row {
+          display: flex;
+          justify-content: space-between;
+          padding: 8px 0;
+          border-bottom: 1px solid var(--border);
+          font-size: 0.82rem;
+          color: #B8A8AC;
+          gap: 12px;
+        }
+        .sc-affiliate__ex-row:last-child { border-bottom: none; }
+        .sc-affiliate__ex-row strong { color: var(--blush); white-space: nowrap; }
+        .sc-affiliate__perks {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 1.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .sc-affiliate__perks li {
+          font-size: 0.85rem;
+          color: #B8A8AC;
+          display: flex;
+          gap: 8px;
+        }
+
+        /* ── FINAL CTA ────────────────────────────────── */
+        .sc-final-cta {
+          text-align: center;
+          padding: 80px 20px;
+          background: var(--bg2);
+          border-top: 1px solid var(--border);
+        }
+        .sc-final-cta .sc-btn { margin: 0 auto; display: flex; }
+
+        /* ── TABLET 640px+ ────────────────────────────── */
+        @media (min-width: 640px) {
+          .sc-hero, .sc-storyboard, .sc-how, .sc-features,
+          .sc-proof, .sc-pricing, .sc-affiliate, .sc-final-cta {
+            padding: 80px 40px;
+          }
+          .sc-hero__ctas { flex-direction: row; justify-content: center; }
+          .sc-hero__ctas .sc-btn { width: auto; }
+          .sc-features__grid { grid-template-columns: repeat(2, 1fr); }
+          .sc-pricing__compare { flex-direction: row; align-items: flex-start; }
+          .sc-pricing__col { flex: 1; }
+          .sc-storyboard__grid { grid-template-columns: repeat(4, 1fr); }
+          .sc-stats { gap: 12px; }
+        }
+
+        /* ── DESKTOP 1024px+ ──────────────────────────── */
+        @media (min-width: 1024px) {
+          .sc-hero, .sc-storyboard, .sc-how, .sc-features,
+          .sc-proof, .sc-pricing, .sc-affiliate, .sc-final-cta {
+            padding: 96px 60px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .sc-storyboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+          }
+          .sc-storyboard__grid { grid-template-columns: repeat(4, 1fr); margin-bottom: 0; }
+          .sc-storyboard__copy { padding-top: 0; }
+          .sc-features__grid { grid-template-columns: repeat(3, 1fr); }
+          .sc-how__steps { flex-direction: row; }
+          .sc-intel__scroll { padding: 0 60px 16px; }
+          .sc-intel__card { flex: 0 0 300px; }
+          .sc-dp__row { grid-template-columns: 1fr 1fr; }
+        }
+      `}</style>
+    </main>
   );
 }
