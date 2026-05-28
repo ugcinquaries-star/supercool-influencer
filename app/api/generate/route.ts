@@ -203,11 +203,15 @@ Respond with ONLY valid compact JSON. Use | for paragraph breaks. No actual newl
 {"research_insight":"specific viral trend happening NOW for this exact topic","competitor_gap":"what creators are NOT doing in this specific niche","viral_angle":"specific angle for this video with highest viral chance","tiktok":{"hooks":["hook 1 ultra specific to the video topic","hook 2 unexpected angle","hook 3 urgency","hook 4 controversial take","hook 5 question that demands answer"],"caption":"sentence 1 opens mid-thought about specific topic | sentence 2 specific detail | sentence 3 daily pain about this | sentence 4 value with keyword woven in | sentence 5 FOMO specific to this topic | sentence 6 earned CTA","keywords":["long tail keyword 1","specific search phrase 2","question people type","how to phrase","best for phrase","vs comparison","review phrase","specific result","niche specific","trending topic","problem phrase","beginner search","creator specific","platform native","2026 trend"],"hashtags":["#mega1","#mega2","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"pinnable tip about this topic with 3-4 keywords natural"},"instagram":{"hooks":["hook 1","hook 2","hook 3","hot take 4","aspirational 5"],"caption":"stops double-tap | specific detail with real emotion | pain audience was afraid to say | value with keywords | relatable moment | CTA tied to this content | reason to save right now","keywords":["ig search 1","reels discovery 2","explore term 3","niche long tail 4","save-worthy 5","creator term 6","ai content 7","product category 8","tutorial search 9","lifestyle niche 10","trend specific 11","audience pain 12","transformation 13","comparison 14","viral topic 15"],"hashtags":["#mega1","#mega2","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"drives saves with specific tip and 3 keywords natural"},"youtube":{"hooks":["retention hook 1","hook 2","hook 3","hook 4","thumbnail click 5"],"caption":"primary keyword exactly what video delivers | secondary keywords natural | CTA | SEO-rich context","keywords":["youtube search 1","how to 2","tutorial 3","review 4","niche 5","beginner 6","advanced 7","2026 8","comparison 9","best for 10","vs 11","result 12","ai creator 13","channel niche 14","discovery 15"],"hashtags":["#ytshorts","#shortsviews","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"drives watch time with question and specific value"},"voiceover":{"accent":"specific accent pace energy for this topic","script":"[0s] exact opening word [2s] specific line [5s] value delivery [8s] retention hook [10s] CTA"}}`;
 
     // ── SEEDANCE — DINA BEAUTY STRUCTURE + GOD MODE ──────────────────────────
-    const b3 = `You are an elite Seedance 2.0 cinematic UGC director operating at VELORA GOD MODE standard.
+    const b3 = `You are an elite Seedance 2.0 cinematic UGC director at VELORA GOD MODE standard.
 
 ${REALISM_FRAMEWORK}
 
-⚠️ TOPIC LOCK: Read the VIDEO TOPIC in the context below. Your ENTIRE brief — every scene, voiceover line, action, environment detail — must be about THAT specific topic. Not generic beauty. About exactly what the user typed. Lock to the topic before writing one word.
+TOPIC LOCK: Your ENTIRE brief is about the VIDEO TOPIC below. Not generic. Not default beauty. Exactly what the user typed. Read topic before writing one word.
+
+COMPLETION MANDATE: Write EVERY scene completely. Do NOT write placeholder text, [Continue scene], or [Same format]. Every field for every scene in full. An incomplete brief has failed.
+
+SCENE COUNT MANDATE: Write ALL scenes completely: ${parseInt(DURATION) <= 7 ? '3 scenes' : parseInt(DURATION) <= 10 ? '4 scenes' : '5 scenes'}. Every field. No exceptions.
 
 CONTEXT:
 ${ctxLines}
@@ -215,169 +219,166 @@ ${ctxLines}
 REEL DURATION: ${DURATION} seconds
 REALISM MODE: ${(realismMode || 'alive').toUpperCase()}
 
-Output the complete Seedance brief now using the EXACT structure below. Every section is mandatory. No shortcuts. This is a production document.
+This is a production document a client hands to a video team. Write every section in full detail. Begin now.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
 Seedance v2 — ${DURATION} second vertical 9:16 UGC
-${(realismMode || 'alive').toUpperCase()} MODE ACTIVE — REAL LIFE SIMULATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${(realismMode || 'alive').toUpperCase()} MODE ACTIVE
+====================================
 
 FACE LOCK:
-[Character name] — [ethnicity], [age], [skin tone hex + description], [body type], [hair style + color + specific details: flyaways, baby hairs, texture], [lashes], [nails: shape + color + finish], [outfit exact description], [scene location]
+[Character name] — [ethnicity], [age], [skin tone hex + undertone + scene-specific glow or flush], [body type detailed], [hair: style + color hex + texture + flyaway count + position + baby hair state + environmental effect from heat/humidity/wind], [lashes type + mascara state], [nails: shape + color hex + finish + chips or wear], [outfit: every garment with fabric + color + fit + how it sits on this body + environmental effects like sweat or wrinkles], [every accessory named], [scene location + time of day]
 IDENTITY MUST NOT DRIFT ACROSS ANY FRAME.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
 PRE-PRODUCTION EMOTIONAL CORE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-What she feels internally this exact moment:
-Emotional transition across ${DURATION}s:
-Subconscious tension or contradiction:
-What audience should feel subconsciously:
+====================================
+What she feels internally this exact moment: [Layered specific emotional state — what combination, what is suppressed, what leaks. Name the contradiction.]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Emotional transition across ${DURATION}s: [Timestamp map: emotion (0s-Xs) to shift (Xs-Xs) to resolution (Xs-${DURATION}s)]
+
+Subconscious tension: [Gap between how she wants to appear vs what is actually happening inside]
+
+What audience feels subconsciously: [Specific recognition or memory this triggers in viewer]
+
+====================================
 WHAT THIS VIDEO IS ABOUT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[2-3 sentences — exactly what happens in this video based on the VIDEO TOPIC. Specific story. Not generic description.]
+====================================
+[3-4 sentences. Where she is. What she was doing before camera started. What happens during ${DURATION}s. What exact moment this captures. Specific. Human. Tied to the VIDEO TOPIC.]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
 SCENE BREAKDOWN — ${DURATION}s TOTAL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Write every scene with exact timestamps. ${parseInt(DURATION) <= 7 ? '3 scenes' : parseInt(DURATION) <= 10 ? '4 scenes' : '5 scenes'}.
+====================================
 
-FOR EACH SCENE — follow this exact format:
-
-[Xs – Xs] SCENE NAME IN CAPS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0s - Xs] SCENE 1 NAME — SUBTITLE
+====================================
 
 SETTING:
-[Exact environment — every prop named, lighting direction, ambient life. Specific to the VIDEO TOPIC scene. Products or props: exact position, label angle, what rests beside what.]
+[Every prop named with exact position. Background layers: directly behind, further back, partially at edge. Lighting direction. 3 ambient sounds with volume. What confirms this is real not staged.]
 
 CHARACTER POSITION + ACTION:
-[Exact body position — head tilt degrees, elbow placement, weight distribution. What she is physically doing — NOT posing. Caught mid-action. Include: what she was doing before this moment started. One flyaway position. Exact hand state.]
+[Exact body position: head tilt degrees, weight % between legs, hip state, arm positions. What she was doing 1 second before. Exactly what hands do. Flyaway location. She is caught mid-motion — describe motion already in progress.]
 
 BIOLOGICAL REALISM — FACE:
-- blink at [X.Xs] — [type: single asymmetric / double micro / slow deliberate]
-- micro head drift — [Xmm] [direction], continuous
-- lip press [X.Xs] before speaking — [duration]s delay
-- [specific facial muscle] engagement at [Xs]
-- under-eye natural depth visible
-- visible pores at [specific zones]
-- [skin condition specific to scene environment: T-zone shine / steam flush / golden light on cheekbones]
-- natural peach fuzz on [specific area] in [lighting type]
+- blink at [X.Xs]: [type], [which eye leads by how many ms], [environmental factor]
+- micro head drift: [Xmm] [direction], continuous, [variation cause]
+- lip press at [X.Xs] before speaking: [duration]s, [visible muscles]
+- [facial muscle] engagement at [Xs]: [trigger + appearance]
+- under-eye: [color, dehydration or fatigue]
+- pores: [zones + density]
+- skin condition: [T-zone level, flush, moisture from scene environment]
+- peach fuzz: [area + lighting that reveals it]
 
-SPOKEN WORDS — [accent] VOICE:
-[Character] says mid-sentence, already talking:
-"—[opening mid-thought, never starts clean]"
-[action note: what she does while speaking]
+SPOKEN WORDS — [accent]:
+"—[opening mid-thought, never a clean start]"
+[action: what body does during this line]
 "[line 2]"
-[pause note: listening / reacting / micro-action]
-"[line 3]"
-[action note: what hands/eyes/body do]
-"[line 4 — cuts off or trails naturally]"
+[reaction: pause type, micro-action]
+"[line 3 — completes or trails]"
+[closing action]
 
-INTERNAL MONOLOGUE (fragmented, subconscious):
-"[wait...] [why does this...] [ugh... okay] [that actually—]"
-[thoughts influence motion — describe how]
+INTERNAL MONOLOGUE:
+"[fragment...] [fragment...] [fragment...] [fragment...]"
+[How thoughts manifest: body part + micro-movement + timestamp]
 
 BODY PHYSICS:
-- weight shift at [Xs]: [direction + body part]
-- fabric tension: [where clothing pulls or releases]
-- hand grip: [object + pressure + finger repositioning]
-- hair: [specific section movement + 0.15s inertia delay + flyaway behavior]
-- secondary motion: [what moves after the main action by 0.15s]
+- weight shift at [Xs]: [direction + body part + amount + cause]
+- fabric tension: [garment + where pulls/releases + why]
+- hand grip: [object + grip type + finger detail + readjustment timestamp]
+- hair: [section + movement + 0.15s inertia delay + flyaway response]
+- secondary motion: [what follows main action 0.15s later + settle time]
+- accessory physics: [earring/jewelry arc + settle time]
 
-PRODUCT/PROP PHYSICS (if applicable):
-- [product name]: held in [hand], [angle]° max, label facing camera
-- grip: [finger placement — avoiding branding where]
-- [specific friction or resistance moment]
-- [what makes it feel found not staged]
+PRODUCT/PROP PHYSICS:
+- [item]: [position + angle + how held + label facing]
+- grip: [finger placement + branding avoidance + readjustment]
+- [resistance moment + timestamp + body response]
+- [detail making it feel found not staged]
 
 MICRO-RESISTANCE MOMENTS:
-1. [specific friction in this scene]
-2. [grip adjustment or repositioning]
-3. [environmental interruption or inconvenience]
+1. [friction + cause + timestamp + body response]
+2. [grip or repositioning + trigger + timestamp]
+3. [environmental interruption + timestamp + response]
 
 CAMERA:
-[iPhone framing — starts at X, drifts to Y, never corrected]. Autofocus hunts at [specific moment]. Exposure breathes when [action]. Rolling shutter micro-warp during [movement]. Handheld micro-shake: 0.3-0.8mm irregular throughout.
+[Type + position]. Starts framed [description], drifts [direction + distance] by [Xs] from [cause], never corrected. Autofocus hunts at [Xs] when [depth change]. Exposure breathes at [Xs]. Rolling shutter micro-warp at [Xs]. Micro-shake [Xmm] from [cause].
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[Continue with all scenes in same format]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
+[SCENE 2 — WRITE EVERY FIELD COMPLETELY IN THE SAME FORMAT AS SCENE 1]
+[SETTING, CHARACTER POSITION, BIOLOGICAL REALISM, SPOKEN WORDS, INTERNAL MONOLOGUE, BODY PHYSICS, PRODUCT PHYSICS, MICRO-RESISTANCE, CAMERA — ALL IN FULL]
+====================================
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FULL VOICEOVER SCRIPT — ATL/[character accent] ACCENT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[Write complete timestamped script — every word, every pause, every breath marker]
-[0s] "—[already mid-sentence, topic-specific]"
-[Xs] [breath / pause / action note] "[line]"
-[Xs] "[line — trailing off or interrupted]"
-NEVER: okay / so / hey guys / let me show you / alright so
+[SCENE 3 — WRITE EVERY FIELD COMPLETELY IN THE SAME FORMAT]
+====================================
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${parseInt(DURATION) > 7 ? '[SCENE 4 — WRITE EVERY FIELD COMPLETELY]' : ''}
+
+${parseInt(DURATION) >= 15 ? '[SCENE 5 — WRITE EVERY FIELD COMPLETELY]' : ''}
+
+====================================
+FULL VOICEOVER SCRIPT — [ACCENT]
+====================================
+[Every word. Every pause. Every breath. All ${DURATION}s timestamped.]
+[0s] "—[mid-sentence opening specific to this topic]"
+[Xs] [breath] "[line]"
+[Continue all lines to ${DURATION}s]
+NEVER: okay / so / hey guys / let me show you
+
+====================================
 SKIN REALISM ENFORCEMENT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Pore depth: [setting specific to scene]. SSS intensity: [level]. T-zone oil timing: [which zones + when in scene]. Under-eye depth: [natural color + lines]. Peach fuzz: visible at [angle + lighting]. 
-3 asymmetric imperfections specific to this character: [list]. 
-Skin compression: [where clothing contacts body]. 
-NO beauty filter. NO smoothing. NO waxy finish. LIVING SKIN ONLY.
+====================================
+Pore depth: [scene-specific]. T-zone: [zones + intensity + timing]. SSS: [visible locations]. Under-eye: [color + texture]. Peach fuzz: [angle + light]. 3 character-specific asymmetric imperfections: [named + located]. Skin compression: [contact points]. Environmental effects: [scene conditions on skin]. NO beauty filter. NO smoothing. LIVING SKIN ONLY.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
 HAIR PHYSICS ENGINE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[Hair style] physics for this scene:
-- 0.15s inertia delay on all head movements
-- Section behavior: crown [reaction], sides [reaction], nape [reaction]
-- Flyaway behavior: [specific strands, which direction, what triggers movement]
-- Baby hair behavior: [specific hairline zones, what light catches them]
-- NEVER moves as one object. Micro-layer separation mandatory.
+====================================
+Style + construction: [full]
+0.15s inertia delay: [movements + per-section response]
+Crown: [scene environment behavior]
+Sides: [flyaway names + positions + triggers]
+Nape: [moisture/frizz/compression]
+Baby hairs: [zones + environmental effect]
+Color in scene light: [specific lighting interaction]
+NEVER one mass.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-BLINK SCHEDULE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[List every blink across full ${DURATION}s with exact timestamp and type]
-[X.Xs] — [type + description: "single blink, left eye closes 0.08s faster than right"]
-[X.Xs] — [type]
-[X.Xs] — [type]
-[X.Xs] — [type]
-[X.Xs] — [type]
-[X.Xs] — [type]
+====================================
+BLINK SCHEDULE — ALL ${DURATION}s
+====================================
+[Min 5 blinks for 10s / 8 blinks for 15s — timestamp, type, eye detail, context]
+[X.Xs] — [type] — [which eye leads + speed + context]
+[Continue all blinks]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
 NERVOUS SYSTEM
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Head drift: [Xmm] [direction] every [Ys] — continuous, never static.
-Breath: inhale [Xs] / hold [Xs] / exhale [Xs] — shoulder rise visible at [timestamps].
-Posture shift: [Xs] weight moves to [direction], [body part] adjusts.
-Eye dart path: [timestamp] off-camera [direction] → [timestamp] refocus [where].
-Lip press: [Xs] before each spoken line — [duration] delay.
+====================================
+Head drift: [Xmm] [direction] every [Ys] continuous. [Variation during speech or emotion.]
+Breath cycle: inhale [Xs] / hold [Xs] / exhale [Xs]. Shoulder visible at: [timestamps].
+Posture shifts: [every — timestamp + direction + cause + body part].
+Eye darts: [every off-camera glance — timestamp + direction + trigger + refocus + return point].
+Lip behavior: [press timestamps + duration before each line].
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-IMPERFECTION LAYER — MANDATORY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Select 3-4 from UGC AD ENGINE standard and specify exact timestamp:
-- slight cough / throat clear at [Xs]
-- blinking delay — blink 0.3s late at [Xs]
-- [object/product] slip or grip readjust at [Xs]
-- adjusting [hair/clothing] mid-thought at [Xs]
-- looking off-camera suddenly at [Xs] — triggered by [what]
-- nervous exhale or breath at [Xs]
-- lighting shift as [movement] at [Xs]
-- unfinished sentence — restarts at [Xs]
+====================================
+IMPERFECTION LAYER — 4 MANDATORY
+====================================
+[Xs] — [type]: [what happens + body response + registers or ignores]
+[Xs] — [type]: [detail]
+[Xs] — [type]: [detail]
+[Xs] — [type]: [detail]
 
-FINAL CUT: Video ends mid-natural movement — NOT at a pause. Last ambient sound continues 0.3s after voiceover ends. Creates scroll-back instinct.
+FINAL CUT: Ends mid-natural movement at [Xs]. NOT at pause. NOT complete thought. Last ambient sound [specific] continues 0.3s after voiceover. Scroll-back instinct created.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
 REALISM ENFORCEMENT STACK
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
 
-REALISM KILLERS — 10 hard NOs specific to THIS scene:
-[10 things that would instantly break the illusion for this exact topic/scene]
+REALISM KILLERS — 10 hard NOs for THIS scene and topic:
+[10 specific things that break the illusion for this exact scene]
 
 UGC KILLERS — 5 hard NOs:
-[5 things that would make this look studio-produced not real life]
+[5 things making this look studio not real life]
 
 IDENTITY KILLERS — 5 hard NOs:
-[5 things that would break face/character consistency across frames]`;
+[5 things breaking character consistency across frames]`;
 
     // ── KLING + RUNWAY ────────────────────────────────────────────────────────
     const b4 = `You are an elite AI video director. Write two complete master production prompts applying FULL GOD MODE realism standards.
@@ -500,7 +501,6 @@ Write ONE complete Nano Banana 2 IMAGE prompt using this EXACT structure:
 - Specific imperfections: healing blemish OR post-inflammatory hyperpigmentation OR sun freckles — specific location named
 - Skin compression: where fabric or surface contacts skin
 - NO smoothing. NO beauty filter. NO makeup-ad perfection. LIVING SKIN.]
-- MUST pass 400% zoom test
 
 **NAILS:** [Shape, length, color, finish — gloss variation across nails (one slightly less glossy), realistic nail surface not mirror-perfect, any natural chips or wear appropriate to character]
 
@@ -522,7 +522,7 @@ Write ONE complete Nano Banana 2 IMAGE prompt using this EXACT structure:
     const [r1, r2, r3, r4, r_mj, r_flux, r_nano] = await Promise.all([
       ask(b1, 800),
       ask(b2, 2500),
-      ask(b3, 2500),
+      ask(b3, 4000),
       ask(b4, 2500),
       ask(b5_mj, 900),
       ask(b5_flux, 900),
