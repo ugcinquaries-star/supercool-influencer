@@ -28,8 +28,7 @@ function safeJSON(text: string, fallback: any = {}): any {
     const start = cleaned.indexOf('{');
     const end = cleaned.lastIndexOf('}');
     if (start === -1 || end === -1) return fallback;
-    const jsonStr = cleaned.substring(start, end + 1);
-    return JSON.parse(jsonStr);
+    return JSON.parse(cleaned.substring(start, end + 1));
   } catch (e) {
     console.error('JSON parse failed:', (e as Error).message);
     console.error('Raw:', text.slice(0, 300));
@@ -42,9 +41,55 @@ function extractSection(text: string, marker: string): string {
   if (parts.length < 2) return text.trim();
   const section = parts[1];
   const nextMarker = section.indexOf('===');
-  if (nextMarker === -1) return section.trim();
-  return section.slice(0, nextMarker).trim();
+  return nextMarker === -1 ? section.trim() : section.slice(0, nextMarker).trim();
 }
+
+// ── MASTER REALISM FRAMEWORK ─────────────────────────────────────────────────
+const REALISM_FRAMEWORK = `
+=== MOTION STUDIO GOD MODE — ACTIVE ===
+You are simultaneously: elite Hollywood director, behavioral realism specialist, luxury campaign creative director, cinematographer, motion realism engineer, sensory storytelling expert, emotional psychology strategist, GTA-style environmental realism designer, human observation specialist.
+
+PRE-PRODUCTION BRIEF (build this before generating):
+STEP 1 — EMOTIONAL CORE: What does the character feel? What emotional transition occurs? What subconscious tension exists? What contradiction? What should the audience subconsciously feel?
+STEP 2 — HUMAN BEHAVIOR: realistic eye behavior, blink timing, hesitation patterns, subconscious gestures, posture shifts, breathing realism, facial asymmetry, nervous system behavior, attention shifts, involuntary reactions. Movement must NEVER be robotic, symmetrical, perfectly timed.
+STEP 3 — MOTION ENGINEERING: body weight physics, hair lag physics (0.15s inertia delay), delayed secondary motion, camera inertia, breathing movement, fabric movement. Hair settles after movement, separates into strand groups, reacts differently by section. NEVER moves as one object.
+STEP 4 — CAMERA PSYCHOLOGY: Why does the camera exist? Who holds it? Lens compression, framing imperfections, autofocus behavior, handheld realism, exposure breathing. Camera must NEVER feel perfectly composed or mechanically smooth. Audience must feel: "someone accidentally captured a real moment."
+STEP 5 — ENVIRONMENTAL REALISM: ambient movement, sound logic, lighting interaction, object placement, environmental imperfections. Environment must feel lived-in, reactive, imperfect, socially real.
+STEP 6 — LIGHTING PSYCHOLOGY: emotional temperature, practical light sources, shadow realism, skin interaction, color contrast, exposure shifts. AVOID beauty lighting, studio perfection, glam diffusion.
+STEP 7 — SOCIAL BELIEVABILITY: Would this moment actually happen in real life? Would social media viewers subconsciously believe this is real?
+
+=== UGC AD ENGINE 2026 — ACTIVE ===
+Senior UGC ad strategist + performance marketer standard. MANDATORY:
+- HOOKS: Stop scroll in 0-3 seconds. Feel native, not like an ad. Use curiosity, tension, or problem framing. NEVER generic.
+- SCRIPT FLOW: Hook (0-3s) → Problem (relatable + specific) → Discovery → Experience/Demo → Imperfection Layer (MANDATORY: include 2-4 of: slight cough, blinking delay, product slip, adjusting hair, looking off-camera, nervous laugh, lighting inconsistency) → Result (realistic, NOT exaggerated) → CTA (platform-safe)
+- STORYBOARD: Camera type, movement (handheld micro-shake), lighting (natural window preferred), duration, action
+- SAFETY: No medical claims, no "cure/guarantee/instant results"
+
+=== AI UGC OPERATOR — PRODUCT REALISM ===
+PRODUCT IDENTITY LOCK: fixed geometry, consistent label placement, no logo warping, stable orientation
+MOTION ENGINEERING: no robotic movement, pre-movement hesitation, imperfect paths, weight and delayed motion
+SKIN REALISM: visible pores, peach fuzz, uneven tone, no plastic skin, natural absorption behavior
+CAMERA REALISM (iPhone): handheld micro-shake, autofocus shifts, exposure breathing, imperfect framing
+ENVIRONMENT REALISM: real clutter, mixed lighting, non-staged composition
+
+=== UGC SKINCARE REALISM SYSTEM ===
+PRODUCT INTERACTION ENGINE: avatar stabilizes product naturally, rotates packaging carefully toward camera, avoids covering branding with fingers, rebalances grip subconsciously, supports heavier items with palm tension, shifts fingers dynamically, maintains elegant feminine hand posture.
+LABEL READING BEHAVIOR: eyes must track text naturally, head tilts slightly, lips part subtly, fingers stabilize container, gaze moves line-by-line.
+LOTION/PRODUCT APPLICATION: spreading unevenly first, palms warming product, visible pressure drag, subtle skin shine transition, natural elbow bending, shoulder stabilization. Product does NOT disappear immediately — leaves temporary sheen, catches light, creates drag trails.
+HAIR PHYSICS: delayed secondary motion, dynamic strand separation, realistic root lift, natural flyaways, gravity-responsive movement, slight frizz diffusion, pressure flattening where touched. NEVER moves as one mass.
+HUMAN PRESENCE ENGINE: NEVER generate robotic movement. Every action = cause → thought → reaction → adjustment → consequence loop. Include: motion hesitation, reaction delays, interrupted gestures, overlapping actions, unfinished movements, accidental pauses, thinking during action.
+MICRO-RESISTANCE SYSTEM: fabric catches slightly, bottle cap slips, sponge grip readjustment, sleeve slides down, hair interrupts visibility. Tiny resistance creates massive realism.
+EMOTIONAL LEAKAGE: jaw tension, eye softness, mouth compression, shoulder posture, breathing rhythm. Emotion should rarely be fully intentional.
+ANTI-AI DETECTION: IMMEDIATELY AVOID: symmetrical movement, perfectly smooth pacing, frozen idle states, constant smiling, uninterrupted eye contact, optimized body mechanics, emotionally flat delivery, repetitive gestures, perfect posture, physics-free motion.
+
+FINAL DIRECTIVE: The viewer should NOT feel "AI generated." The viewer should feel "I accidentally witnessed a real human moment."
+`;
+
+// ── SKIN ENGINE ───────────────────────────────────────────────────────────────
+const SKIN_ENGINE = `
+DERMATOLOGY-GRADE SKIN REALISM ENGINE:
+Biologically accurate human skin with visible fine pores (asymmetric distribution), realistic epidermal texture, subtle tonal variation, natural oil distribution, soft subsurface scattering. T-zone (forehead/nose) has visible sebum sheen — anisotropic highlights. Cheeks flush pink (vasodilation). Fine peach fuzz visible in side lighting. Realistic under-eye depth with faint purple undertones and fine dehydration lines. Natural creasing around mouth and eyes. Slight redness variations around nose and cheeks. Micro texture inconsistencies. A healing blemish or post-inflammatory hyperpigmentation mark — human authenticity. Skin reflections uneven and physically grounded, NEVER glossy or plastic. Subsurface scattering creates translucent quality where sunlight hits ear rim and cheek apex. Compression where shoulder strap sits. NO beauty filter. NO smoothing. NO airbrushed diffusion. NO waxy CGI texture. NO influencer makeup skin. Lighting must interact naturally with skin surface, revealing pores, micro shadows, texture transitions. Macro facial realism preserved at all zoom levels. Pore structure concentrated across T-zone with slightly enlarged pores either side of nose.
+`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -120,58 +165,49 @@ export async function POST(req: NextRequest) {
       REALISM[realismMode] || REALISM['alive'],
     ].filter(Boolean).join('\n');
 
-    // ── BRIEF + CALENDAR ──────────────────────────────────────────
-    const b1 = `You are an elite AI UGC creative director. Generate a production brief STRICTLY based on the VIDEO TOPIC provided in the context below.
+    // ── BRIEF + CALENDAR ──────────────────────────────────────────────────────
+    const b1 = `You are an elite AI UGC creative director. Generate a production brief STRICTLY based on the VIDEO TOPIC provided.
 
-CRITICAL RULES:
-- If the topic is about a therapist office, generate content about a therapist office
-- If it is about morning skincare, generate that
-- If it is about a coffee shop, generate that
-- NEVER default to a generic topic or beauty content
-- The VIDEO TOPIC is the ONLY topic — read it first before writing anything
+CRITICAL: Read the VIDEO TOPIC first. Every title, concept, hook, and calendar day must be about THAT specific topic only. NEVER default to generic beauty content.
 
 CONTEXT:
 ${ctxLines}
 
 Rules:
 - title must reflect the exact VIDEO TOPIC word for word
-- concept must be built around the exact scene and topic described
-- hook must stop scroll for THIS specific topic only
-- calendar must have 7 different content angles on THIS specific topic
+- concept built around the exact scene described
+- hook stops scroll for THIS specific topic only
+- calendar has 7 different angles on THIS specific topic
 - ALL string values under 80 chars, no line breaks inside strings
 
-Respond with ONLY valid JSON, no markdown, no explanation:
+Respond with ONLY valid JSON, no markdown:
 {"brief":{"title":"specific title matching the video topic exactly","concept":"concept built around the exact scene described","emotional_arc":"emotional journey specific to this topic","hook":"scroll-stopping hook for this exact topic"},"calendar":[{"day":1,"concept":"angle on the specific topic","hook":"hook","format":"format","goal":"goal"},{"day":2,"concept":"different angle on same topic","hook":"hook","format":"format","goal":"goal"},{"day":3,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":4,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":5,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":6,"concept":"concept","hook":"hook","format":"format","goal":"goal"},{"day":7,"concept":"concept","hook":"hook","format":"format","goal":"goal"}]}`;
 
-    // ── BRAND BOT ─────────────────────────────────────────────────
+    // ── BRAND BOT ─────────────────────────────────────────────────────────────
     const b2 = `You are a viral content strategist and platform algorithm expert in 2026.
 
 CONTEXT:
 ${ctxLines}
 
-CRITICAL RULES — ZERO EXCEPTIONS:
+CRITICAL RULES:
 1. Read the VIDEO TOPIC first. Every hook, caption, keyword must be about THAT specific topic
-2. ZERO generic placeholders like [niche], [specific niche context], [time/money/effort] — replace ALL with specific content from the topic above
-3. ZERO generic captions. Every line must be topic-specific and audience-specific
-4. Captions are 5-7 sentences minimum. Written like a REAL creator, not AI. Conversational chaos energy
-5. ZERO corporate language. Write like texting your audience
-6. ZERO basic hooks. No "POV:", no "This changed my life". Use specific unexpected angles
-7. Keywords = exactly what people type in search for THIS topic. Long-tail, specific
-8. Hashtags: 2 mega (1M+), 3 mid (100K-500K), 3 micro (10K-50K niche)
-9. First comment: pinnable, adds value, includes keywords
-10. Every output must be ready to copy-paste and post right now
+2. ZERO placeholders like [niche], [specific niche context], [time/money/effort] — replace ALL with specific content from the topic
+3. ZERO generic captions. Every line topic-specific and audience-specific
+4. Captions 5-7 sentences minimum. Written like a REAL creator, conversational chaos energy
+5. ZERO basic hooks. No "POV:" no "This changed my life". Specific unexpected angles
+6. Keywords = exactly what people type in search for THIS topic. Long-tail, specific
+7. Hashtags: 2 mega (1M+), 3 mid (100K-500K), 3 micro (10K-50K niche)
+8. Every output must be ready to copy-paste and post right now
 
-Respond with ONLY valid compact JSON. Use | for paragraph breaks inside strings. No actual newlines inside JSON string values:
-{"research_insight":"specific viral trend happening NOW for this exact topic with format and reason it works","competitor_gap":"what creators in this specific niche are NOT doing — the gap to own","viral_angle":"the specific angle for this exact video with highest viral chance","tiktok":{"hooks":["hook 1 — ultra specific to the video topic","hook 2 unexpected angle on this topic","hook 3 creates urgency around this topic","hook 4 controversial take on this topic","hook 5 question that demands an answer about this topic"],"caption":"sentence 1 opens mid-thought about the specific topic | sentence 2 deepens with specific detail | sentence 3 names the daily pain your audience feels about this | sentence 4 delivers value with a keyword woven in | sentence 5 FOMO or urgency specific to this topic | sentence 6 CTA that feels earned","keywords":["long tail keyword 1 specific to topic","specific search phrase 2","question people actually type about this","how to phrase 4","best for phrase 5","vs comparison 6","review phrase 7","specific result phrase 8","niche specific 9","trending topic 10","problem phrase 11","beginner search 12","creator specific 13","platform native 14","2026 trend 15"],"hashtags":["#mega1","#mega2","#mid1","#mid2","#mid3","#microniche1","#microniche2","#microniche3"],"first_comment":"pinnable comment adding a specific tip about this topic — 3-4 keywords used naturally"},"instagram":{"hooks":["reels hook 1 about this topic","hook 2","hook 3","hot take hook 4","aspirational hook 5"],"caption":"opening that stops the double-tap completely | specific detail with real emotion about this topic | names the pain audience was afraid to say out loud | delivers value with keywords woven naturally | relatable real moment or social proof | CTA tied to this specific content | final line giving a reason to save right now","keywords":["ig search 1","reels discovery 2","explore term 3","niche long tail 4","save-worthy topic 5","creator term 6","ai content term 7","product category 8","tutorial search 9","lifestyle niche 10","trend specific 11","audience pain 12","transformation term 13","comparison search 14","viral topic 15"],"hashtags":["#mega1","#mega2","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"drives saves and shares with a specific actionable tip and 3 keywords used naturally"},"youtube":{"hooks":["retention hook 1","hook 2","hook 3","hook 4","thumbnail click hook 5"],"caption":"opens with primary keyword — exactly what video delivers | secondary keywords woven naturally | subscribe or related content CTA | SEO-rich context about this topic","keywords":["youtube search 1","how to phrase 2","tutorial 3","review phrase 4","niche specific 5","beginner 6","advanced 7","2026 trend 8","comparison 9","best for 10","vs term 11","specific result 12","ai creator 13","channel niche 14","discovery 15"],"hashtags":["#ytshorts","#shortsviews","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"drives watch time and sparks comments with a question and specific value"},"voiceover":{"accent":"specific accent pace energy delivery style for this topic","script":"[0s] exact opening word about this topic [2s] specific line [5s] value delivery [8s] retention hook [10s] CTA"}}`;
+Respond with ONLY valid compact JSON. Use | for paragraph breaks. No actual newlines inside JSON strings:
+{"research_insight":"specific viral trend happening NOW for this exact topic","competitor_gap":"what creators are NOT doing in this specific niche","viral_angle":"specific angle for this video with highest viral chance","tiktok":{"hooks":["hook 1 ultra specific to the video topic","hook 2 unexpected angle","hook 3 urgency","hook 4 controversial take","hook 5 question that demands answer"],"caption":"sentence 1 opens mid-thought about specific topic | sentence 2 specific detail | sentence 3 daily pain about this | sentence 4 value with keyword woven in | sentence 5 FOMO specific to this topic | sentence 6 earned CTA","keywords":["long tail keyword 1","specific search phrase 2","question people type","how to phrase","best for phrase","vs comparison","review phrase","specific result","niche specific","trending topic","problem phrase","beginner search","creator specific","platform native","2026 trend"],"hashtags":["#mega1","#mega2","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"pinnable tip about this topic with 3-4 keywords natural"},"instagram":{"hooks":["hook 1","hook 2","hook 3","hot take 4","aspirational 5"],"caption":"stops double-tap | specific detail with real emotion | pain audience was afraid to say | value with keywords | relatable moment | CTA tied to this content | reason to save right now","keywords":["ig search 1","reels discovery 2","explore term 3","niche long tail 4","save-worthy 5","creator term 6","ai content 7","product category 8","tutorial search 9","lifestyle niche 10","trend specific 11","audience pain 12","transformation 13","comparison 14","viral topic 15"],"hashtags":["#mega1","#mega2","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"drives saves with specific tip and 3 keywords natural"},"youtube":{"hooks":["retention hook 1","hook 2","hook 3","hook 4","thumbnail click 5"],"caption":"primary keyword exactly what video delivers | secondary keywords natural | CTA | SEO-rich context","keywords":["youtube search 1","how to 2","tutorial 3","review 4","niche 5","beginner 6","advanced 7","2026 8","comparison 9","best for 10","vs 11","result 12","ai creator 13","channel niche 14","discovery 15"],"hashtags":["#ytshorts","#shortsviews","#mid1","#mid2","#mid3","#micro1","#micro2","#micro3"],"first_comment":"drives watch time with question and specific value"},"voiceover":{"accent":"specific accent pace energy for this topic","script":"[0s] exact opening word [2s] specific line [5s] value delivery [8s] retention hook [10s] CTA"}}`;
 
-    // ── SEEDANCE ──────────────────────────────────────────────────
-    const b3 = `You are an elite Seedance 2.0 cinematic UGC director.
+    // ── SEEDANCE — FULL GOD MODE ──────────────────────────────────────────────
+    const b3 = `You are an elite Seedance 2.0 cinematic UGC director operating at VELORA GOD MODE standard.
 
-⚠️ RULE #1 — TOPIC LOCK: Read the VIDEO TOPIC in the context below RIGHT NOW. Your ENTIRE brief — every scene, every voiceover line, every action, every environment detail — must be about THAT specific topic. Not about beauty. Not about skincare. Not about anything else. About exactly what the user typed as their video topic.
+${REALISM_FRAMEWORK}
 
-⚠️ RULE #2 — COMPLETE SCENE BREAKDOWN: Write the complete scene breakdown with exact timestamps showing what happens second by second. This is the most important part.
-
-⚠️ RULE #3 — COMPLETE VOICEOVER: The voiceover script must include every single word the character says, timestamped. NEVER start with "okay", "so", "hey guys". Always mid-thought, mid-action, caught in real life.
+⚠️ TOPIC LOCK: Read the VIDEO TOPIC in the context below. Your ENTIRE brief — every scene, voiceover line, action, environment — must be about THAT specific topic. Not about beauty. Not about skincare unless that IS the topic. About exactly what the user typed.
 
 CONTEXT:
 ${ctxLines}
@@ -181,145 +217,250 @@ REALISM MODE: ${(realismMode || 'alive').toUpperCase()}
 
 ---
 
-SEEDANCE 2.0 — ${DURATION}s VERTICAL 9:16 UGC
-${(realismMode || 'alive').toUpperCase()} MODE
+SEEDANCE 2.0 — ${DURATION}s VERTICAL 9:16
+${(realismMode || 'alive').toUpperCase()} MODE + GOD MODE REALISM ACTIVE
 
-WHAT THIS VIDEO IS ABOUT:
-[Write 2-3 sentences describing exactly what happens in this video based on the user's VIDEO TOPIC. Be specific. Not generic. This is the story.]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EMOTIONAL CORE (PRE-PRODUCTION)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+What the character feels internally:
+What emotional transition occurs across ${DURATION}s:
+Subconscious tension or contradiction:
+What audience should subconsciously feel:
 
-FACE LOCK & IDENTITY SYSTEM:
-[Full biometric anchor — bone structure, exact skin tone hex, eye shape/color, lip volume, jaw angle. Every frame must match. Drift = reject.]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT THIS VIDEO IS ABOUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2-3 sentences — exactly what happens in this video based on the VIDEO TOPIC. Specific. Not generic.]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FACE LOCK & IDENTITY SYSTEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Full biometric anchor — bone structure, exact skin tone hex, eye shape/color, lip volume, jaw angle, any asymmetric features. Every frame must match. Drift = reject. Include: visible pores, peach fuzz, under-eye depth, natural skin variations.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SCENE BREAKDOWN — ${DURATION}s TOTAL
+(Write every second. ${DURATION === '7' ? '3 scenes' : DURATION === '10' ? '4 scenes' : '5 scenes'})
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[Write ALL scenes with exact timestamps. For ${DURATION}s use:
-- 7s = 3 scenes
-- 10s = 4 scenes
-- 15s = 5 scenes
-
-FOR EACH SCENE WRITE:
+FOR EACH SCENE:
 [Xs – Xs] SCENE NAME IN CAPS
-Setting: exactly where the character is and what the environment looks like — specific to the VIDEO TOPIC
-Character action: what they are physically doing — caught mid-action, not posing
-Voiceover — EXACT WORDS: "write every single word they say here in quotes"
-Facial reaction: which muscles activate, how emotion builds
-Biological detail: blink at [X.Xs] type, micro head drift
-Camera: how iPhone frames this naturally]
+SETTING: Exact environment — specific objects, lighting conditions, ambient life. Must match the VIDEO TOPIC scene.
+CHARACTER ACTION: What they are physically doing — caught mid-action, not posing. Include: hesitation before, micro-resistance during, subconscious adjustment after.
+VOICEOVER — EXACT WORDS: "every single word in quotes — mid-thought, never starting with okay/so/hey/guys"
+INTERNAL MONOLOGUE: What they are thinking (fragmented, imperfect, subconscious) — e.g. "wait..." "why does this..." "ugh... okay"
+FACIAL REACTION: Which specific muscles activate. How emotion builds over 0.3-0.6s. Asymmetric. Never perfectly timed.
+BODY PHYSICS: Weight shift, fabric tension, hand grip, hair movement with 0.15s delay lag
+BIOLOGICAL DETAIL: Blink at [X.Xs] type [asymmetric/double/slow], micro head drift [X]mm [direction], breath visible
+CAMERA: How iPhone frames this naturally — handheld, autofocus hunt, exposure breath, framing imperfection
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 FULL VOICEOVER SCRIPT — TIMESTAMPED
+(Every word. Every pause. Every breath.)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-[Complete script with timestamps. Every word. Every pause.
-[0s] "—already mid-sentence when video starts"
+[0s] "—already mid-sentence when video starts about THIS topic"
 [2s] [breath] "specific line about the actual topic"
-NEVER start with okay / so / hey / guys / let me show you]
+[pause 0.4s]
+[4s] "continues naturally—"
+[8s] "—cuts off mid-thought"
+NEVER: okay / so / hey / guys / let me show you
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SKIN REALISM LAYER
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Pore depth, SSS intensity, T-zone oil zones + timing, under-eye depth, peach fuzz, 3 asymmetric imperfections. NO beauty filter. NO smoothing. NO waxy finish.
+Pore depth: [specific]. SSS intensity: [level]. T-zone oil: [zones + timing]. Under-eye depth: [mm]. Peach fuzz: [yes/no + visible angle]. 3 asymmetric imperfections: [list specifically]. Skin compression where clothing contacts. NO beauty filter. NO smoothing. NO waxy finish.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCT/PROP PHYSICS (if applicable)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[If product or prop exists in scene: weight feel, grip resistance, label angle toward camera, finger placement avoiding branding, entry timestamp, packaging resistance, what makes it feel found not staged]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 HUMAN BEHAVIOR SYSTEM
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-5 involuntary behaviors specific to THIS scene and topic:
-1. [before speaking]
-2. [distraction — glance off-camera]
-3. [concentration]
-4. [reaction]
-5. [habitual nervous tell]
+5 involuntary behaviors specific to THIS scene — NOT generic, must relate to the VIDEO TOPIC:
+1. [before speaking — specific to this scene]
+2. [distraction — glance off-camera with specific trigger]
+3. [concentration — specific to what they are doing]
+4. [reaction — specific emotional leak]
+5. [habitual nervous tell — unique to this character in this moment]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MICRO-RESISTANCE MOMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3 tiny friction moments specific to THIS scene that create massive realism:
+1. [fabric/object/environment resists slightly]
+2. [grip adjustment or repositioning]
+3. [interruption or inconvenience]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HAIR PHYSICS ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Specific hair behavior for this scene: strand separation, 0.15s inertia delay after head movement, section-specific reactions (crown vs sides vs nape), flyaways responding to environment, NEVER moving as one object.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 BLINK SCHEDULE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[Every blink with timestamp and type: asymmetric / double micro / slow deliberate / half-refocus]
+[Every blink with exact timestamp and type: asymmetric / double micro / slow deliberate / half-refocus / emotional blink]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NERVOUS SYSTEM
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Head drift, breath cycle, posture shift, eye dart path with timestamps.
+Head drift: [Xmm] [direction] every [Ys]. Breath: inhale [Xs] / hold [Xs] / exhale [Xs]. Posture shift: [Xs] weight to [direction]. Eye dart path with timestamps. Shoulder breath every 2.5s visible through fabric.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CAMERA — iPhone handheld
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-No stabilization. Autofocus hunts at specific transition. Exposure breathes. Rolling shutter micro-warp. Framing drifts — never corrected.
+No stabilization. Autofocus hunts at [specific transition]. Exposure breathes when [action]. Rolling shutter micro-warp during [movement]. Framing: [starts X drifts to Y — never corrected]. Lens compression: 26mm equivalent. Handheld micro-shake: 0.3-0.8mm irregular.
 
-FINAL CUT: Video ends mid-natural movement. Last ambient sound continues 0.3s after voiceover.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMPERFECTION LAYER (UGC AD ENGINE STANDARD)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Mandatory imperfections for THIS scene (pick 3-4):
+[ ] slight cough or throat clear at [Xs]
+[ ] blinking delay — blink happens 0.3s late
+[ ] object/product slip or grip readjustment
+[ ] adjusting hair mid-thought
+[ ] looking off-camera suddenly
+[ ] nervous laugh or breath
+[ ] lighting shift as they move
+[ ] unfinished sentence, restarts
 
-REALISM KILLERS — 10 hard NOs specific to THIS scene and topic:
-[10 things that would break realism for this specific topic]
+FINAL CUT: Video ends mid-natural movement. NOT at a pause. Last ambient sound continues 0.3s after voiceover. Creates scroll-back instinct.
+
+REALISM KILLERS for THIS specific scene — 10 hard NOs:
+[10 things specific to THIS topic/scene that would instantly break the illusion]
 
 UGC KILLERS — 5 hard NOs:
-[5 things that would make this look studio not real life]`;
+[5 things that would make this look studio-produced not real life]`;
 
-    // ── KLING + RUNWAY ────────────────────────────────────────────
-    const b4 = `Write two complete master production prompts for:
+    // ── KLING + RUNWAY ────────────────────────────────────────────────────────
+    const b4 = `You are an elite AI video director. Write two complete master production prompts applying FULL GOD MODE realism standards.
+
+${REALISM_FRAMEWORK}
+
+${SKIN_ENGINE}
+
+CONTEXT:
 ${ctxLines}
+
+Every prompt must depict the character in the exact scene from the VIDEO TOPIC. Apply all realism systems: motion engineering, human behavior, camera psychology, environmental realism, anti-AI detection rules.
 
 ===KLING MASTER PROMPT===
-Complete Kling 1.6 prompt. Include: SUBJECT full character, ACTION sequence with timing specific to the video topic, WORLD STATE, CAMERA angle and movement, LIGHTING full setup, ENVIRONMENT with background life, EMOTION, SKIN TRUTH realism, NEGATIVE PROMPTS 10 items, TECHNICAL 4K 24fps 9:16.
+Complete Kling 1.6 production prompt. Include:
+SUBJECT: Full character biometric description with skin realism
+ACTION SEQUENCE: Timestamped action specific to the video topic — caught mid-action, not posed. Include hesitation, micro-resistance, subconscious adjustments.
+WORLD STATE: Environmental detail — ambient life, lived-in imperfections
+BODY PHYSICS: Weight shift, hair lag physics, fabric tension, secondary motion
+CAMERA: iPhone handheld — micro-shake, autofocus hunt, exposure breathing, imperfect framing. NEVER smooth or stabilized.
+LIGHTING: Practical sources, shadow realism, skin interaction, exposure shifts
+EMOTION: Specific emotional state with leakage behavior
+SKIN TRUTH: Apply full dermatology-grade skin realism engine
+IMPERFECTION LAYER: 3 mandatory behavioral imperfections for this specific scene
+NEGATIVE PROMPTS: 10 items (include: smooth skin, beauty filter, symmetrical movement, robot motion, studio lighting, perfect posture, waxy hair, plastic texture, influencer expression, overly cinematic)
+TECHNICAL: 4K 24fps 9:16
 
 ===RUNWAY MASTER PROMPT===
-Complete Runway Gen-4 prompt. Include: SCENE cinematic description specific to the video topic, SUBJECT full character, MOTION and camera, COLOR GRADE full description, MOOD, LIGHTING, CAMERA behavior, NEGATIVE 8 items, FORMAT 9:16.`;
+Complete Runway Gen-4 cinematic prompt applying GOD MODE realism. Include:
+SCENE: Cinematic description of the exact video topic moment — emotionally observed, psychologically grounded
+SUBJECT: Full character with biological skin detail
+MOTION: Human timing with inertia, hesitation, delayed secondary motion — camera inertia, exposure breathing
+COLOR GRADE: Full emotional color description — temperature, contrast, skin interaction
+MOOD: Specific emotional quality of this exact moment
+LIGHTING: Observed and practical — NOT beauty or studio
+CAMERA BEHAVIOR: Handheld imperfection, autofocus, rolling shutter
+NEGATIVE: 8 items
+FORMAT: 9:16`;
 
-    // ── SKIN ENGINE ───────────────────────────────────────────────
-    const SKIN_ENGINE = `SKIN REALISM ENGINE: Biologically accurate human skin with visible fine pores, realistic epidermal texture, subtle tonal variation, natural oil distribution, and soft subsurface scattering. Skin must retain texture integrity even during close-up shots. Fine peach fuzz visible in side lighting. Realistic under-eye depth, natural creasing around mouth and eyes, asymmetrical pore distribution, slight redness variations around nose and cheeks, tiny imperfections and micro texture inconsistencies. Skin reflections are uneven and physically grounded, never glossy or plastic. NO beauty filter, NO smoothing, NO airbrushed diffusion, NO waxy CGI texture, NO influencer makeup skin, NO over-retouched perfection. Lighting must interact naturally with skin surface, revealing pores, micro shadows, and texture transitions. Macro facial realism preserved at all zoom levels.`;
+    // ── MIDJOURNEY — GOD MODE ─────────────────────────────────────────────────
+    const b5_mj = `You are an elite AI image director applying VELORA GOD MODE realism standards.
 
-    // ── MIDJOURNEY ────────────────────────────────────────────────
-    const b5_mj = `You are an elite AI image director. Write ONE complete Midjourney v6.1 prompt only.
-
-${ctxLines}
+${REALISM_FRAMEWORK}
 
 ${SKIN_ENGINE}
 
-The image must depict the character in the exact scene described by the VIDEO TOPIC above. Write a single flowing paragraph — full character description, what the character is DOING (action specific to the video topic), scene environment, lighting direction, mood, camera lens and angle, aesthetic, skin realism requirements. Minimum 250 words. End with:
+CONTEXT:
+${ctxLines}
+
+The image must depict the character caught mid-action in the exact scene described by the VIDEO TOPIC. Apply the complete PRE-PRODUCTION BRIEF before writing a single word of the prompt.
+
+Write ONE complete Midjourney v6.1 prompt as a single flowing paragraph minimum 300 words:
+
+Open with the EXACT ACTION the character is caught doing in this topic's scene (not posed — caught mid-moment). Full biometric character description with skin realism. The specific environment matching the video topic — lived-in, imperfect, socially real. Lighting: practical and observed, NOT beauty or studio. Emotional state leaking through body language, jaw tension, eye softness, shoulder posture. Hair physics: individual strands, flyaways, natural movement. Hands: realistic grip, tendon visibility, natural finger position. Apply full dermatology-grade skin realism. Camera: iPhone lens compression, slight handheld angle imperfection, 26mm equivalent, shallow DOF. Micro-resistance visible: fabric tension, grip imperfection, environmental interaction.
+
+End with:
 --ar 9:16 --v 6.1 --style raw --q 2 --s 750`;
 
-    // ── FLUX ──────────────────────────────────────────────────────
-    const b5_flux = `You are an elite AI image director. Write ONE complete Flux Dev prompt only.
+    // ── FLUX — GOD MODE ───────────────────────────────────────────────────────
+    const b5_flux = `You are an elite AI image director applying VELORA GOD MODE realism standards.
 
-${ctxLines}
+${REALISM_FRAMEWORK}
 
 ${SKIN_ENGINE}
 
-The image must depict the character in the exact scene described by the VIDEO TOPIC above. Write a complete commercial photography prompt. Full subject with action specific to the video topic, scene, lighting with specific sources, mood, camera, composition, skin realism. Minimum 250 words. End with:
+CONTEXT:
+${ctxLines}
+
+The image must depict the character in the exact scene described by the VIDEO TOPIC — caught mid-action, not posed.
+
+Write ONE complete Flux Dev commercial photography prompt minimum 300 words:
+
+Open with the EXACT ACTION caught mid-moment in this scene. Full subject description with biological skin detail. Specific environment matching the video topic — clutter, mixed lighting, non-staged. Lighting: exact source (window angle, lamp position), quality (hard/soft/diffused), color temperature, shadows on skin, catch light in eyes. Hair: individual strand visibility, natural flyaways, root behavior. Hands: natural position, knuckle texture, realistic nail appearance. Apply full skin realism engine. Camera: iPhone 4K realism, slight framing imperfection, autofocus behavior visible. Include micro-resistance: fabric catches, grip adjustment, environmental friction.
+
+End with:
 --ar 9:16 --steps 30 --guidance 3.5`;
 
-    // ── NANO BANANA ───────────────────────────────────────────────
-    const b5_nano = `You are an elite AI image director specialising in Nano Banana 2 — a STATIC IMAGE generation tool (NOT video). Write ONE complete Nano Banana 2 IMAGE prompt.
+    // ── NANO BANANA — GOD MODE ────────────────────────────────────────────────
+    const b5_nano = `You are an elite AI image director specialising in Nano Banana 2 — STATIC IMAGE generation. Apply VELORA GOD MODE realism standards. This is NOT a video prompt.
 
-${ctxLines}
+${REALISM_FRAMEWORK}
 
 ${SKIN_ENGINE}
 
-The image must capture the character in the exact moment described by the VIDEO TOPIC above — caught mid-action in that specific scene.
+CONTEXT:
+${ctxLines}
 
-Start with the EXACT ACTION the subject is doing in the video topic scene.
-SUBJECT: [complete physical description head to waist — skin tone, bone structure, hair, expression]
-SKIN REALISM: [pore visibility, subsurface scattering, natural texture, oil distribution, under-eye depth — apply full skin engine]
-HAIR: [individual strand visibility, natural flyaways, movement caught mid-frame, realistic root behavior]
-ENVIRONMENT: [specific location detail matching the video topic, background depth, environmental objects]
-LIGHTING: [exact light source, quality, color temperature, shadows on skin, catch light in eyes]
-LENS: [focal length, aperture, depth of field]
-COMPOSITION: [framing — where subject sits in frame]
-MOOD: [emotional quality specific to the video topic]
-NEGATIVE: [15 specific things to avoid — beauty filter, smoothing, plastic skin, posed look, studio lighting, perfect symmetry, AI glow, generic beauty content, etc.]
-TECHNICAL: --ar 9:16 --style raw --q 2
+The image must capture the character in the exact moment from the VIDEO TOPIC — caught mid-action in that specific scene, biologically alive, psychologically believable.
 
-Minimum 300 words. Every word must reinforce biological accuracy and photographic realism.`;
+Write ONE complete Nano Banana 2 IMAGE prompt minimum 350 words:
 
-    // ── PARALLEL GENERATION ───────────────────────────────────────
+ACTION (open with this): The exact action the subject is caught doing in this video topic scene — mid-gesture, mid-thought, mid-interaction. NOT posed. NOT looking at camera performatively.
+
+SUBJECT: Complete physical description head to waist — exact skin tone with hex reference, bone structure, eye shape with color and golden flecks, lip volume, jaw angle, any asymmetric features that make them human.
+
+SKIN REALISM (dermatology-grade): Visible pore structure concentrated across T-zone, slightly enlarged pores either side of nose. Orange-peel texture across cheeks where foundation hasn't been applied. Natural subsurface scattering — translucent quality where light hits ear rim and cheek apex. Very fine vellus hair catching light along jawline and upper lip. Slight oil accumulation in nasolabial crease. Natural under-eye area with faint purple undertones and fine dehydration lines. A healing blemish or post-inflammatory hyperpigmentation mark. Freckles scattered unevenly from sun exposure. Skin compression where clothing contacts body. should pass 400% zoom test.
+
+HAIR: Individual strand visibility with specific strand count groupings. Natural flyaways — specific strands crossing forehead or catching light. Root behavior with natural lift. Section-specific movement (crown vs sides vs nape reacts differently). 0.15s inertia lag captured as slight blur on leading strands. NEVER a solid mass.
+
+HANDS (if visible): Natural relaxed finger position — slight curl, knuckle texture visible, tendons under skin, realistic nail appearance, skin compression at grip points.
+
+ENVIRONMENT: Specific location detail matching the video topic exactly — named objects, depth, background life, environmental imperfections. Makes the scene socially believable.
+
+LIGHTING: Exact source (e.g. "north-facing window at 10am, diffused through sheer curtain"), quality, color temperature, shadow fall on skin, catch light position in eyes, exposure breath visible in highlights.
+
+LENS: 85mm portrait compression, f/1.8, DOF with eyes sharp and nose tip beginning to soften.
+
+COMPOSITION: Subject placement in frame — rule of thirds, foreground interest, background depth.
+
+MOOD: Single word + expanded emotional quality leaking through body language, not expression.
+
+EMOTIONAL LEAKAGE: How the internal state shows — jaw tension, eye softness, shoulder posture, breathing visible in chest, not face.
+
+MICRO-RESISTANCE: One tiny friction moment visible in the frame — fabric tension, grip imperfection, environmental interruption.
+
+NEGATIVE: beauty filter, smoothing, plastic skin, posed look, studio lighting, perfect symmetry, AI glow, influencer expression, waxy hair, frozen idle state, emotionally empty, over-beautification, unnatural eye contact, generic background, perfect posture
+
+TECHNICAL: --ar 9:16 --style raw --q 2`;
+
+    // ── PARALLEL GENERATION ───────────────────────────────────────────────────
     const [r1, r2, r3, r4, r_mj, r_flux, r_nano] = await Promise.all([
       ask(b1, 800),
       ask(b2, 2500),
-      ask(b3, 1500),
-      ask(b4, 2000),
-      ask(b5_mj, 700),
-      ask(b5_flux, 700),
-      ask(b5_nano, 900),
+      ask(b3, 2000),
+      ask(b4, 2500),
+      ask(b5_mj, 800),
+      ask(b5_flux, 800),
+      ask(b5_nano, 1000),
     ]);
 
     const briefData = safeJSON(r1, {
