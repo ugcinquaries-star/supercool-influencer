@@ -88,7 +88,7 @@ FINAL DIRECTIVE: The viewer should NOT feel "AI generated." The viewer should fe
 // ── SKIN ENGINE ───────────────────────────────────────────────────────────────
 const SKIN_ENGINE = `
 DERMATOLOGY-GRADE SKIN REALISM ENGINE:
-Biologically accurate human skin with visible fine pores (asymmetric distribution), realistic epidermal texture, subtle tonal variation, natural oil distribution, soft subsurface scattering. T-zone (forehead/nose) has visible sebum sheen — anisotropic highlights. Cheeks flush pink (vasodilation). Fine peach fuzz visible in side lighting. Realistic under-eye depth with faint purple undertones and fine dehydration lines. Natural creasing around mouth and eyes. Slight redness variations around nose and cheeks. Micro texture inconsistencies. A healing blemish or post-inflammatory hyperpigmentation mark — human authenticity. Skin reflections uneven and physically grounded, NEVER glossy or plastic. Subsurface scattering creates translucent quality where sunlight hits ear rim and cheek apex. Compression where shoulder strap sits. NO beauty filter. NO smoothing. NO airbrushed diffusion. NO waxy CGI texture. NO influencer makeup skin. Lighting must interact naturally with skin surface, revealing pores, micro shadows, texture transitions. Macro facial realism preserved at all zoom levels. Pore structure concentrated across T-zone with slightly enlarged pores either side of nose.
+Biologically accurate human skin with visible fine pores (asymmetric distribution), realistic epidermal texture, subtle tonal variation, natural oil distribution, soft subsurface scattering. T-zone (forehead/nose) has visible sebum sheen — anisotropic highlights. Cheeks flush pink (vasodilation). Fine peach fuzz visible in side lighting. Realistic under-eye depth with faint purple undertones and fine dehydration lines. Natural creasing around mouth and eyes. Slight redness variations around nose and cheeks. Micro texture inconsistencies. A healing blemish or post-inflammatory hyperpigmentation mark — human authenticity. Skin reflections uneven and physically grounded, NEVER glossy or plastic. Subsurface scattering creates translucent quality where sunlight hits ear rim and cheek apex. Compression where shoulder strap sits. NO beauty filter. NO smoothing. NO airbrushed diffusion. NO waxy CGI texture. NO influencer makeup skin. Lighting must interact naturally with skin surface, revealing pores, micro shadows, texture transitions. Macro facial realism preserved at all zoom levels. Pore structure concentrated across T-zone with slightly enlarged pores either side of nose. Must pass 400% zoom skin test.
 `;
 
 export async function POST(req: NextRequest) {
@@ -176,7 +176,7 @@ ${ctxLines}
 Rules:
 - title must reflect the exact VIDEO TOPIC word for word
 - concept built around the exact scene described
-- hook stops scroll for THIS specific topic only
+- hook stops scroll for THIS specific topic and niche only
 - calendar has 7 different angles on THIS specific topic
 - ALL string values under 80 chars, no line breaks inside strings
 
