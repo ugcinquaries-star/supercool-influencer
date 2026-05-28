@@ -327,7 +327,7 @@ NEVER: okay / so / hey guys / let me show you
 ====================================
 SKIN REALISM ENFORCEMENT
 ====================================
-Pore depth: [scene-specific]. T-zone: [zones + intensity + timing]. SSS: [visible locations]. Under-eye: [color + texture]. Peach fuzz: [angle + light]. 3 character-specific asymmetric imperfections: [named + located]. Skin compression: [contact points]. Environmental effects: [scene conditions on skin]. NO beauty filter. NO smoothing. LIVING SKIN ONLY.
+Pore depth: [scene-specific]. T-zone: [zones + intensity + timing]. SSS: [visible locations]. Under-eye: [color + texture]. Peach fuzz: [angle + light]. 3 character-specific asymmetric imperfections: [named + located]. Skin compression: [contact points]. Skin must pass 400% zoom test. Environmental effects: [scene conditions on skin]. NO beauty filter. NO smoothing. LIVING SKIN ONLY.
 
 ====================================
 HAIR PHYSICS ENGINE
@@ -466,56 +466,39 @@ ${ctxLines}
 
 The image must capture the character in the exact moment from the VIDEO TOPIC — caught mid-action, biologically alive, psychologically believable. NOT posed. NOT performative.
 
-Write ONE complete Nano Banana 2 IMAGE prompt using this EXACT structure:
+⚠️ COMPLETION MANDATE: You MUST write ALL sections below completely — from EXACT ACTION through to TECHNICAL. The prompt is incomplete and has FAILED if LIGHTING, CAMERA ANGLE, or NEGATIVE are missing. Do not spend all tokens on early sections. Budget your words: each section gets roughly equal depth. LIGHTING, CAMERA ANGLE, and NEGATIVE are MANDATORY final sections.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ SECTION BUDGET: Keep each section to 60-100 words maximum. This ensures you reach all sections including LIGHTING, CAMERA ANGLE, and NEGATIVE before the token limit.
+
+Write ONE complete Nano Banana 2 IMAGE prompt using this EXACT structure. All 11 sections required:
+
+====================================
 # NANO BANANA 2 IMAGE PROMPT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+====================================
 
-**EXACT ACTION:** [The precise moment caught in frame — mid-gesture, mid-thought, mid-interaction specific to the VIDEO TOPIC. NOT posed. Body position in full detail: what each hand is doing, head angle in degrees, weight distribution, what they were doing 0.5 seconds before this frame was captured.]
+**EXACT ACTION:** [60-80 words. Precise mid-motion moment specific to the VIDEO TOPIC. Body position: head angle degrees, weight distribution, what each hand does, what was happening 0.5s before capture. Caught in motion — not posed.]
 
-**CHARACTER:** [Ethnicity, age, skin tone with Fitzpatrick scale + hex, body type in detail — bone structure, facial structure specifics, lip volume, jaw angle, natural facial asymmetry, any distinctive features like dimples that appear during the emotional state of this scene. Eyes: iris color + pattern, limbal ring, visible micro-vessels in sclera. Lashes: type and volume. Body type detail visible through outfit. ALL physical specifics — nothing generic.]
+**CHARACTER:** [60-80 words. Ethnicity, age, Fitzpatrick scale + hex, facial structure: cheekbones, lip volume, jaw, natural asymmetry, distinctive features. Eyes: iris color + pattern, limbal ring, micro-vessels. Lashes. Body type visible through outfit.]
 
-**BODY TYPE:** [Full description — height impression, proportions, how clothing interacts with body, visible body language carrying the emotional state of the scene]
+**BODY TYPE:** [40-60 words. Height impression, proportions, how clothing interacts with body, body language carrying the emotional state of this scene.]
 
-**HAIR:** [Style name + exact construction. Strand-level rendering required:
-- Individual strands emerging from distinct follicle openings — NOT texture simulation
-- Hair shaft optics: medulla dark core, cortex semi-translucent amber-warm in transmitted light, cuticle anisotropic highlight — narrow sharp line along strand axis (NOT broad gloss blob)
-- Strand variation: diameter ±15%, unique curvature per strand, irregular spacing, strands crossing naturally
-- Split ends: 3-5 strands per cluster showing frayed fiber tip
-- Baby hairs: 15-30 per centimeter at temples and nape, 20-35 micron diameter, each catching rim light independently
-- Flyaways: 8-15 individual strands escaped, each unique path, catching backlight as bright thin lines
-- Color physics: root color → mid-length transition → end highlights with feathered blend over 40-60mm, backlit sections glow amber-warm
-- NEVER a solid mass. NEVER texture overlay. Individual strand paths traceable.]
+**HAIR:** [50-70 words. Style + color: root hex → mid transition → end highlights with feathered blend. Strand-level rendering: individual strands NOT texture simulation, anisotropic highlight as narrow line on strand axis NOT blob. Baby hair count at hairline catching rim light. Flyaway count + backlight glow. NEVER solid mass. No more detail than this — CHARACTER block covers the rest.]
 
-**EYES:** [Iris fiber structure with warm color variation, visible fine vessels in sclera (NOT pure white), tear film luminous crescent along lower waterline, natural asymmetry between eyes, blink state at moment of capture — partial, full, or post-blink with slight moisture residue on lash tips. Exact emotional state of the gaze for this scene.]
+**EYES:** [ONE sentence only. Gaze direction + emotional quality specific to this scene + blink state at capture. Do NOT repeat iris/vessel detail already in CHARACTER.]
 
-**SKIN:** [Apply full dermatology-grade skin realism:
-- Fitzpatrick scale + exact hex + undertone description
-- Pore structure: asymmetric distribution, concentrated T-zone, sizes 100-250 microns, slightly enlarged beside nose wings
-- Sebum: T-zone anisotropic sheen, matte outer cheeks, natural oil variation
-- SSS: blood flow visible in ear translucency and cheek warmth
-- Vellus hair: peach fuzz visible on jaw and upper cheek in raking light
-- Under-eye: natural depth, realistic micro-texture transitions, slight undertone (purple for deeper tones, blue-grey for lighter)
-- Nasolabial folds: activating naturally for the emotional expression of this scene
-- Specific imperfections: healing blemish OR post-inflammatory hyperpigmentation OR sun freckles — specific location named
-- Skin compression: where fabric or surface contacts skin
-- Skin must pass 400% skin zoom test.
-- NO smoothing. NO beauty filter. NO makeup-ad perfection. LIVING SKIN.]
+**SKIN:** [60-80 words. Fitzpatrick + hex + undertone. Pore zones + micron sizes. T-zone sebum sheen. SSS at cheekbone and ear. Peach fuzz in raking light. Under-eye undertone color. One named imperfection with location. Skin compression at fabric contact. NO filter. LIVING SKIN.] Skin must pass 400% zoom  test.
 
-**NAILS:** [Shape, length, color, finish — gloss variation across nails (one slightly less glossy), realistic nail surface not mirror-perfect, any natural chips or wear appropriate to character]
+**NAILS:** [20-30 words. Shape, length, color, finish. One nail less glossy. Natural wear from scene activity.]
 
-**OUTFIT:** [Exact garment description — fabric type, color, cut, how it sits on this specific body, natural fabric wrinkles at bend points (elbow, waist), tension points where body shape affects drape, any accessories with exact description]
+**OUTFIT:** [40-60 words. Every garment: fabric, color, fit, drape on this body. Wrinkles at bend points. Fabric tension. Every accessory named.]
 
-**ACTION DETAIL:** [Expand on the exact action — what the hands are doing in full detail, grip type if holding anything, tendon visibility, skin compression at grip points, finger positioning with natural slight irregularity]
+**SCENE/ENVIRONMENT:** [60-80 words. Exact location matching the VIDEO TOPIC. Named objects with placement. 3 depth layers. Environmental imperfections. Any prop with label angle. What makes this feel lived-in not staged.]
 
-**SCENE/ENVIRONMENT:** [Exact location matching the VIDEO TOPIC — named specific objects with placement, depth layers (foreground / midground / background), background life (blurred figures or objects at realistic depth), environmental imperfections that confirm authenticity, any product or prop with exact label placement and angle, what makes this space feel lived-in not staged]
+**LIGHTING:** [80-100 words. MANDATORY — write this in full. Exact light source: type + position + direction in degrees + quality (hard/soft/diffused) + color temperature in Kelvin. How shadows fall on face specifically: which side, shadow depth, soft or hard edge. Catch light position in both eyes: use clock positions (e.g. 10 o'clock left, 11 o'clock right). Rim light on hair: which side, how it interacts with flyaways. Skin luminosity: where light creates warmth vs coolness on skin.]
 
-**LIGHTING:** [Exact light source: type (window / lamp / outdoor / practical), direction (angle degrees), quality (hard / soft / diffused), color temperature in Kelvin, how shadows fall specifically on face and body, catch light position in both eyes (clock position), rim light behavior on hair, skin luminosity interaction, exposure breath visible in any blown-out highlights]
+**CAMERA ANGLE:** [60-80 words. MANDATORY — write this in full. Exact lens: 85mm or 100mm macro. Aperture: f/1.4-f/2.0. Depth of field: what is razor sharp, what begins to soften, what is fully blurred. Frame composition: exact subject position in frame using rule of thirds. Camera height relative to subject (eye level / slightly below / slightly above). Camera angle in degrees from camera axis. Any slight framing imperfection.]
 
-**CAMERA ANGLE:** [Exact lens: 85mm OR 100mm macro. Aperture: f/1.4-f/2.0. Depth of field description: what is razor sharp vs beginning to soften vs fully blurred. Frame composition: where subject sits in frame, rule of thirds application, any slight framing imperfection from handheld capture. Camera position: height relative to subject, angle in degrees.]
-
-**NEGATIVE:** no beauty filter, no skin smoothing, no plastic skin texture, no symmetry perfection, no posed expression, no studio lighting unless specified, no waxy hair, no hair as solid mass, no AI beauty glow, no perfect posture, no emotionally empty expression, no unnatural eye contact, no generic background, no airbrushing, no retouching, no CGI quality, no influencer-staged composition, no perfect nail gloss, no black void anywhere
+**NEGATIVE:** [MANDATORY. List as comma-separated values:] no beauty filter, no skin smoothing, no plastic skin, no symmetry perfection, no posed expression, no waxy hair, no hair as solid mass, no AI beauty glow, no perfect posture, no emotionally empty expression, no unnatural direct eye contact, no generic background, no airbrushing, no retouching, no CGI quality, no influencer staging, no perfect nail gloss, no black void, no studio perfection, no clean hands for scene activity
 
 **TECHNICAL:** Extreme photorealistic, 8K resolution, RAW unretouched, full-frame camera render, CFG 5.0, Steps 38 --ar 9:16 --style raw --q 2`;
 
@@ -527,7 +510,7 @@ Write ONE complete Nano Banana 2 IMAGE prompt using this EXACT structure:
       ask(b4, 2500),
       ask(b5_mj, 900),
       ask(b5_flux, 900),
-      ask(b5_nano, 1500),
+      ask(b5_nano, 2500),
     ]);
 
     const briefData = safeJSON(r1, {
