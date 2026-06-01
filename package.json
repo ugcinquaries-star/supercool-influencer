@@ -10,8 +10,8 @@
   },
   "dependencies": {
   "resend": "^3.0.0",
-  "next": "...",
-  "@clerk/nextjs": "...",
+  "next": 
+  "@clerk/nextjs": 
     "resend": "^3.0.0",
     "@supabase/supabase-js": "^2.105.4",
     "@swc/helpers": "^0.5.21",
