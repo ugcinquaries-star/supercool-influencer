@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import HomeNav from "./components/HomeNav";
 
 export const metadata: Metadata = {
   title: "SuperCool Influencer — AI UGC Production Briefs in 60 Seconds",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         </head>
         <body style={{ margin: 0, padding: 0, background: '#06060b' }}>
+          <HomeNav />
           {children}
         </body>
       </html>
