@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth, SignInButton } from '@clerk/nextjs';
 
@@ -95,11 +95,39 @@ export default function GeneratePage() {
     reelDuration:'10', videoTopic:'', customScene:'',
   });
 
+  // Restore form after sign-in redirect
+  useEffect(() => {
+    const savedForm = localStorage.getItem('sc_saved_form');
+    const savedStep = localStorage.getItem('sc_saved_step');
+    const savedMode = localStorage.getItem('sc_saved_mode');
+    if (savedForm) {
+      try {
+        const parsed = JSON.parse(savedForm);
+        setForm(parsed);
+        if (savedMode) setMode(savedMode as 'content' | 'ugc_ads');
+        if (savedStep) setStep(parseInt(savedStep));
+        // Clear saved state
+        localStorage.removeItem('sc_saved_form');
+        localStorage.removeItem('sc_saved_step');
+        localStorage.removeItem('sc_saved_mode');
+        // If signed in and restored, auto-trigger generate
+        if (isSignedIn && savedStep === '5') {
+          setTimeout(() => {
+            document.getElementById('sc-generate-btn')?.click();
+          }, 300);
+        }
+      } catch {}
+    }
+  }, [isSignedIn]);
+
   const set = (f: string, v: string) => setForm(p => ({...p, [f]: v}));
 
   const handleGenerate = async () => {
-    // Gate: if not signed in, show sign-in modal
+    // Gate: if not signed in, save form + jump to step 5 after login
     if (!isSignedIn) {
+      localStorage.setItem('sc_saved_form', JSON.stringify(form));
+      localStorage.setItem('sc_saved_step', '5');
+      localStorage.setItem('sc_saved_mode', mode);
       setShowSignIn(true);
       return;
     }
@@ -475,7 +503,7 @@ export default function GeneratePage() {
               Continue →
             </button>
           ) : (
-            <button onClick={handleGenerate} style={{background:'linear-gradient(135deg, #9E182B, #D4AF87)',color:'white',padding:'14px 36px',borderRadius:'100px',fontSize:'15px',fontWeight:700,cursor:'pointer',border:'none'}}>
+            <button id="sc-generate-btn" onClick={handleGenerate} style={{background:'linear-gradient(135deg, #9E182B, #D4AF87)',color:'white',padding:'14px 36px',borderRadius:'100px',fontSize:'15px',fontWeight:700,cursor:'pointer',border:'none'}}>
               ⚡ Generate Production Brief
             </button>
           )}
