@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth, SignInButton } from '@clerk/nextjs';
 
 // ── Constants ──────────────────────────────────────────────
 const AD_ANGLES = ['Before vs After','GRWM','Unboxing','Testimonial','Problem Solution','POV Storytime','Transformation','Myth Busting','TikTok Made Me Buy It','Honest Review','Day in the Life','Tutorial / How To'];
@@ -73,12 +74,13 @@ const s: any = {
   textarea: {width:'100%',background:'rgba(255,255,255,0.05)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'12px',padding:'14px',color:'white',fontSize:'14px',resize:'none' as const,outline:'none',boxSizing:'border-box' as const},
 };
 
-// ── Component ──────────────────────────────────────────────
 export default function GeneratePage() {
   const router = useRouter();
+  const { isSignedIn } = useAuth();
   const [step, setStep] = useState(1);
   const [mode, setMode] = useState<'content'|'ugc_ads'>('content');
   const [loading, setLoading] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
   const [outfitCat, setOutfitCat] = useState('AI UGC / Creator');
   const [hairstyleType, setHairstyleType] = useState('general');
   const [form, setForm] = useState({
@@ -96,6 +98,11 @@ export default function GeneratePage() {
   const set = (f: string, v: string) => setForm(p => ({...p, [f]: v}));
 
   const handleGenerate = async () => {
+    // Gate: if not signed in, show sign-in modal
+    if (!isSignedIn) {
+      setShowSignIn(true);
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch('/api/generate', {
@@ -104,9 +111,17 @@ export default function GeneratePage() {
         body: JSON.stringify({...form, mode}),
       });
       const data = await res.json();
+      if (res.status === 401 || data.error === 'SIGN_IN_REQUIRED') {
+        setLoading(false);
+        setShowSignIn(true);
+        return;
+      }
       if (data.success) {
         sessionStorage.setItem('brief', JSON.stringify(data.data));
         router.push('/output');
+      } else if (data.error === 'NO_CREDITS') {
+        alert('You have no credits remaining. Please upgrade your plan.');
+        setLoading(false);
       } else {
         alert('Failed: ' + data.error);
         setLoading(false);
@@ -156,16 +171,74 @@ export default function GeneratePage() {
 
   return (
     <div style={{background:'#0D0A0E',minHeight:'100vh',color:'white',fontFamily:'sans-serif'}}>
+
+      {/* ── SIGN IN MODAL ── */}
+      {showSignIn && (
+        <div style={{
+          position:'fixed',inset:0,zIndex:1000,
+          background:'rgba(0,0,0,0.85)',
+          display:'flex',alignItems:'center',justifyContent:'center',
+          padding:'24px',
+        }}>
+          <div style={{
+            background:'#1A1214',
+            border:'1px solid rgba(255,255,255,0.1)',
+            borderRadius:'20px',
+            padding:'40px 32px',
+            maxWidth:'400px',
+            width:'100%',
+            textAlign:'center',
+          }}>
+            <div style={{fontSize:'40px',marginBottom:'16px'}}>⚡</div>
+            <h2 style={{
+              fontFamily:"'Playfair Display', Georgia, serif",
+              fontSize:'26px',fontWeight:700,
+              color:'#F5F0E8',marginBottom:'10px',lineHeight:1.2,
+            }}>
+              One step away from<br />your brief.
+            </h2>
+            <p style={{fontSize:'14px',color:'rgba(255,255,255,0.5)',lineHeight:1.6,marginBottom:'28px'}}>
+              Sign in or create a free account to generate your production brief. It takes 10 seconds.
+            </p>
+            <div style={{display:'flex',flexDirection:'column' as const,gap:'10px'}}>
+              <SignInButton mode="modal" forceRedirectUrl="/generate">
+                <button style={{
+                  width:'100%',padding:'14px',borderRadius:'10px',
+                  background:'#9E182B',color:'white',
+                  fontSize:'14px',fontWeight:700,letterSpacing:'0.06em',
+                  textTransform:'uppercase' as const,border:'none',cursor:'pointer',
+                }}>
+                  ⚡ SIGN IN & GENERATE
+                </button>
+              </SignInButton>
+              <button
+                onClick={() => setShowSignIn(false)}
+                style={{
+                  width:'100%',padding:'12px',borderRadius:'10px',
+                  background:'transparent',color:'rgba(255,255,255,0.35)',
+                  fontSize:'13px',border:'1px solid rgba(255,255,255,0.08)',cursor:'pointer',
+                }}
+              >
+                ← Go back and edit
+              </button>
+            </div>
+            <p style={{fontSize:'11px',color:'rgba(255,255,255,0.2)',marginTop:'16px'}}>
+              Free account · 3 briefs included · No credit card
+            </p>
+          </div>
+        </div>
+      )}
+
       <div style={{height:'3px',background:'rgba(255,255,255,0.1)'}}>
         <div style={{height:'100%',width:((step/5)*100)+'%',background:'linear-gradient(90deg, #9E182B, #D4AF87)',transition:'width 0.4s'}} />
       </div>
       <nav style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'18px 48px',borderBottom:'1px solid rgba(255,255,255,0.07)'}}>
         <a href="/dashboard" style={{textDecoration:'none',display:'flex',flexDirection:'column' as const,gap:0}}>
-            <span style={{fontFamily:"'DM Sans',sans-serif",fontWeight:300,fontSize:'14px',color:'#F5F0E8',letterSpacing:'0.22em',textTransform:'uppercase' as const}}>
-              <strong style={{fontWeight:700}}>SUPER</strong>COOL Influencer
-            </span>
-            <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:'9px',fontWeight:300,letterSpacing:'0.22em',textTransform:'uppercase' as const,color:'rgba(245,240,232,0.3)',marginTop:'2px'}}>Your AI Content Director</span>
-          </a>
+          <span style={{fontFamily:"'DM Sans',sans-serif",fontWeight:300,fontSize:'14px',color:'#F5F0E8',letterSpacing:'0.22em',textTransform:'uppercase' as const}}>
+            <strong style={{fontWeight:700}}>SUPER</strong>COOL Influencer
+          </span>
+          <span style={{fontFamily:"'DM Sans',sans-serif",fontSize:'9px',fontWeight:300,letterSpacing:'0.22em',textTransform:'uppercase' as const,color:'rgba(245,240,232,0.3)',marginTop:'2px'}}>Your AI Content Director</span>
+        </a>
         <div style={{fontSize:'13px',color:'rgba(255,255,255,0.4)'}}>Step {step} of 5</div>
       </nav>
 
@@ -248,7 +321,6 @@ export default function GeneratePage() {
           <div>
             <h1 style={{fontSize:'36px',fontWeight:800,letterSpacing:'-2px',marginBottom:'8px'}}>Build your character.</h1>
             <p style={{color:'rgba(255,255,255,0.4)',marginBottom:'32px'}}>Who is the AI human in your video?</p>
-
             <div style={{marginBottom:'16px'}}>
               <span style={s.label}>Gender</span>
               <div style={{display:'flex',gap:'10px'}}>
@@ -257,12 +329,10 @@ export default function GeneratePage() {
                 ))}
               </div>
             </div>
-
             <Drop label="Character Archetype" field="characterArchetype" options={CHARACTERS} />
             <Drop label="Ethnicity" field="ethnicity" options={ETHNICITIES} />
             <Drop label="Age Range" field="ageRange" options={AGE_RANGES} />
             <Drop label="Body Type" field="bodyType" options={form.gender==='female' ? FEMALE_BODY_TYPES : MALE_BODY_TYPES} />
-
             {form.gender==='male' && (
               <div style={{marginBottom:'16px'}}>
                 <span style={s.label}>Hairstyle Type</span>
@@ -274,25 +344,20 @@ export default function GeneratePage() {
                 <Drop label="Hairstyle" field="hairstyle" options={hairstyleType==='black' ? MALE_HAIRSTYLES_BLACK : MALE_HAIRSTYLES_GENERAL} />
               </div>
             )}
-
             {form.gender==='female' && <Drop label="Hairstyle" field="hairstyle" options={FEMALE_HAIRSTYLES} />}
-
             <Drop label="Hair Color" field="hairColor" options={HAIR_COLORS} />
-
             {form.gender==='male' && (
               <>
                 <Drop label="Beard" field="beardOption" options={BEARD_OPTIONS} />
                 <Drop label="Tattoos" field="tattooOption" options={TATTOO_OPTIONS} />
               </>
             )}
-
             <div style={{marginBottom:'16px'}}>
               <span style={s.label}>Outfit Category</span>
               <select value={outfitCat} onChange={e => { setOutfitCat(e.target.value); set('outfit',''); }} style={s.drop}>
                 {Object.keys(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS).map(c => <option key={c} value={c} style={{background:'#131013'}}>{c}</option>)}
               </select>
             </div>
-
             <div style={{marginBottom:'16px'}}>
               <span style={s.label}>Specific Look</span>
               <select value={form.outfit} onChange={e => set('outfit',e.target.value)} style={s.drop}>
@@ -300,7 +365,6 @@ export default function GeneratePage() {
                 {(form.gender==='female' ? FEMALE_OUTFIT_CATS : MALE_OUTFIT_CATS)[outfitCat]?.map(o => <option key={o} value={o} style={{background:'#131013'}}>{o}</option>)}
               </select>
             </div>
-
             <Drop label="Accessories" field="accessories" options={form.gender==='female' ? FEMALE_ACCESSORIES : MALE_ACCESSORIES} />
           </div>
         )}
@@ -321,13 +385,7 @@ export default function GeneratePage() {
                 ))}
                 <div style={{borderRadius:'10px',border:'1px solid '+(form.customScene ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.08)'),background:form.customScene ? 'rgba(158,24,43,0.08)' : 'rgba(255,255,255,0.03)',padding:'14px 16px'}}>
                   <div style={{fontSize:'13px',fontWeight:600,color:form.customScene ? '#F2E0D2' : 'rgba(255,255,255,0.5)',marginBottom:'8px'}}>✏️ Custom Scene — type your own</div>
-                  <input
-                    type="text"
-                    placeholder="e.g. Car dealership test driving a Porsche · Therapy office · Rooftop bar Dubai · Private jet..."
-                    value={form.customScene || ''}
-                    onChange={e => { set('customScene', e.target.value); if(e.target.value) set('sceneLocation','custom'); }}
-                    style={{width:'100%',background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'8px',padding:'10px 12px',color:'white',fontSize:'13px',outline:'none',fontFamily:'sans-serif',boxSizing:'border-box' as const}}
-                  />
+                  <input type="text" placeholder="e.g. Car dealership test driving a Porsche · Therapy office · Rooftop bar Dubai · Private jet..." value={form.customScene || ''} onChange={e => { set('customScene', e.target.value); if(e.target.value) set('sceneLocation','custom'); }} style={{width:'100%',background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'8px',padding:'10px 12px',color:'white',fontSize:'13px',outline:'none',fontFamily:'sans-serif',boxSizing:'border-box' as const}} />
                 </div>
               </div>
             </div>
@@ -349,11 +407,10 @@ export default function GeneratePage() {
                 </button>
               ))}
             </div>
-            {/* Reel Duration */}
             <div style={{marginBottom:'32px'}}>
               <div style={{fontSize:'11px',fontWeight:700,color:'rgba(255,255,255,0.3)',letterSpacing:'0.1em',textTransform:'uppercase' as const,marginBottom:'14px'}}>⏱ Reel Duration</div>
               <div style={{display:'flex',gap:'10px'}}>
-                {[{v:'7',label:'7 seconds',desc:'Ultra-hook'},{ v:'10',label:'10 seconds',desc:'Standard'},{ v:'15',label:'15 seconds',desc:'Story arc'}].map(d => (
+                {[{v:'7',label:'7 seconds',desc:'Ultra-hook'},{v:'10',label:'10 seconds',desc:'Standard'},{v:'15',label:'15 seconds',desc:'Story arc'}].map(d => (
                   <button key={d.v} onClick={() => set('reelDuration', d.v)} style={{flex:1,padding:'14px 10px',borderRadius:'10px',border:'1px solid '+(form.reelDuration===d.v ? 'rgba(158,24,43,0.6)' : 'rgba(255,255,255,0.08)'),background:form.reelDuration===d.v ? 'rgba(158,24,43,0.12)' : 'rgba(255,255,255,0.03)',cursor:'pointer',textAlign:'center' as const}}>
                     <div style={{fontSize:'18px',fontWeight:800,color:form.reelDuration===d.v ? '#F2E0D2' : 'white',marginBottom:'2px'}}>{d.label}</div>
                     <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>{d.desc}</div>
@@ -361,7 +418,7 @@ export default function GeneratePage() {
                 ))}
               </div>
             </div>
-            <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:'12px',padding:'20px'}}>
+            <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:'12px',padding:'20px',marginBottom:'32px'}}>
               <div style={{fontSize:'11px',fontWeight:700,color:'rgba(255,255,255,0.3)',letterSpacing:'0.1em',textTransform:'uppercase' as const,marginBottom:'14px'}}>Summary</div>
               <div style={{display:'flex',flexDirection:'column' as const,gap:'6px'}}>
                 {[
@@ -385,6 +442,26 @@ export default function GeneratePage() {
                 ))}
               </div>
             </div>
+
+            {/* Sign in notice for logged out users */}
+            {!isSignedIn && (
+              <div style={{
+                background:'rgba(158,24,43,0.08)',
+                border:'1px solid rgba(158,24,43,0.3)',
+                borderRadius:'12px',
+                padding:'16px 20px',
+                marginBottom:'16px',
+                display:'flex',
+                alignItems:'center',
+                gap:'12px',
+              }}>
+                <span style={{fontSize:'20px'}}>🔐</span>
+                <div>
+                  <div style={{fontSize:'13px',fontWeight:700,color:'#F2AFBC',marginBottom:'2px'}}>You'll sign in on the next step</div>
+                  <div style={{fontSize:'12px',color:'rgba(255,255,255,0.4)'}}>Free account · 3 briefs included · 10 seconds to create</div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
