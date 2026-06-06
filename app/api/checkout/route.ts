@@ -17,17 +17,20 @@ export async function POST(req: NextRequest) {
     const { plan } = await req.json();
     const planData = PLANS[plan];
     if (!planData) return NextResponse.json({ error: 'Invalid plan' }, { status: 400 });
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [{ price_data: { currency: 'usd', product_data: { name: planData.name }, unit_amount: planData.price, ...(planData.recurring ? { recurring: { interval: 'month' as const } } : {}) }, quantity: 1 }],
       mode: planData.recurring ? 'subscription' : 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?success=true`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
+      success_url: `${appUrl}/dashboard?success=true`,
+      cancel_url: `${appUrl}/pricing`,
       metadata: { userId, plan, credits: planData.credits.toString() },
+      ...(planData.recurring ? { subscription_data: { metadata: { userId, plan } } } : {}),
     });
     return NextResponse.json({ url: session.url });
-  } catch (error: any) {
-    console.error('Stripe error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Stripe error:', message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
