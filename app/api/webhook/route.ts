@@ -21,17 +21,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Webhook signature invalid' }, { status: 400 });
   }
 
-  // Idempotency: skip if already processed
-  const { data: existing } = await supabaseAdmin
-    .from('webhook_events')
-    .select('id')
-    .eq('stripe_event_id', event.id)
-    .single();
-  if (existing) return NextResponse.json({ received: true, skipped: true });
-
-  // Log the event
-  await supabaseAdmin.from('webhook_events').insert({ stripe_event_id: event.id, type: event.type });
-
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
     const userId = session.metadata?.userId;
@@ -39,7 +28,11 @@ export async function POST(req: NextRequest) {
     const credits = parseInt(session.metadata?.credits || '0');
 
     if (userId && credits > 0) {
-      const { data } = await supabaseAdmin.from('users').select('credits').eq('id', userId).single();
+      const { data } = await supabaseAdmin
+        .from('users')
+        .select('credits')
+        .eq('id', userId)
+        .single();
       const current = data?.credits || 0;
       await supabaseAdmin.from('users').upsert({
         id: userId,
@@ -50,17 +43,25 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Handle monthly subscription renewals
   if (event.type === 'invoice.paid') {
     const invoice = event.data.object as Stripe.Invoice;
-    const sub = invoice.subscription
-      ? await stripe.subscriptions.retrieve(invoice.subscription as string)
-      : null;
-    const userId = sub?.metadata?.userId;
-    const plan = sub?.metadata?.plan;
+    const rawInvoice = invoice as unknown as Record<string, unknown>;
+    const subscriptionId =
+      (rawInvoice.subscription as string) ||
+      ((rawInvoice.parent as Record<string, unknown>)?.subscription_id as string);
+
+    if (!subscriptionId) return NextResponse.json({ received: true });
+
+    const sub = await stripe.subscriptions.retrieve(subscriptionId);
+    const userId = sub.metadata?.userId;
+    const plan = sub.metadata?.plan;
 
     if (userId && plan && PLAN_CREDITS[plan]) {
-      const { data } = await supabaseAdmin.from('users').select('credits').eq('id', userId).single();
+      const { data } = await supabaseAdmin
+        .from('users')
+        .select('credits')
+        .eq('id', userId)
+        .single();
       const current = data?.credits || 0;
       await supabaseAdmin.from('users').upsert({
         id: userId,
