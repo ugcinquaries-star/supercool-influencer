@@ -12,6 +12,9 @@ export default function AcademyPage() {
         <Link href="/" className="academy-nav__logo">
           <span className="academy-nav__super">SUPER</span>COOL INFLUENCER
         </Link>
+        <a href={beaconsLink} className="academy-nav__cta">
+          UNLOCK COURSE
+        </a>
       </nav>
 
       {/* HERO */}
@@ -178,19 +181,21 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
+      {/* FINAL CTA - SPLIT */}
       <section className="academy-final">
         <div className="academy-wrap">
-          <h2 className="academy-h1 academy-h1--sm">
-            Ready To Build<br />
-            <em>Your AI Influencer?</em>
-          </h2>
+          <h2 className="academy-h2">Start Free — Or Unlock The Full System Today</h2>
           <p className="academy-section__text">
-            Start today and get instant access to the complete creator system.
+            Grab the free starter kit if you're just beginning. Or unlock the full AI Influencer Academy™ system if you're ready to build your realistic AI influencer, create reels and vlogs, and start using the complete workflow today.
           </p>
-          <a href={beaconsLink} className="academy-btn">
-            ⚡ UNLOCK INSTANT ACCESS
-          </a>
+          <div className="academy-split-cta">
+            <a href="/free" className="academy-btn academy-btn--secondary">
+              Send Me The Free Starter Kit
+            </a>
+            <a href={beaconsLink} className="academy-btn academy-btn--light">
+              ⚡ UNLOCK FULL COURSE ACCESS
+            </a>
+          </div>
         </div>
       </section>
 
@@ -217,7 +222,6 @@ export default function AcademyPage() {
         .academy { font-family: var(--sans); color: var(--ink); background: var(--oat); overflow-x: hidden; }
         .academy-wrap { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
 
-        /* NAV */
         .academy-nav {
           display: flex;
           align-items: center;
@@ -240,7 +244,24 @@ export default function AcademyPage() {
 
         .academy-nav__super { color: var(--wine); }
 
-        /* HERO */
+        .academy-nav__cta {
+          padding: 10px 20px;
+          background: var(--wine);
+          color: white;
+          text-decoration: none;
+          border-radius: 6px;
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          transition: all 0.2s;
+        }
+
+        .academy-nav__cta:hover {
+          background: #7a1220;
+          transform: translateY(-2px);
+        }
+
         .academy-hero {
           background: linear-gradient(135deg, var(--oat) 0%, var(--rose) 100%);
           padding: 80px 0;
@@ -355,6 +376,32 @@ export default function AcademyPage() {
           color: var(--wine);
         }
 
+        .academy-btn--secondary {
+          background: transparent;
+          color: var(--wine);
+          border: 2px solid var(--wine);
+        }
+
+        .academy-btn--secondary:hover {
+          background: var(--wine);
+          color: white;
+        }
+
+        .academy-split-cta {
+          display: flex;
+          gap: 16px;
+          justify-content: center;
+          max-width: 700px;
+          margin: 0 auto;
+          flex-wrap: wrap;
+        }
+
+        .academy-split-cta .academy-btn {
+          flex: 1;
+          min-width: 240px;
+          margin-bottom: 0;
+        }
+
         .academy-price {
           font-size: 0.82rem;
           color: var(--wine);
@@ -362,7 +409,6 @@ export default function AcademyPage() {
           font-weight: 500;
         }
 
-        /* SECTIONS */
         .academy-section {
           background: white;
           padding: 60px 0;
@@ -408,7 +454,6 @@ export default function AcademyPage() {
           opacity: 1;
         }
 
-        /* GRID */
         .academy-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -440,7 +485,6 @@ export default function AcademyPage() {
           opacity: 0.85;
         }
 
-        /* INCLUDED */
         .academy-included {
           max-width: 700px;
           margin: 40px auto;
@@ -457,7 +501,6 @@ export default function AcademyPage() {
           font-weight: 500;
         }
 
-        /* BULLETS */
         .academy-bullets {
           max-width: 700px;
           margin: 40px auto;
@@ -470,7 +513,6 @@ export default function AcademyPage() {
           font-weight: 500;
         }
 
-        /* FAQ */
         .academy-faq {
           max-width: 700px;
           margin: 40px auto;
@@ -501,7 +543,6 @@ export default function AcademyPage() {
           opacity: 0.85;
         }
 
-        /* FINAL */
         .academy-final {
           background: linear-gradient(135deg, var(--wine) 0%, #7a1220 100%);
           padding: 80px 0;
@@ -520,13 +561,8 @@ export default function AcademyPage() {
 
         .academy-final .academy-wrap { position: relative; z-index: 2; }
 
-        .academy-final .academy-h1 {
+        .academy-final .academy-h2 {
           color: white;
-          margin-bottom: 1rem;
-        }
-
-        .academy-final .academy-h1 em {
-          color: var(--rose);
         }
 
         .academy-final .academy-section__text {
@@ -534,7 +570,6 @@ export default function AcademyPage() {
           opacity: 1;
         }
 
-        /* FOOTER */
         .academy-footer {
           background: var(--wine);
           padding: 28px 24px;
@@ -549,12 +584,22 @@ export default function AcademyPage() {
           text-decoration: none;
         }
 
-        /* MOBILE */
         @media (max-width: 640px) {
           .academy-hero { padding: 60px 0; min-height: auto; }
           .academy-included { grid-template-columns: 1fr; }
           .academy-grid { grid-template-columns: 1fr; }
           .academy-btn { width: 100%; }
+          .academy-split-cta {
+            flex-direction: column;
+            gap: 12px;
+          }
+          .academy-split-cta .academy-btn {
+            min-width: auto;
+          }
+          .academy-nav__cta {
+            padding: 8px 16px;
+            font-size: 0.6rem;
+          }
         }
       `}</style>
     </main>
