@@ -16,7 +16,6 @@ export default function AcademyPage() {
 
       {/* HERO */}
       <section className="academy-hero">
-        <div className="academy-hero__bg" />
         <div className="academy-wrap">
           <div className="academy-eyebrow">
             <span className="academy-dot" /> AI Influencer Academy · Now Open
@@ -45,14 +44,14 @@ export default function AcademyPage() {
       </section>
 
       {/* SECTION 2 */}
-      <section className="academy-section academy-section--light">
+      <section className="academy-section academy-section--wine">
         <div className="academy-wrap">
-          <h2 className="academy-h2">The Complete AI Influencer System™ Is Now Open</h2>
-          <p className="academy-section__text">
+          <h2 className="academy-h2 academy-h2--light">The Complete AI Influencer System™ Is Now Open</h2>
+          <p className="academy-section__text academy-section__text--light">
             AI Influencer Academy™ gives you the step-by-step training, tools, prompts, and workflows to build a realistic AI influencer and turn simple ideas into content you can use for social media, portfolios, campaigns, and digital products.
           </p>
           <div style={{ textAlign: "center" }}>
-            <a href={beaconsLink} className="academy-btn">
+            <a href={beaconsLink} className="academy-btn academy-btn--light">
               GET INSTANT ACCESS
             </a>
           </div>
@@ -89,7 +88,7 @@ export default function AcademyPage() {
       </section>
 
       {/* SECTION 4 */}
-      <section className="academy-section academy-section--light">
+      <section className="academy-section academy-section--blush">
         <div className="academy-wrap">
           <h2 className="academy-h2">Included With Your Enrollment</h2>
           <div className="academy-included">
@@ -122,10 +121,10 @@ export default function AcademyPage() {
       </section>
 
       {/* SECTION 6 */}
-      <section className="academy-section academy-section--light">
+      <section className="academy-section academy-section--wine">
         <div className="academy-wrap">
-          <h2 className="academy-h2">This Is Not Just A Prompt Pack</h2>
-          <p className="academy-section__text">
+          <h2 className="academy-h2 academy-h2--light">This Is Not Just A Prompt Pack</h2>
+          <p className="academy-section__text academy-section__text--light">
             This is a complete AI creator system. You are not just getting random prompts. You are learning how to build your avatar, lock the identity, create realistic scenes, plan content, direct videos, edit your workflow, and monetize your results.
           </p>
         </div>
@@ -147,7 +146,7 @@ export default function AcademyPage() {
       </section>
 
       {/* SECTION 8: FAQ */}
-      <section className="academy-section academy-section--light">
+      <section className="academy-section academy-section--blush">
         <div className="academy-wrap">
           <h2 className="academy-h2">Frequently Asked Questions</h2>
           <div className="academy-faq">
@@ -204,23 +203,18 @@ export default function AcademyPage() {
 
       <style>{`
         :root {
-          --wine: #9E182B;
-          --wine2: #7A1222;
-          --wine3: #5C0A18;
           --rose: #F9CBD6;
           --blush: #F2AFBC;
-          --oat: #FBF4EC;
-          --oatc: #F2E0D2;
+          --wine: #9E182B;
+          --oat: #F2E0D2;
           --ink: #1A0508;
           --mute: #9B6A72;
-          --paper: #FFFDFB;
           --serif: 'Playfair Display', Georgia, serif;
           --sans: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
-          --dark: #06060b;
         }
 
         .academy * { box-sizing: border-box; }
-        .academy { font-family: var(--sans); color: var(--ink); background: var(--dark); overflow-x: hidden; }
+        .academy { font-family: var(--sans); color: var(--ink); background: var(--oat); overflow-x: hidden; }
         .academy-wrap { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
 
         /* NAV */
@@ -229,8 +223,8 @@ export default function AcademyPage() {
           align-items: center;
           justify-content: space-between;
           padding: 16px 24px;
-          border-bottom: 1px solid rgba(242, 175, 188, 0.15);
-          background: var(--dark);
+          border-bottom: 1px solid rgba(158, 24, 43, 0.15);
+          background: var(--oat);
           position: sticky;
           top: 0;
           z-index: 100;
@@ -241,14 +235,14 @@ export default function AcademyPage() {
           font-weight: 700;
           letter-spacing: 0.14em;
           text-decoration: none;
-          color: var(--rose);
+          color: var(--ink);
         }
 
         .academy-nav__super { color: var(--wine); }
 
         /* HERO */
         .academy-hero {
-          background: radial-gradient(130% 100% at 70% 0%, var(--wine) 0%, var(--wine2) 50%, var(--wine3) 100%);
+          background: linear-gradient(135deg, var(--oat) 0%, var(--rose) 100%);
           padding: 80px 0;
           position: relative;
           min-height: 90vh;
@@ -256,10 +250,11 @@ export default function AcademyPage() {
           align-items: center;
         }
 
-        .academy-hero__bg {
+        .academy-hero::before {
+          content: '';
           position: absolute;
           inset: 0;
-          background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+          background-image: radial-gradient(circle at 1px 1px, rgba(158, 24, 43, 0.05) 1px, transparent 0);
           background-size: 28px 28px;
         }
 
@@ -270,14 +265,14 @@ export default function AcademyPage() {
           align-items: center;
           gap: 8px;
           padding: 7px 16px;
-          border: 1px solid rgba(242, 175, 188, 0.35);
+          border: 1px solid var(--wine);
           border-radius: 100px;
-          background: rgba(255, 255, 255, 0.07);
+          background: rgba(255, 255, 255, 0.6);
           font-size: 0.62rem;
           font-weight: 700;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: var(--rose);
+          color: var(--wine);
           margin-bottom: 32px;
         }
 
@@ -286,7 +281,7 @@ export default function AcademyPage() {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: var(--blush);
+          background: var(--wine);
         }
 
         .academy-h1 {
@@ -295,13 +290,13 @@ export default function AcademyPage() {
           font-weight: 800;
           line-height: 1.0;
           letter-spacing: -0.02em;
-          color: var(--paper);
+          color: var(--ink);
           margin: 0 0 1.25rem;
         }
 
         .academy-h1 em {
           font-style: italic;
-          color: var(--blush);
+          color: var(--wine);
           display: block;
         }
 
@@ -309,9 +304,10 @@ export default function AcademyPage() {
 
         .academy-sub {
           font-size: 1rem;
-          color: var(--rose);
+          color: var(--ink);
           line-height: 1.7;
           margin-bottom: 1.5rem;
+          opacity: 0.9;
         }
 
         .academy-perks {
@@ -323,7 +319,8 @@ export default function AcademyPage() {
 
         .academy-perk {
           font-size: 0.88rem;
-          color: var(--rose);
+          color: var(--wine);
+          font-weight: 500;
         }
 
         .academy-btn {
@@ -335,7 +332,7 @@ export default function AcademyPage() {
           letter-spacing: 0.08em;
           text-transform: uppercase;
           background: var(--wine);
-          color: var(--paper);
+          color: white;
           border: none;
           cursor: pointer;
           transition: all 0.2s;
@@ -343,42 +340,72 @@ export default function AcademyPage() {
           margin-bottom: 12px;
         }
 
-        .academy-btn:hover { background: var(--wine2); }
+        .academy-btn:hover {
+          background: #7a1220;
+          transform: translateY(-2px);
+        }
+
+        .academy-btn--light {
+          background: white;
+          color: var(--wine);
+        }
+
+        .academy-btn--light:hover {
+          background: var(--oat);
+          color: var(--wine);
+        }
 
         .academy-price {
           font-size: 0.82rem;
-          color: var(--blush);
+          color: var(--wine);
           margin: 0;
+          font-weight: 500;
         }
 
         /* SECTIONS */
         .academy-section {
-          background: var(--dark);
+          background: white;
           padding: 60px 0;
-          border-bottom: 1px solid rgba(242, 175, 188, 0.1);
+          border-bottom: 1px solid var(--rose);
         }
 
-        .academy-section--light {
-          background: linear-gradient(135deg, #0a0a0a 0%, rgba(158, 24, 43, 0.05) 100%);
+        .academy-section--wine {
+          background: var(--wine);
+          border-bottom: none;
+        }
+
+        .academy-section--blush {
+          background: var(--rose);
+          border-bottom: 1px solid var(--blush);
         }
 
         .academy-h2 {
           font-family: var(--serif);
           font-size: clamp(1.8rem, 5vw, 2.8rem);
           font-weight: 800;
-          color: var(--blush);
+          color: var(--wine);
           text-align: center;
           margin-bottom: 24px;
           letter-spacing: -0.01em;
         }
 
+        .academy-h2--light {
+          color: white;
+        }
+
         .academy-section__text {
           font-size: 0.95rem;
-          color: rgba(242, 175, 188, 0.85);
+          color: var(--ink);
           line-height: 1.7;
           text-align: center;
           max-width: 700px;
           margin: 0 auto 2rem;
+          opacity: 0.85;
+        }
+
+        .academy-section__text--light {
+          color: white;
+          opacity: 1;
         }
 
         /* GRID */
@@ -390,25 +417,27 @@ export default function AcademyPage() {
         }
 
         .academy-card {
-          background: linear-gradient(135deg, rgba(158, 24, 43, 0.1) 0%, rgba(122, 18, 34, 0.1) 100%);
-          border: 1px solid rgba(158, 24, 43, 0.3);
+          background: linear-gradient(135deg, var(--rose) 0%, var(--blush) 100%);
+          border: 1px solid rgba(158, 24, 43, 0.2);
           border-radius: 8px;
           padding: 24px;
           text-align: center;
+          box-shadow: 0 4px 12px rgba(158, 24, 43, 0.08);
         }
 
         .academy-card h3 {
-          color: var(--blush);
+          color: var(--wine);
           font-size: 1.1rem;
           margin-bottom: 12px;
           font-weight: 600;
         }
 
         .academy-card p {
-          color: rgba(242, 175, 188, 0.8);
+          color: var(--ink);
           font-size: 0.9rem;
           line-height: 1.6;
           margin: 0;
+          opacity: 0.85;
         }
 
         /* INCLUDED */
@@ -421,10 +450,11 @@ export default function AcademyPage() {
         }
 
         .academy-included__item {
-          color: var(--blush);
+          color: var(--wine);
           font-size: 0.9rem;
           padding: 8px 0;
           border-bottom: 1px solid rgba(158, 24, 43, 0.2);
+          font-weight: 500;
         }
 
         /* BULLETS */
@@ -434,9 +464,10 @@ export default function AcademyPage() {
         }
 
         .academy-bullet {
-          color: var(--blush);
+          color: var(--wine);
           font-size: 0.95rem;
           margin-bottom: 12px;
+          font-weight: 500;
         }
 
         /* FAQ */
@@ -456,25 +487,27 @@ export default function AcademyPage() {
         }
 
         .academy-faq__item h4 {
-          color: var(--blush);
+          color: var(--wine);
           margin-bottom: 8px;
           font-size: 0.95rem;
           font-weight: 600;
         }
 
         .academy-faq__item p {
-          color: rgba(242, 175, 188, 0.8);
+          color: var(--ink);
           font-size: 0.9rem;
           margin: 0;
           line-height: 1.6;
+          opacity: 0.85;
         }
 
         /* FINAL */
         .academy-final {
-          background: radial-gradient(130% 100% at 70% 0%, var(--wine) 0%, var(--wine2) 50%, var(--wine3) 100%);
+          background: linear-gradient(135deg, var(--wine) 0%, #7a1220 100%);
           padding: 80px 0;
           text-align: center;
           position: relative;
+          color: white;
         }
 
         .academy-final::before {
@@ -487,21 +520,32 @@ export default function AcademyPage() {
 
         .academy-final .academy-wrap { position: relative; z-index: 2; }
 
-        .academy-final .academy-h1 { margin-bottom: 1rem; }
-        .academy-final .academy-section__text { color: var(--rose); }
+        .academy-final .academy-h1 {
+          color: white;
+          margin-bottom: 1rem;
+        }
+
+        .academy-final .academy-h1 em {
+          color: var(--rose);
+        }
+
+        .academy-final .academy-section__text {
+          color: white;
+          opacity: 1;
+        }
 
         /* FOOTER */
         .academy-footer {
-          background: var(--wine3);
+          background: var(--wine);
           padding: 28px 24px;
           text-align: center;
           font-size: 0.7rem;
           letter-spacing: 0.08em;
-          color: var(--blush);
+          color: var(--rose);
         }
 
         .academy-footer__link {
-          color: var(--rose);
+          color: white;
           text-decoration: none;
         }
 
